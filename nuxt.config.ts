@@ -3,7 +3,7 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
 
-  modules: ['@nuxtjs/seo', '@nuxt/fonts', '@nuxt/image', '@nuxt/scripts', '@vueuse/nuxt'],
+  modules: ['@nuxtjs/seo', '@nuxt/fonts', '@nuxt/image', '@nuxt/scripts', '@vueuse/nuxt', '@vueuse/motion/nuxt'],
 
   // SSR je defaultne zapnute v Nuxt
   ssr: true,
@@ -31,7 +31,8 @@ export default defineNuxtConfig({
       },
       charset: 'utf-8',
       viewport: 'width=device-width, initial-scale=1'
-    }
+    },
+    pageTransition: { name: 'page', mode: 'out-in' }
   },
 
   // Globálne SCSS

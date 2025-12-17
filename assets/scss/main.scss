@@ -62,3 +62,14 @@ img {
   clip: rect(0, 0, 0, 0);
   border: 0;
 }
+
+// Page transitions
+.page-enter-active,
+.page-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.page-enter-from,
+.page-leave-to {
+  opacity: 0;
+}
