@@ -1,0 +1,63 @@
+@use 'variables' as *;
+
+// Responsive breakpoints
+@mixin mobile {
+  @media (max-width: $mobile) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (max-width: $tablet) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: $desktop) {
+    @content;
+  }
+}
+
+// Flexbox
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+// Gradients
+@mixin gradient-primary {
+  background: linear-gradient(135deg, $primary 0%, $secondary 100%);
+}
+
+@mixin gradient-pink {
+  background: linear-gradient(135deg, #f093fb 0%, $accent-pink 100%);
+}
+
+@mixin gradient-blue {
+  background: linear-gradient(135deg, $accent-blue 0%, #00f2fe 100%);
+}
+
+// Card style
+@mixin card {
+  background: $bg-white;
+  border-radius: $radius-md;
+  box-shadow: $shadow-md;
+}
+
+// Hover lift effect
+@mixin hover-lift {
+  transition: transform $transition-fast, box-shadow $transition-fast;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: $shadow-lg;
+  }
+}
