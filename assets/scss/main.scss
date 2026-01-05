@@ -63,13 +63,11 @@ img {
   border: 0;
 }
 
-// Page transitions
-.page-enter-active {
-  transition: opacity 0.3s ease-out;
-}
-
+// Page transitions - rýchly crossfade
+.page-enter-active,
 .page-leave-active {
-  transition: opacity 0.3s ease-in;
+  transition: opacity 0.15s ease;
+  will-change: opacity;
 }
 
 .page-enter-from,
@@ -77,22 +75,10 @@ img {
   opacity: 0;
 }
 
-// Home page transition - len fade out pri odchode
-.home-leave-active {
-  transition: opacity 0.3s ease-in;
-}
-
-.home-leave-to {
-  opacity: 0;
-}
-
-// Bez enter animácie - video má vlastný fade-in
-.home-enter-active {
-  transition: none;
-}
-
-.home-enter-from {
-  opacity: 1;
+// Zabezpeč že stránka je jedna vrstva
+.page-enter-active *,
+.page-leave-active * {
+  transition: none !important;
 }
 
 // No scroll - pre fullscreen stránky
