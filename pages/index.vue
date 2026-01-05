@@ -11,7 +11,6 @@ useSeoMeta({
 const videoRef = ref<HTMLVideoElement | null>(null)
 const isVideoLoaded = ref(false)
 
-// Vlastná transition - fade out pri odchode, bez transition pri príchode (video má vlastný fade)
 definePageMeta({
   pageTransition: {
     name: 'home',
@@ -53,13 +52,11 @@ onMounted(async () => {
       loop
       playsinline
       preload="auto"
+      poster="https://pub-c3be0c5631d344eab722713e13225ca2.r2.dev/poster.png"
     >
-      <source src="/videos/kacenkovo_web_hd.mp4" type="video/mp4">
+      <source src="https://pub-c3be0c5631d344eab722713e13225ca2.r2.dev/kacenkovo_web_4k.mp4" type="video/mp4">
     </video>
-    <div class="hero__overlay" />
     <div class="hero__content">
-      <h1>Kačenkovo</h1>
-      <p>Kvalitné dámske a detské oblečenie</p>
       <div class="hero__links">
         <NuxtLink to="/damska-moda" class="hero__link">
           Dámska móda
@@ -76,7 +73,7 @@ onMounted(async () => {
 .hero {
   position: relative;
   width: 100%;
-  height: 100dvh;
+  height: 100vh;
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -94,31 +91,19 @@ onMounted(async () => {
     object-fit: cover;
     z-index: -2;
     opacity: 0;
-    transition: opacity 0.5s ease-out;
+    transition: opacity 0.3s ease-out;
     image-rendering: high-quality;
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
   }
 
-  &__overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.4);
-    z-index: -1;
-    opacity: 0;
-    transition: opacity 0.5s ease-out;
-  }
 
   &__content {
     text-align: center;
     color: $text-white;
-    z-index: 1;
     opacity: 0;
     transform: translateY(20px);
-    transition: opacity 0.6s ease-out 0.2s, transform 0.6s ease-out 0.2s;
+    transition: opacity 0.3s ease-out 0.3s, transform 0.3s ease-out 0.3s;
 
     h1 {
       font-size: clamp(2.5rem, 8vw, 5rem);
@@ -133,7 +118,6 @@ onMounted(async () => {
     }
   }
 
-  // Loaded state - fade in všetky elementy
   &--loaded &__video,
   &--loaded &__overlay {
     opacity: 1;
