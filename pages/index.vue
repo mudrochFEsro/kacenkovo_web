@@ -53,9 +53,8 @@ onMounted(async () => {
       loop
       playsinline
       preload="auto"
-      poster="/videos/poster.jpg"
     >
-      <source src="/videos/hero-4k-ultra.mp4" type="video/mp4">
+      <source src="/videos/kacenkovo_web_hd.mp4" type="video/mp4">
     </video>
     <div class="hero__overlay" />
     <div class="hero__content">
