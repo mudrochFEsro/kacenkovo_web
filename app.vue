@@ -1,25 +1,50 @@
 <script setup lang="ts">
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, computed, watch } from 'vue'
 
 const route = useRoute()
 const videoRef = ref<HTMLVideoElement | null>(null)
 const isVideoLoaded = ref(false)
+const shouldLoadVideo = ref(false)
 
 // Video je viditeľné len na homepage
 const showVideo = computed(() => route.path === '/')
 
-onMounted(() => {
-  const video = videoRef.value
-  if (!video) return
+// Detekcia mobile zariadenia pre menšie video
+const isMobile = ref(false)
 
-  video.addEventListener('canplay', () => {
-    isVideoLoaded.value = true
-  }, { once: true })
+// Video URL - Full HD pre mobile (1080p), 4K pre desktop
+const videoUrl = computed(() => {
+  if (isMobile.value) {
+    return 'https://pub-c3be0c5631d344eab722713e13225ca2.r2.dev/kacenkovo_web_1080p.mp4'
+  }
+  return 'https://pub-c3be0c5631d344eab722713e13225ca2.r2.dev/kacenkovo_web_4k.mp4'
 })
+
+onMounted(() => {
+  // Detekcia mobile na základe šírky obrazovky
+  isMobile.value = window.innerWidth < 768
+
+  // Lazy load - načítaj video len ak sme na homepage
+  if (showVideo.value) {
+    shouldLoadVideo.value = true
+  }
+})
+
+// Lazy loading - načítaj video keď sa naviguje na homepage
+watch(showVideo, (isHomepage) => {
+  if (isHomepage && !shouldLoadVideo.value) {
+    shouldLoadVideo.value = true
+  }
+})
+
+// Handler pre načítanie videa
+const onVideoCanPlay = () => {
+  isVideoLoaded.value = true
+}
 </script>
 
 <template>
-  <!-- Globálne video pozadie - hrá stále -->
+  <!-- Globálne video pozadie - lazy loaded -->
   <div
     class="global-video-bg"
     :class="{
@@ -28,16 +53,18 @@ onMounted(() => {
     }"
   >
     <video
+      v-if="shouldLoadVideo"
       ref="videoRef"
       class="global-video-bg__video"
       autoplay
       muted
       loop
       playsinline
-      preload="auto"
+      preload="metadata"
       poster="/poster.png"
+      @canplay="onVideoCanPlay"
     >
-      <source src="https://pub-c3be0c5631d344eab722713e13225ca2.r2.dev/kacenkovo_web_4k.mp4" type="video/mp4">
+      <source :src="videoUrl" type="video/mp4">
     </video>
   </div>
 
