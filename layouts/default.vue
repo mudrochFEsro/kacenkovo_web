@@ -1,23 +1,23 @@
 <template>
   <div class="app-layout">
-    <header class="main-header">
-      <nav class="nav-container">
-        <NuxtLink to="/" class="logo">Kacenkovo</NuxtLink>
-        <div class="nav-links">
-          <NuxtLink to="/">Domov</NuxtLink>
-          <NuxtLink to="/damska-sekcia">Dámska sekcia</NuxtLink>
-          <NuxtLink to="/detska-sekcia">Detská sekcia</NuxtLink>
-        </div>
-      </nav>
-    </header>
+<!--    <header class="main-header">-->
+<!--      <nav class="nav-container">-->
+<!--        <NuxtLink to="/" class="logo">Kacenkovo</NuxtLink>-->
+<!--        <div class="nav-links">-->
+<!--          <NuxtLink to="/">Domov</NuxtLink>-->
+<!--          <NuxtLink to="/damska-moda">Dámska móda</NuxtLink>-->
+<!--          <NuxtLink to="/detska-moda">Detská móda</NuxtLink>-->
+<!--        </div>-->
+<!--      </nav>-->
+<!--    </header>-->
 
     <main>
       <slot />
     </main>
 
-    <footer class="main-footer">
-      <p>&copy; {{ new Date().getFullYear() }} Kacenkovo. Všetky práva vyhradené.</p>
-    </footer>
+<!--    <footer class="main-footer">-->
+<!--      <p>&copy; {{ new Date().getFullYear() }} Kacenkovo. Všetky práva vyhradené.</p>-->
+<!--    </footer>-->
   </div>
 </template>
 

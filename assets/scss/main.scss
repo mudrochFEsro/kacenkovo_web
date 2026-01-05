@@ -64,12 +64,33 @@ img {
 }
 
 // Page transitions
-.page-enter-active,
+.page-enter-active {
+  transition: opacity 0.3s ease-out;
+}
+
 .page-leave-active {
-  transition: opacity 0.3s ease;
+  transition: opacity 0.3s ease-in;
 }
 
 .page-enter-from,
 .page-leave-to {
   opacity: 0;
+}
+
+// Home page transition - len fade out pri odchode
+.home-leave-active {
+  transition: opacity 0.4s ease-in;
+}
+
+.home-leave-to {
+  opacity: 0;
+}
+
+// Bez enter animácie - video má vlastný fade-in
+.home-enter-active {
+  transition: none;
+}
+
+.home-enter-from {
+  opacity: 1;
 }

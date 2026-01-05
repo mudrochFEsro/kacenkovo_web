@@ -1,9 +1,9 @@
 <script setup lang="ts">
 useSeoMeta({
-  title: 'Detská sekcia - Kacenkovo',
-  ogTitle: 'Detská sekcia - Kacenkovo',
-  description: 'Kvalitné a pohodlné detské oblečenie pre všetky vekové kategórie. Tričká, mikiny, nohavice.',
-  ogDescription: 'Kvalitné a pohodlné detské oblečenie pre všetky vekové kategórie.'
+  title: 'Dámska móda - Kacenkovo',
+  ogTitle: 'Dámska móda - Kacenkovo',
+  description: 'Objavte našu kolekciu elegantného a štýlového dámskeho oblečenia. Šaty, blúzky, nohavice a viac.',
+  ogDescription: 'Objavte našu kolekciu elegantného a štýlového dámskeho oblečenia.'
 })
 </script>
 
@@ -11,31 +11,31 @@ useSeoMeta({
   <div>
     <section class="page-header">
       <NuxtLink to="/" class="back-link">&larr; Späť na hlavnú stránku</NuxtLink>
-      <h1>Detská sekcia</h1>
-      <p>Pohodlné a kvalitné oblečenie pre deti</p>
+      <h1>Dámska móda</h1>
+      <p>Elegantné a štýlové oblečenie pre ženy</p>
     </section>
 
     <section class="content">
       <div class="product-grid">
         <div class="product-card">
           <div class="product-image"></div>
-          <h3>Detské tričko</h3>
-          <p class="price">14,99 €</p>
-        </div>
-        <div class="product-card">
-          <div class="product-image"></div>
-          <h3>Mikina s kapucňou</h3>
-          <p class="price">24,99 €</p>
-        </div>
-        <div class="product-card">
-          <div class="product-image"></div>
-          <h3>Tepláky detské</h3>
-          <p class="price">19,99 €</p>
-        </div>
-        <div class="product-card">
-          <div class="product-image"></div>
-          <h3>Zimná bunda</h3>
+          <h3>Elegantné šaty</h3>
           <p class="price">49,99 €</p>
+        </div>
+        <div class="product-card">
+          <div class="product-image"></div>
+          <h3>Dámska blúzka</h3>
+          <p class="price">29,99 €</p>
+        </div>
+        <div class="product-card">
+          <div class="product-image"></div>
+          <h3>Nohavice slim fit</h3>
+          <p class="price">39,99 €</p>
+        </div>
+        <div class="product-card">
+          <div class="product-image"></div>
+          <h3>Kabát zimný</h3>
+          <p class="price">89,99 €</p>
         </div>
       </div>
     </section>
@@ -46,7 +46,7 @@ useSeoMeta({
 .page-header {
   text-align: center;
   padding: $spacing-lg $spacing-md;
-  @include gradient-blue;
+  @include gradient-pink;
   color: $text-white;
 
   h1 {
@@ -92,13 +92,13 @@ useSeoMeta({
 
 .product-image {
   height: 200px;
-  background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+  background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
 }
 
 .price {
   padding: 0 $spacing-sm $spacing-sm;
   margin: 0;
-  color: $accent-blue;
+  color: $accent-pink;
   font-weight: bold;
   font-size: 1.2rem;
 }

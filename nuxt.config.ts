@@ -11,7 +11,7 @@ export default defineNuxtConfig({
   // Pre SSG - prerender specificke routy
   nitro: {
     prerender: {
-      routes: ['/', '/detska-sekcia', '/damska-sekcia'],
+      routes: ['/', '/detska-moda', '/damska-moda'],
       crawlLinks: true
     }
   },
@@ -32,7 +32,7 @@ export default defineNuxtConfig({
       charset: 'utf-8',
       viewport: 'width=device-width, initial-scale=1'
     },
-    pageTransition: { name: 'page', mode: 'out-in' }
+    pageTransition: { name: 'page', mode: 'default' }
   },
 
   // Globálne SCSS
