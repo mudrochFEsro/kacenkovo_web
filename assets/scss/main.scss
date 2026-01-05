@@ -94,3 +94,14 @@ img {
 .home-enter-from {
   opacity: 1;
 }
+
+// No scroll - pre fullscreen stránky
+html.no-scroll,
+body.no-scroll {
+  overflow: hidden;
+  height: 100%;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+}

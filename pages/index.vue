@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import { ref, onMounted, nextTick } from 'vue'
+import { ref, onMounted, watch } from 'vue'
+
+const route = useRoute()
 
 useSeoMeta({
   title: 'Kacenkovo - Obchod s oblečením',
@@ -11,34 +13,30 @@ useSeoMeta({
 const videoRef = ref<HTMLVideoElement | null>(null)
 const isVideoLoaded = ref(false)
 
-definePageMeta({
-  pageTransition: {
-    name: 'home',
-    mode: 'out-in'
-  }
-})
-
-onMounted(async () => {
-  await nextTick()
-
-  if (!videoRef.value) return
-
+const startVideo = () => {
   const video = videoRef.value
+  if (!video) return
 
-  // Ak je video už načítané (cached), rovno zobraz
   if (video.readyState >= 3) {
     isVideoLoaded.value = true
-    video.play().catch(() => {})
-    return
+    if (video.paused) {
+      video.play().catch(() => {})
+    }
+  } else {
+    video.addEventListener('canplay', () => {
+      isVideoLoaded.value = true
+      video.play().catch(() => {})
+    }, { once: true })
   }
+}
 
-  video.addEventListener('loadeddata', () => {
-    isVideoLoaded.value = true
-  }, { once: true })
+onMounted(startVideo)
 
-  // Reštartuj video pri navigácii späť
-  video.load()
-  video.play().catch(() => {})
+// Keď sa vrátiš na túto stránku
+watch(() => route.path, (newPath) => {
+  if (newPath === '/') {
+    setTimeout(startVideo, 50)
+  }
 })
 </script>
 
@@ -52,7 +50,7 @@ onMounted(async () => {
       loop
       playsinline
       preload="auto"
-      poster="https://pub-c3be0c5631d344eab722713e13225ca2.r2.dev/poster.png"
+      poster="/poster.png"
     >
       <source src="https://pub-c3be0c5631d344eab722713e13225ca2.r2.dev/kacenkovo_web_4k.mp4" type="video/mp4">
     </video>
@@ -78,54 +76,31 @@ onMounted(async () => {
   display: flex;
   align-items: center;
   justify-content: center;
+  // Poster ako fallback pozadie - vždy viditeľné
+  background: #000 url('/poster.png') no-repeat center / cover;
 
   &__video {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    min-width: 100%;
-    min-height: 100%;
-    width: auto;
-    height: auto;
-    transform: translate(-50%, -50%);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
-    z-index: -2;
+    z-index: 1;
     opacity: 0;
-    transition: opacity 0.3s ease-out;
-    image-rendering: high-quality;
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
+    transition: opacity 0.15s ease-out;
   }
-
 
   &__content {
+    position: relative;
+    z-index: 2;
     text-align: center;
     color: $text-white;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.3s ease-out 0.3s, transform 0.3s ease-out 0.3s;
 
-    h1 {
-      font-size: clamp(2.5rem, 8vw, 5rem);
-      font-weight: 700;
-      margin-bottom: $spacing-sm;
-      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
-    }
-
-    p {
-      font-size: clamp(1rem, 3vw, 1.5rem);
-      text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
-    }
   }
 
-  &--loaded &__video,
-  &--loaded &__overlay {
+  &--loaded &__video {
     opacity: 1;
-  }
-
-  &--loaded &__content {
-    opacity: 1;
-    transform: translateY(0);
   }
 
   &__links {
@@ -143,13 +118,13 @@ onMounted(async () => {
     padding: $spacing-md $spacing-lg;
     background: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(10px);
-    border: 2px solid rgba(255, 255, 255, 0.3);
+    border: 2px solid rgba(255, 255, 255, 0.15);
     border-radius: $radius-md;
     color: $text-white;
     text-decoration: none;
     font-size: clamp(1.1rem, 2.5vw, 1.4rem);
     font-weight: 600;
-    transition: all 0.3s ease;
+    transition: all 0.15s ease;
 
     &:hover {
       background: rgba(255, 255, 255, 0.25);
