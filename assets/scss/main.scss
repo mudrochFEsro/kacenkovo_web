@@ -64,11 +64,11 @@ img {
 }
 
 // Page transitions - rýchly crossfade
-.page-enter-active,
-.page-leave-active {
-  transition: opacity 0.15s ease;
-  will-change: opacity;
-}
+//.page-enter-active,
+//.page-leave-active {
+//  transition: opacity 0.1s ease;
+//  will-change: opacity;
+//}
 
 .page-enter-from,
 .page-leave-to {
@@ -82,8 +82,7 @@ img {
 }
 
 // No scroll - pre fullscreen stránky
-html.no-scroll,
-body.no-scroll {
+html.no-scroll{
   overflow: hidden;
   height: 100%;
   position: fixed;

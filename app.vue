@@ -1,6 +1,13 @@
 <script setup lang="ts">
 import { ref, onMounted, computed, watch } from 'vue'
 
+useHead({
+  link: [
+    { rel: 'preload', href: '/detska_moda_logo.svg', as: 'image', type: 'image/svg+xml' },
+    { rel: 'preload', href: '/damska_moda_logo.svg', as: 'image', type: 'image/svg+xml' }
+  ]
+})
+
 const route = useRoute()
 const videoRef = ref<HTMLVideoElement | null>(null)
 const isVideoLoaded = ref(false)
@@ -37,7 +44,7 @@ const onVideoCanPlay = () => {
 </script>
 
 <template>
-  <div
+  <section
     class="global-video-bg"
     :class="{
       'global-video-bg--visible': showVideo,
@@ -60,7 +67,7 @@ const onVideoCanPlay = () => {
     >
       <source :src="videoUrl" type="video/mp4">
     </video>
-  </div>
+  </section>
 
   <NuxtLayout>
     <NuxtPage />
