@@ -6,13 +6,10 @@ const videoRef = ref<HTMLVideoElement | null>(null)
 const isVideoLoaded = ref(false)
 const shouldLoadVideo = ref(false)
 
-// Video je viditeľné len na homepage
 const showVideo = computed(() => route.path === '/')
 
-// Detekcia mobile zariadenia pre menšie video
 const isMobile = ref(false)
 
-// Video URL - Full HD pre mobile (1080p), 4K pre desktop
 const videoUrl = computed(() => {
   if (isMobile.value) {
     return 'https://pub-c3be0c5631d344eab722713e13225ca2.r2.dev/kacenkovo_web_1080p.mp4'
@@ -21,30 +18,25 @@ const videoUrl = computed(() => {
 })
 
 onMounted(() => {
-  // Detekcia mobile na základe šírky obrazovky
   isMobile.value = window.innerWidth < 768
 
-  // Lazy load - načítaj video len ak sme na homepage
   if (showVideo.value) {
     shouldLoadVideo.value = true
   }
 })
 
-// Lazy loading - načítaj video keď sa naviguje na homepage
 watch(showVideo, (isHomepage) => {
   if (isHomepage && !shouldLoadVideo.value) {
     shouldLoadVideo.value = true
   }
 })
 
-// Handler pre načítanie videa
 const onVideoCanPlay = () => {
   isVideoLoaded.value = true
 }
 </script>
 
 <template>
-  <!-- Globálne video pozadie - lazy loaded -->
   <div
     class="global-video-bg"
     :class="{
@@ -62,6 +54,8 @@ const onVideoCanPlay = () => {
       playsinline
       preload="metadata"
       poster="/poster.png"
+      aria-hidden="true"
+      tabindex="-1"
       @canplay="onVideoCanPlay"
     >
       <source :src="videoUrl" type="video/mp4">
@@ -84,7 +78,7 @@ const onVideoCanPlay = () => {
   background: #000 url('/poster.png') no-repeat center / cover;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.15s ease, visibility 0.15s ease;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
 
   &--visible {
     opacity: 1;

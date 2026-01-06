@@ -9,35 +9,35 @@ useSeoMeta({
 
 <template>
   <div>
-    <section class="page-header">
-      <NuxtLink to="/" class="back-link">&larr; Späť na hlavnú stránku</NuxtLink>
-      <h1>Detská móda</h1>
+    <section class="page-header" aria-labelledby="page-title">
+      <NuxtLink to="/" class="back-link" aria-label="Späť na hlavnú stránku">&larr; Späť na hlavnú stránku</NuxtLink>
+      <h1 id="page-title">Detská móda</h1>
       <p>Pohodlné a kvalitné oblečenie pre deti</p>
     </section>
 
-    <section class="content">
-      <div class="product-grid">
-        <div class="product-card">
-          <div class="product-image"></div>
+    <section class="content" aria-label="Produkty detskej módy">
+      <ul class="product-grid" role="list" aria-label="Zoznam produktov">
+        <li class="product-card">
+          <div class="product-image" role="img" aria-label="Obrázok produktu Detské tričko"></div>
           <h3>Detské tričko</h3>
           <p class="price">14,99 €</p>
-        </div>
-        <div class="product-card">
-          <div class="product-image"></div>
+        </li>
+        <li class="product-card">
+          <div class="product-image" role="img" aria-label="Obrázok produktu Mikina s kapucňou"></div>
           <h3>Mikina s kapucňou</h3>
           <p class="price">24,99 €</p>
-        </div>
-        <div class="product-card">
-          <div class="product-image"></div>
+        </li>
+        <li class="product-card">
+          <div class="product-image" role="img" aria-label="Obrázok produktu Tepláky detské"></div>
           <h3>Tepláky detské</h3>
           <p class="price">19,99 €</p>
-        </div>
-        <div class="product-card">
-          <div class="product-image"></div>
+        </li>
+        <li class="product-card">
+          <div class="product-image" role="img" aria-label="Obrázok produktu Zimná bunda"></div>
           <h3>Zimná bunda</h3>
           <p class="price">49,99 €</p>
-        </div>
-      </div>
+        </li>
+      </ul>
     </section>
   </div>
 </template>
@@ -61,9 +61,16 @@ useSeoMeta({
   display: inline-block;
   margin-bottom: $spacing-sm;
   opacity: 0.9;
+  border-radius: 4px;
 
   &:hover {
     opacity: 1;
+  }
+
+  &:focus-visible {
+    opacity: 1;
+    outline: 3px solid #fff;
+    outline-offset: 4px;
   }
 }
 
@@ -77,6 +84,9 @@ useSeoMeta({
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: $spacing-md;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 .product-card {

@@ -13,16 +13,16 @@ useHead({
 </script>
 
 <template>
-  <section class="hero">
+  <section class="hero" aria-label="Výber kategórie oblečenia">
     <div class="hero__content">
-      <div class="hero__links">
-        <NuxtLink to="/damska-moda" class="hero__link">
-          Dámska móda
+      <nav class="hero__links" aria-label="Kategórie oblečenia">
+        <NuxtLink to="/damska-moda" class="hero__link" aria-label="Prejsť do sekcie dámskej módy">
+          <img class="hero__logo" src="/detska_moda_logo.svg" alt="Dámska móda - logo" loading="eager" />
         </NuxtLink>
-        <NuxtLink to="/detska-moda" class="hero__link">
-          Detská móda
+        <NuxtLink to="/detska-moda" class="hero__link" aria-label="Prejsť do sekcie detskej módy">
+          <img class="hero__logo" src="/detska_moda_logo.svg" alt="Detská móda - logo" loading="eager" />
         </NuxtLink>
-      </div>
+      </nav>
     </div>
   </section>
 </template>
@@ -35,7 +35,7 @@ useHead({
   display: flex;
   align-items: center;
   justify-content: center;
-
+  padding: $spacing-sm;
   &__content {
     position: relative;
     z-index: 2;
@@ -44,7 +44,7 @@ useHead({
 
   &__links {
     display: flex;
-    gap: $spacing-lg;
+    gap: $spacing-sm;
     flex-wrap: wrap;
     justify-content: center;
   }
@@ -53,22 +53,30 @@ useHead({
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: $spacing-md $spacing-lg;
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(10px);
-    border: 2px solid rgba(255, 255, 255, 0.15);
+    padding: $spacing-sm;
+    background: rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(20px);
+    border: 4px solid rgba(255, 255, 255, 0.15);
     border-radius: $radius-md;
-    color: $text-white;
-    text-decoration: none;
-    font-size: clamp(1.1rem, 2.5vw, 1.4rem);
-    font-weight: 600;
-    transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+    transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease, outline 0.15s ease;
 
     &:hover {
       background: rgba(255, 255, 255, 0.25);
       border-color: rgba(255, 255, 255, 0.5);
-      transform: translateY(-3px);
+      transform: translateY(-12px);
     }
+
+    &:focus-visible {
+      outline: 3px solid #fff;
+      outline-offset: 4px;
+      background: rgba(255, 255, 255, 0.25);
+      border-color: rgba(255, 255, 255, 0.5);
+    }
+  }
+
+  &__logo{
+    width: 400px;
+    height: auto;
   }
 }
 </style>
