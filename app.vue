@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, computed, watch } from 'vue'
+import { ref, onMounted, onUnmounted, computed, watch } from 'vue'
 
 useHead({
   link: [
@@ -25,12 +25,28 @@ const videoUrl = computed(() => {
   return 'https://pub-c3be0c5631d344eab722713e13225ca2.r2.dev/kacenkovo_web_4k.mp4'
 })
 
+const resumeVideo = () => {
+  if (videoRef.value && showVideo.value && document.visibilityState === 'visible') {
+    videoRef.value.play().catch(() => {})
+  }
+}
+
 onMounted(() => {
   isMobile.value = window.innerWidth < 768
 
   if (showVideo.value) {
     shouldLoadVideo.value = true
   }
+
+  document.addEventListener('visibilitychange', resumeVideo)
+  window.addEventListener('focus', resumeVideo)
+  window.addEventListener('pageshow', resumeVideo)
+})
+
+onUnmounted(() => {
+  document.removeEventListener('visibilitychange', resumeVideo)
+  window.removeEventListener('focus', resumeVideo)
+  window.removeEventListener('pageshow', resumeVideo)
 })
 
 watch(showVideo, (isHomepage) => {

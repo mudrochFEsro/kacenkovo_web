@@ -100,7 +100,8 @@ useHead({
   }
 
   &__logo {
-    width: 400px;
+    width: 100%;
+    max-width: 300px;
     height: auto;
   }
 }
