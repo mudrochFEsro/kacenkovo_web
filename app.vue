@@ -3,6 +3,7 @@ import { ref, onMounted, computed, watch } from 'vue'
 
 useHead({
   link: [
+    { rel: 'preload', href: '/poster.webp', as: 'image', type: 'image/webp', fetchpriority: 'high' },
     { rel: 'preload', href: '/detska_moda_logo.svg', as: 'image', type: 'image/svg+xml' },
     { rel: 'preload', href: '/damska_moda_logo.svg', as: 'image', type: 'image/svg+xml' }
   ]
@@ -60,7 +61,7 @@ const onVideoCanPlay = () => {
       loop
       playsinline
       preload="metadata"
-      poster="/poster.png"
+      poster="/poster.webp"
       aria-hidden="true"
       tabindex="-1"
       @canplay="onVideoCanPlay"
@@ -82,7 +83,7 @@ const onVideoCanPlay = () => {
   width: 100%;
   height: 100vh;
   z-index: -1;
-  background: #000 url('/poster.png') no-repeat center / cover;
+  background: #000 url('/poster.webp') no-repeat center / cover;
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.25s ease, visibility 0.25s ease;
