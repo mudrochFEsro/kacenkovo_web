@@ -2,9 +2,7 @@
 
 useSeoMeta({
   title: 'Kacenkovo - Obchod s oblečením',
-  ogTitle: 'Kacenkovo - Obchod s oblečením',
-  description: 'Kvalitné dámske a detské oblečenie za skvelé ceny. Navštívte náš obchod!',
-  ogDescription: 'Kvalitné dámske a detské oblečenie za skvelé ceny. Navštívte náš obchod!'
+  description: 'Kvalitné dámske a detské oblečenie za skvelé ceny. Navštívte náš obchod!'
 })
 
 useHead({

@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, computed, watch } from 'vue'
 
+const config = useRuntimeConfig()
+
 useHead({
   link: [
     { rel: 'preload', href: '/poster.webp', as: 'image', type: 'image/webp', fetchpriority: 'high' },
@@ -19,10 +21,7 @@ const showVideo = computed(() => route.path === '/')
 const isMobile = ref(false)
 
 const videoUrl = computed(() => {
-  if (isMobile.value) {
-    return 'https://pub-c3be0c5631d344eab722713e13225ca2.r2.dev/kacenkovo_web_1080p.mp4'
-  }
-  return 'https://pub-c3be0c5631d344eab722713e13225ca2.r2.dev/kacenkovo_web_4k.mp4'
+  return isMobile.value ? config.public.videoUrlMobile : config.public.videoUrl4k
 })
 
 const resumeVideo = () => {
@@ -31,8 +30,12 @@ const resumeVideo = () => {
   }
 }
 
-onMounted(() => {
+const updateIsMobile = () => {
   isMobile.value = window.innerWidth < 768
+}
+
+onMounted(() => {
+  updateIsMobile()
 
   if (showVideo.value) {
     shouldLoadVideo.value = true
@@ -41,12 +44,14 @@ onMounted(() => {
   document.addEventListener('visibilitychange', resumeVideo)
   window.addEventListener('focus', resumeVideo)
   window.addEventListener('pageshow', resumeVideo)
+  window.addEventListener('resize', updateIsMobile)
 })
 
 onUnmounted(() => {
   document.removeEventListener('visibilitychange', resumeVideo)
   window.removeEventListener('focus', resumeVideo)
   window.removeEventListener('pageshow', resumeVideo)
+  window.removeEventListener('resize', updateIsMobile)
 })
 
 watch(showVideo, (isHomepage) => {

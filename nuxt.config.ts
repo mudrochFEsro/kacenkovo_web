@@ -5,6 +5,13 @@ export default defineNuxtConfig({
 
   modules: ['@nuxtjs/seo', '@nuxt/fonts', '@nuxt/image', '@nuxt/scripts', '@vueuse/nuxt', '@vueuse/motion/nuxt'],
 
+  runtimeConfig: {
+    public: {
+      videoUrlMobile: 'https://pub-c3be0c5631d344eab722713e13225ca2.r2.dev/kacenkovo_web_1080p.mp4',
+      videoUrl4k: 'https://pub-c3be0c5631d344eab722713e13225ca2.r2.dev/kacenkovo_web_4k.mp4'
+    }
+  },
+
   // SSR je defaultne zapnute v Nuxt
   ssr: true,
 
