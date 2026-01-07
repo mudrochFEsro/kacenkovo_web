@@ -7,7 +7,8 @@ useHead({
   link: [
     { rel: 'preload', href: '/poster.webp', as: 'image', type: 'image/webp', fetchpriority: 'high' },
     { rel: 'preload', href: '/detska_moda_logo.svg', as: 'image', type: 'image/svg+xml' },
-    { rel: 'preload', href: '/damska_moda_logo.svg', as: 'image', type: 'image/svg+xml' }
+    { rel: 'preload', href: '/damska_moda_logo.svg', as: 'image', type: 'image/svg+xml' },
+    { rel: 'preload', href: '/doplnky_logo.svg', as: 'image', type: 'image/svg+xml' }
   ]
 })
 
@@ -30,12 +31,8 @@ const resumeVideo = () => {
   }
 }
 
-const updateIsMobile = () => {
-  isMobile.value = window.innerWidth < 768
-}
-
 onMounted(() => {
-  updateIsMobile()
+  isMobile.value = window.innerWidth < 768
 
   if (showVideo.value) {
     shouldLoadVideo.value = true
@@ -44,14 +41,18 @@ onMounted(() => {
   document.addEventListener('visibilitychange', resumeVideo)
   window.addEventListener('focus', resumeVideo)
   window.addEventListener('pageshow', resumeVideo)
-  window.addEventListener('resize', updateIsMobile)
+
+  // iOS fallback - spustiť video pri prvej interakcii
+  document.addEventListener('touchstart', tryPlayOnInteraction, { passive: true })
+  document.addEventListener('click', tryPlayOnInteraction)
 })
 
 onUnmounted(() => {
   document.removeEventListener('visibilitychange', resumeVideo)
   window.removeEventListener('focus', resumeVideo)
   window.removeEventListener('pageshow', resumeVideo)
-  window.removeEventListener('resize', updateIsMobile)
+  document.removeEventListener('touchstart', tryPlayOnInteraction)
+  document.removeEventListener('click', tryPlayOnInteraction)
 })
 
 watch(showVideo, (isHomepage) => {
@@ -62,6 +63,27 @@ watch(showVideo, (isHomepage) => {
 
 const onVideoCanPlay = () => {
   isVideoLoaded.value = true
+  // iOS Safari potrebuje explicitné spustenie po načítaní
+  if (videoRef.value) {
+    videoRef.value.play().catch(() => {})
+  }
+}
+
+// Pokus o spustenie videa po loadeddata (pre iOS)
+const onVideoLoadedData = () => {
+  if (videoRef.value) {
+    videoRef.value.play().catch(() => {})
+  }
+}
+
+// iOS niekedy potrebuje user interaction pre spustenie videa
+const tryPlayOnInteraction = () => {
+  if (videoRef.value && videoRef.value.paused) {
+    videoRef.value.play().catch(() => {})
+  }
+  // Odstrániť listener po prvom pokuse
+  document.removeEventListener('touchstart', tryPlayOnInteraction)
+  document.removeEventListener('click', tryPlayOnInteraction)
 }
 </script>
 
@@ -81,11 +103,15 @@ const onVideoCanPlay = () => {
       muted
       loop
       playsinline
-      preload="metadata"
+      webkit-playsinline
+      disablePictureInPicture
+      :disableRemotePlayback="true"
+      preload="auto"
       poster="/poster.webp"
       aria-hidden="true"
       tabindex="-1"
       @canplay="onVideoCanPlay"
+      @loadeddata="onVideoLoadedData"
     >
       <source :src="videoUrl" type="video/mp4">
     </video>
@@ -120,6 +146,24 @@ const onVideoCanPlay = () => {
     object-fit: cover;
     opacity: 0;
     transition: opacity 0.25s ease-out;
+
+    // Skryť natívne video controls a play button (iOS Safari)
+    &::-webkit-media-controls {
+      display: none !important;
+    }
+    &::-webkit-media-controls-panel {
+      display: none !important;
+    }
+    &::-webkit-media-controls-play-button {
+      display: none !important;
+    }
+    &::-webkit-media-controls-start-playback-button {
+      display: none !important;
+      -webkit-appearance: none;
+    }
+    &::-webkit-media-controls-overlay-play-button {
+      display: none !important;
+    }
   }
 
   &--loaded &__video {
