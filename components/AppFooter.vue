@@ -24,7 +24,7 @@
           <NuxtLink to="/o-nas">O nás</NuxtLink>
           <NuxtLink to="/sluzby">Služby</NuxtLink>
           <NuxtLink to="/mapa">Kde nás nájdete</NuxtLink>
-          <a href="/Informacia_o_spracuvani_osobných_údajov_kamerový_system.pdf" target="_blank" rel="noopener">Ochrana osobných údajov</a>
+          <a href="/ochrana-osobnych-udajov.pdf" target="_blank" rel="noopener">Ochrana osobných údajov</a>
         </nav>
       </div>
     </div>
