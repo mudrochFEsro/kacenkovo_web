@@ -18,7 +18,7 @@ export default defineNuxtConfig({
   // Pre SSG - prerender specificke routy
   nitro: {
     prerender: {
-      routes: ['/', '/detska-moda', '/damska-moda'],
+      routes: ['/', '/detska-moda', '/damska-moda', '/doplnky', '/mapa', '/o-nas', '/sluzby'],
       crawlLinks: true
     }
   },

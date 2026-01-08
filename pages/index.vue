@@ -1,12 +1,7 @@
 <script setup lang="ts">
-
 useSeoMeta({
   title: 'Kacenkovo - Obchod s oblečením',
   description: 'Kvalitné dámske a detské oblečenie za skvelé ceny. Navštívte náš obchod!'
-})
-
-useHead({
-  htmlAttrs: {class: 'no-scroll'},
 })
 </script>
 
@@ -121,8 +116,9 @@ useHead({
     height: 85px;
 
     @include tablet {
-      max-width: unset;
-      height: 60px;
+      max-width: 250px;
+      height: 70px;
+
     }
   }
 }

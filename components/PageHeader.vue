@@ -2,7 +2,7 @@
 defineProps<{
   title: string
   subtitle: string
-  variant: 'pink' | 'blue'
+  variant: 'pink' | 'blue' | 'purple'
 }>()
 </script>
 
@@ -24,6 +24,10 @@ defineProps<{
 
   &--blue {
     @include gradient-blue;
+  }
+
+  &--purple {
+    @include gradient-purple;
   }
 }
 

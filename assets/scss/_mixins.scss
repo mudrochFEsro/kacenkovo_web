@@ -45,6 +45,10 @@
   background: linear-gradient(135deg, $accent-blue 0%, #00f2fe 100%);
 }
 
+@mixin gradient-purple {
+  background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);
+}
+
 // Card style
 @mixin card {
   background: $bg-white;

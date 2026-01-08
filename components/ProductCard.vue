@@ -2,7 +2,7 @@
 defineProps<{
   name: string
   price: string
-  variant: 'pink' | 'blue'
+  variant: 'pink' | 'blue' | 'purple'
 }>()
 </script>
 
@@ -29,6 +29,10 @@ defineProps<{
   &--blue {
     background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
   }
+
+  &--purple {
+    background: linear-gradient(135deg, #ddd6f3 0%, #faaca8 100%);
+  }
 }
 
 .price {
@@ -40,6 +44,10 @@ defineProps<{
 
   &--blue {
     color: $accent-blue;
+  }
+
+  &--purple {
+    color: $accent-purple;
   }
 }
 </style>
