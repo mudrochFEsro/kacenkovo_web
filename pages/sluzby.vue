@@ -1,7 +1,7 @@
 <script setup lang="ts">
 useSeoMeta({
   title: 'Služby - Kacenkovo',
-  description: 'Pozrite si naše služby. Ponúkame kvalitné dámske a detské oblečenie v Bratislave.'
+  description: 'Ponúkame služby DPD Pickup - príjem a výdaj balíkov. Navštívte nás v Bratislave.'
 })
 </script>
 
@@ -14,7 +14,10 @@ useSeoMeta({
     />
 
     <section class="content">
-      <p>Obsah bude doplnený.</p>
+      <div class="services-text">
+        <h2>DPD Pickup Point</h2>
+        <p>Sme zmluvným partnerom kuriérskej spoločnosti DPD pre príjem a výdaj balíkov pre zákazníkov, ktorí si chcú u nás vyzdvihnúť alebo poslať balík do prepravy.</p>
+      </div>
     </section>
   </div>
 </template>
@@ -22,5 +25,22 @@ useSeoMeta({
 <style lang="scss" scoped>
 .content {
   @include content-container;
+}
+
+.services-text {
+  max-width: 800px;
+  margin: 0 auto;
+
+  h2 {
+    font-size: 1.5rem;
+    margin-bottom: $spacing-sm;
+    color: $accent-purple;
+  }
+
+  p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: $text-dark;
+  }
 }
 </style>
