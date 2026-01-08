@@ -1,19 +1,22 @@
+<script setup lang="ts">
+</script>
 <template>
   <footer class="main-footer">
     <div class="footer-content">
       <div class="footer-section">
         <h3>Kontakt</h3>
         <address>
-          <p>Dudvážska 5</p>
+          <a href="https://share.google/FNTrvu6s87OejToxv" target="_blank" rel="noopener">Dudvážska 5106/5</a>
           <p>821 07 Bratislava</p>
-          <p>Tel.: <a href="tel:+421918519094">+421 918 519 094</a></p>
-          <p>Email: <a href="mailto:kacenkovo.nchron@gmail.com">kacenkovo.nchron@gmail.com</a></p>
+          <p>Tel. č.: <a href="tel:+421918519094">+421 918 519 094</a></p>
+          <p>E-mail: <a href="mailto:kacenkovo.nchron@gmail.com">kacenkovo.nchron@gmail.com</a></p>
         </address>
       </div>
       <div class="footer-section">
         <h3>Otváracie hodiny</h3>
         <p>Po-Pi: 09:00 - 19:00 hod.</p>
         <p>So: 09:00 - 17:00 hod.</p>
+        <p>Ne: zatvorené</p>
       </div>
       <div class="footer-section">
         <h3>Informácie</h3>
@@ -21,6 +24,7 @@
           <NuxtLink to="/o-nas">O nás</NuxtLink>
           <NuxtLink to="/sluzby">Služby</NuxtLink>
           <NuxtLink to="/mapa">Kde nás nájdete</NuxtLink>
+          <a href="/Informacia_o_spracuvani_osobných_údajov_kamerový_system.pdf" target="_blank" rel="noopener">Ochrana osobných údajov</a>
         </nav>
       </div>
     </div>
