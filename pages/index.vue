@@ -27,7 +27,8 @@ useSeoMeta({
 .hero {
   position: relative;
   width: 100%;
-  height: 100vh;
+  height: 100svh; // small viewport height
+  min-height: 500px;
   display: flex;
   align-items: center;
   justify-content: center;

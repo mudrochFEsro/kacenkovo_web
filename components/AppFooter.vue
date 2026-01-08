@@ -35,7 +35,13 @@
   background: $bg-dark;
   color: $text-white;
   padding: $spacing-lg $spacing-md $spacing-md;
+  padding-bottom: calc($spacing-md + env(safe-area-inset-bottom, 0px));
   margin-top: auto;
+
+  @include mobile {
+    min-height: 100vh; // fallback
+    min-height: 100lvh; // large viewport height na mobile
+  }
 }
 
 .footer-content {
