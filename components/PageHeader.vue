@@ -19,15 +19,15 @@ defineProps<{
   @include page-header;
 
   &--pink {
-    @include gradient-pink;
+    background: $accent-pink;
   }
 
   &--blue {
-    @include gradient-blue;
+    background: $accent-blue;
   }
 
   &--purple {
-    @include gradient-purple;
+    background: $accent-purple;
   }
 }
 
