@@ -21,7 +21,7 @@ useSeoMeta({
 
         <p>Väčšie priestory nám umožnili ponúknuť viac tovaru, ako je bižutéria, kabelky, ľadvinky a kožené peňaženky pre dámy a pánov.</p>
 
-        <p class="highlight">Módny obchod Kačenkovo ponúka široký výber moderného a atraktívneho detského a dámskeho oblečenia a doplnkov pre celú rodinu.</p>
+        <p>Módny obchod Kačenkovo ponúka široký výber moderného a atraktívneho detského a dámskeho oblečenia a doplnkov pre celú rodinu.</p>
       </div>
     </section>
   </div>
@@ -43,10 +43,5 @@ useSeoMeta({
     color: $text-dark;
   }
 
-  .highlight {
-    font-weight: 600;
-    color: $accent-purple;
-    font-size: 1.2rem;
-  }
 }
 </style>
