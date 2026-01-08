@@ -136,9 +136,10 @@ const tryPlayOnInteraction = () => {
   position: fixed;
   top: 0;
   left: 0;
+  right: 0;
+  bottom: 0;
   width: 100%;
-  height: 100vh; // fallback
-  height: 100svh; // small viewport height
+  height: 100%;
   z-index: -1;
   background: #000 url('/poster.webp') no-repeat center / cover;
   opacity: 0;

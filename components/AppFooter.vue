@@ -39,7 +39,6 @@
   background: $bg-dark;
   color: $text-white;
   padding: $spacing-lg $spacing-md $spacing-md;
-  padding-bottom: calc($spacing-md + env(safe-area-inset-bottom, 0px));
   margin-top: auto;
 
   @include mobile {

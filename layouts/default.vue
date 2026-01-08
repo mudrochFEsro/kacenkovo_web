@@ -1,6 +1,11 @@
+<script setup lang="ts">
+const route = useRoute()
+const isHomepage = computed(() => route.path === '/')
+</script>
+
 <template>
   <div class="app-layout">
-    <main id="main-content" tabindex="-1">
+    <main id="main-content" tabindex="-1" :class="{ 'main--with-bg': !isHomepage }">
       <slot />
     </main>
 
@@ -17,5 +22,9 @@
 
 main {
   flex: 1;
+
+  &.main--with-bg {
+    background: $bg-light;
+  }
 }
 </style>

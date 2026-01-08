@@ -27,12 +27,15 @@ useSeoMeta({
 .hero {
   position: relative;
   width: 100%;
-  height: 100svh; // small viewport height
+  height: 100vh; // fallback
+  height: 100svh;
   min-height: 500px;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: $spacing-sm;
+  padding-top: calc($spacing-sm + env(safe-area-inset-top, 0px));
+  padding-bottom: calc($spacing-sm + env(safe-area-inset-bottom, 0px));
 
   &__content {
     position: relative;

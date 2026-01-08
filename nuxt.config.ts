@@ -39,9 +39,11 @@ export default defineNuxtConfig({
       charset: 'utf-8',
       viewport: 'width=device-width, initial-scale=1, viewport-fit=cover',
       meta: [
-        { name: 'theme-color', content: '#333333' },
+        { name: 'color-scheme', content: 'light dark' },
+        { name: 'theme-color', media: '(prefers-color-scheme: light)', content: '#333333' },
+        { name: 'theme-color', media: '(prefers-color-scheme: dark)', content: '#333333' },
         { name: 'apple-mobile-web-app-capable', content: 'yes' },
-        { name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent' }
+        { name: 'apple-mobile-web-app-status-bar-style', content: 'default' },
       ]
     },
     pageTransition: { name: 'page', mode: 'in-out' },
