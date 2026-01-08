@@ -13,42 +13,6 @@
   }
 }
 
-@mixin desktop {
-  @media (min-width: $desktop) {
-    @content;
-  }
-}
-
-// Flexbox
-@mixin flex-center {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-@mixin flex-between {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-// Gradients
-@mixin gradient-primary {
-  background: linear-gradient(135deg, $primary 0%, $secondary 100%);
-}
-
-@mixin gradient-pink {
-  background: linear-gradient(135deg, #f093fb 0%, $accent-pink 100%);
-}
-
-@mixin gradient-blue {
-  background: linear-gradient(135deg, $accent-blue 0%, #00f2fe 100%);
-}
-
-@mixin gradient-purple {
-  background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);
-}
-
 // Card style
 @mixin card {
   background: $bg-white;

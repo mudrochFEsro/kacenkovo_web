@@ -1,7 +1,4 @@
 // Farby
-$primary: #667eea;
-$primary-dark: #5a67d8;
-$secondary: #764ba2;
 $accent-pink: #f5576c;
 $accent-blue: #4facfe;
 $accent-purple: #9b59b6;
@@ -22,14 +19,11 @@ $shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
 $shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.1);
 
 // Border radius
-$radius-sm: 8px;
 $radius-md: 12px;
-$radius-lg: 16px;
 
 // Breakpoints
 $mobile: 480px;
 $tablet: 768px;
-$desktop: 1024px;
 $wide: 1200px;
 
 // Spacing
@@ -37,8 +31,6 @@ $spacing-xs: 0.5rem;
 $spacing-sm: 1rem;
 $spacing-md: 2rem;
 $spacing-lg: 3rem;
-$spacing-xl: 4rem;
 
 // Transitions
 $transition-fast: 0.2s ease;
-$transition-normal: 0.3s ease;

@@ -13,6 +13,7 @@
 html {
   scroll-behavior: smooth;
   background: $bg-dark; // iOS Safari safe areas
+  -webkit-text-size-adjust: 100%; // Prevent font scaling in landscape
 }
 
 body {
@@ -21,6 +22,8 @@ body {
   color: $text-dark;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent; // Remove tap highlight on iOS
+  overflow-x: hidden; // Prevent horizontal scroll
 }
 
 // Typography
@@ -40,18 +43,7 @@ img {
   display: block;
 }
 
-// Container
-.container {
-  max-width: $wide;
-  margin: 0 auto;
-  padding: 0 $spacing-md;
-}
-
-// Utility classes
-.text-center {
-  text-align: center;
-}
-
+// Accessibility
 .sr-only {
   position: absolute;
   width: 1px;
@@ -63,30 +55,13 @@ img {
   border: 0;
 }
 
-// Page transitions - rýchly crossfade
-//.page-enter-active,
-//.page-leave-active {
-//  transition: opacity 0.1s ease;
-//  will-change: opacity;
-//}
-
+// Page transitions
 .page-enter-from,
 .page-leave-to {
   opacity: 0;
 }
 
-// Zabezpeč že stránka je jedna vrstva
 .page-enter-active *,
 .page-leave-active * {
   transition: none !important;
-}
-
-// No scroll - pre fullscreen stránky
-html.no-scroll{
-  overflow: hidden;
-  height: 100%;
-  position: fixed;
-  width: 100%;
-  top: 0;
-  left: 0;
 }

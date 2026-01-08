@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, computed, watch } from 'vue'
-
 const config = useRuntimeConfig()
 
 useHead({
@@ -31,17 +29,8 @@ const resumeVideo = () => {
   }
 }
 
-// Fix pre iOS viewport height
-const setVh = () => {
-  const vh = window.innerHeight * 0.01
-  document.documentElement.style.setProperty('--vh', `${vh}px`)
-}
-
 onMounted(() => {
   isMobile.value = window.innerWidth < 768
-
-  // Nastaviť --vh premennú pre iOS
-  setVh()
 
   if (showVideo.value) {
     shouldLoadVideo.value = true
@@ -72,25 +61,21 @@ watch(showVideo, (isHomepage) => {
 
 const onVideoCanPlay = () => {
   isVideoLoaded.value = true
-  // iOS Safari potrebuje explicitné spustenie po načítaní
   if (videoRef.value) {
     videoRef.value.play().catch(() => {})
   }
 }
 
-// Pokus o spustenie videa po loadeddata (pre iOS)
 const onVideoLoadedData = () => {
   if (videoRef.value) {
     videoRef.value.play().catch(() => {})
   }
 }
 
-// iOS niekedy potrebuje user interaction pre spustenie videa
 const tryPlayOnInteraction = () => {
   if (videoRef.value && videoRef.value.paused) {
     videoRef.value.play().catch(() => {})
   }
-  // Odstrániť listener po prvom pokuse
   document.removeEventListener('touchstart', tryPlayOnInteraction)
   document.removeEventListener('click', tryPlayOnInteraction)
 }

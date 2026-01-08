@@ -3,7 +3,7 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
 
-  modules: ['@nuxtjs/seo', '@nuxt/fonts', '@nuxt/image', '@nuxt/scripts', '@vueuse/nuxt', '@vueuse/motion/nuxt'],
+  modules: ['@nuxtjs/seo', '@nuxt/fonts', '@nuxt/image', '@nuxt/scripts'],
 
   runtimeConfig: {
     public: {
@@ -42,7 +42,7 @@ export default defineNuxtConfig({
         { name: 'color-scheme', content: 'light dark' },
         { name: 'theme-color', media: '(prefers-color-scheme: light)', content: '#333333' },
         { name: 'theme-color', media: '(prefers-color-scheme: dark)', content: '#333333' },
-        { name: 'apple-mobile-web-app-capable', content: 'yes' },
+        { name: 'mobile-web-app-capable', content: 'yes' },
         { name: 'apple-mobile-web-app-status-bar-style', content: 'default' },
       ]
     },
