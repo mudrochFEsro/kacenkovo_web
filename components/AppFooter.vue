@@ -43,7 +43,6 @@
   margin-top: auto;
 
   @include mobile {
-    min-height: 100vh; // fallback
     min-height: 100lvh; // large viewport height na mobile
   }
 }
