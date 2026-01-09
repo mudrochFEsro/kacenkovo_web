@@ -16,7 +16,7 @@ const products = [
   <div>
     <PageHeader
         title="Dámska móda"
-        variant="pink"
+        variant="black"
     />
 
     <section class="content" aria-label="Produkty dámskej módy">
@@ -53,5 +53,10 @@ const products = [
 
 .product-grid {
   @include product-grid;
+}
+p{
+  max-width: 800px;
+  margin: auto;
+  font-size: 1.1rem
 }
 </style>

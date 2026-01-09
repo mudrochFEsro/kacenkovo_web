@@ -2,7 +2,7 @@
 defineProps<{
   title: string
   subtitle?: string
-  variant: 'pink' | 'blue' | 'purple' | 'darkred'
+  variant: 'pink' | 'blue' | 'purple' | 'darkred' | 'black'
 }>()
 </script>
 
@@ -24,6 +24,10 @@ defineProps<{
 
   &--darkred {
     background: $accent-darkred;
+  }
+
+  &--black {
+    background: $accent-black;
   }
 
   &--blue {
