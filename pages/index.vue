@@ -35,9 +35,7 @@ useSeoMeta({
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: $spacing-sm;
-  padding-top: calc($spacing-sm + env(safe-area-inset-top, 0px));
-  padding-bottom: calc($spacing-sm + env(safe-area-inset-bottom, 0px));
+  padding: calc($spacing-sm + env(safe-area-inset-top, 0px)) $spacing-sm calc($spacing-sm + env(safe-area-inset-bottom, 0px));
 
   &__content {
     position: relative;
