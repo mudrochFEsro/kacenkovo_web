@@ -10,19 +10,22 @@ useSeoMeta({
     <PageHeader
       title="O nás"
       subtitle="Spoznajte náš príbeh"
-      variant="purple"
+      variant="darkred"
     />
 
     <section class="content">
-      <div class="about-text">
-        <p>Naša spoločnosť je na trhu od r. 2015, začali sme s detským moderným oblečením pre všetky deti a kojencov. Postupom času sme rozširili sortiment o dámske módne oblečenie a doplnky pre deti.</p>
+      <p style="text-align: center;">
+        Naša spoločnosť pôsobí na trhu už <strong>od roku 2015</strong>. Začínali sme s predajom <strong>moderného detského oblečenia pre deti a dojčatá</strong>, pričom dôraz sme kládli na kvalitu, pohodlie a aktuálne módne trendy.
+        <br/><br/>
+        Postupom času sme reagovali na potreby našich zákazníkov a <strong>rozšírili sortiment o dámske módne oblečenie</strong> a <strong>štýlové doplnky pre deti, dámy aj pánov</strong>, čím sme vytvorili komplexnejšiu ponuku pre celú rodinu.
+        <br/><br/>
+        Naše začiatky boli spojené s <strong>menšími priestormi v nákupnom centre NC Hron</strong>, na 1. poschodí nákupnej pasáže. <strong>Od roku 2023</strong> sme sa presťahovali do <strong>väčších a modernejších priestorov v tom istom nákupnom centre</strong>, aby sme boli bližšie k ľuďom a mohli ponúknuť širší sortiment aj viac služieb.
+        <br/><br/>
+        Väčšie priestory nám umožnili výrazne rozšíriť ponuku o <strong>bižutériu, kabelky, ľadvinky</strong> a <strong>kožené peňaženky pre dámy aj pánov</strong>.
+        <br/><br/>
+        <strong>Módny obchod Kačenkovo</strong> dnes ponúka <strong>široký výber moderného a atraktívneho detského a dámskeho oblečenia</strong> spolu s <strong>módnymi doplnkami</strong>, ktoré dopĺňajú štýl celej rodiny.
+      </p>
 
-        <p>Začínali sme v malých priestoroch nákupného centra NC Hron na 1. poschodí nákupnej pasaže. Od r. 2023 sme sa presťahovali do väčších priestorov toho istého nákupného centra, aby sme boli bližšie k ľuďom s väčšou ponukou a službami.</p>
-
-        <p>Väčšie priestory nám umožnili ponúknuť viac tovaru, ako je bižutéria, kabelky, ľadvinky a kožené peňaženky pre dámy a pánov.</p>
-
-        <p>Módny obchod Kačenkovo ponúka široký výber moderného a atraktívneho detského a dámskeho oblečenia a doplnkov pre celú rodinu.</p>
-      </div>
     </section>
   </div>
 </template>
@@ -32,16 +35,16 @@ useSeoMeta({
   @include content-container;
 }
 
-.about-text {
-  max-width: 800px;
-  margin: 0 auto;
+
+
 
   p {
+    max-width: 800px;
     font-size: 1.1rem;
     line-height: 1.8;
-    margin-bottom: $spacing-md;
+    margin: 0 auto $spacing-md;
     color: $text-dark;
   }
 
-}
+
 </style>

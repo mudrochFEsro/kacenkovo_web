@@ -9,14 +9,17 @@ useSeoMeta({
   <section class="hero" aria-label="Výber kategórie oblečenia">
     <div class="hero__content">
       <nav class="hero__links" aria-label="Kategórie oblečenia">
-        <NuxtLink to="/damska-moda" class="hero__dark-link" aria-label="Prejsť do sekcie dámskej módy">
-          <img class="hero__logo" src="/damska_moda_logo.svg" alt="Dámska móda - logo" loading="eager"/>
+        <NuxtLink to="/damska-moda" class="hero__light-link" aria-label="Prejsť do sekcie dámskej módy">
+          Damska moda
+<!--          <img class="hero__logo" src="/damska_moda_logo.svg" alt="Dámska móda - logo" loading="eager"/>-->
         </NuxtLink>
         <NuxtLink to="/detska-moda" class="hero__light-link" aria-label="Prejsť do sekcie detskej módy">
-          <img class="hero__logo" src="/detska_moda_logo.svg" alt="Detská móda - logo" loading="eager"/>
+          Detska moda
+<!--          <img class="hero__logo" src="/detska_moda_logo.svg" alt="Detská móda - logo" loading="eager"/>-->
         </NuxtLink>
-        <NuxtLink to="/doplnky" class="hero__dark-link" aria-label="Prejsť do sekcie doplnky">
-          <img class="hero__logo" src="/doplnky_logo.svg" alt="Doplnky - logo" loading="eager"/>
+        <NuxtLink to="/doplnky" class="hero__light-link" aria-label="Prejsť do sekcie doplnky">
+          Doplnky
+<!--          <img class="hero__logo" src="/doplnky_logo.svg" alt="Doplnky - logo" loading="eager"/>-->
         </NuxtLink>
       </nav>
     </div>
@@ -27,7 +30,6 @@ useSeoMeta({
 .hero {
   position: relative;
   width: 100%;
-  height: 100vh; // fallback
   height: 100svh;
   min-height: 500px;
   display: flex;
@@ -57,14 +59,17 @@ useSeoMeta({
   }
 
   &__light-link {
+    font-size: 24px;
+    font-weight: 900;
+    color: white;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: $spacing-sm;
-    background: rgba(255, 255, 255, 0.5);
+    padding: 0.7rem;
+    background: darkred;
     backdrop-filter: blur(20px);
-    border: 4px solid rgba(255, 255, 255, 0.5);
-    border-radius: $radius-md;
+    //border: 4px solid black;
+      border-radius: $radius-md;
     transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease, outline 0.15s ease;
     will-change: transform;
     @include tablet {
@@ -72,16 +77,16 @@ useSeoMeta({
     }
 
     &:hover {
-      background: rgba(255, 255, 255, 0.7);
-      border-color: rgba(255, 255, 255, 0.7);
+      //background: rgba(255, 255, 255, 0.8);
+      //border-color: rgba(255, 255, 255, 0.8);
       transform: translateY(-6px);
     }
 
     &:focus-visible {
-      outline: 4px solid rgba(255, 255, 255, 0.7);
+      outline: 4px solid rgba(255, 255, 255, 0.8);
       outline-offset: 4px;
-      background: rgba(255, 255, 255, 0.7);
-      border-color: rgba(255, 255, 255, 0.7);
+      background: rgba(255, 255, 255, 0.8);
+      border-color: rgba(255, 255, 255, 0.8);
     }
   }
 

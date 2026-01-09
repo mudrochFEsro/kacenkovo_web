@@ -1,8 +1,8 @@
 <script setup lang="ts">
 defineProps<{
   title: string
-  subtitle: string
-  variant: 'pink' | 'blue' | 'purple'
+  subtitle?: string
+  variant: 'pink' | 'blue' | 'purple' | 'darkred'
 }>()
 </script>
 
@@ -20,6 +20,10 @@ defineProps<{
 
   &--pink {
     background: $accent-pink;
+  }
+
+  &--darkred {
+    background: $accent-darkred;
   }
 
   &--blue {

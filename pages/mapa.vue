@@ -10,7 +10,7 @@ useSeoMeta({
     <PageHeader
       title="Kde nás nájdete"
       subtitle="Navštívte nás v našej predajni"
-      variant="purple"
+      variant="darkred"
     />
 
     <section class="map-section">
