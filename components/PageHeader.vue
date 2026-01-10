@@ -70,29 +70,22 @@ onUnmounted(() => {
       { 'page-header--scrolled': isScrolled }
     ]"
   >
-    <!-- Back button - vždy v DOM, len sa zobrazí/skryje -->
+    <!-- Back button - vždy viditeľný -->
     <button
       class="page-header__back-btn"
       @click="goBack"
       aria-label="Späť na hlavnú stránku"
-      :tabindex="isScrolled ? 0 : -1"
     >
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
         <path d="M19 12H5M12 19l-7-7 7-7"/>
       </svg>
     </button>
 
-    <!-- Compact title - vždy v DOM -->
-    <span class="page-header__title-compact">{{ title }}</span>
+    <!-- Logo - skryje sa pri scrolle -->
+    <img v-if="logo" :src="logo" alt="" class="page-header__logo" />
 
-    <!-- Full content - vždy v DOM, len sa zobrazí/skryje -->
-    <div class="page-header__content">
-      <NuxtLink to="/" class="back-link" :tabindex="isScrolled ? -1 : 0">
-        &larr; Späť na hlavnú stránku
-      </NuxtLink>
-      <img v-if="logo" :src="logo" alt="" class="page-header__logo" />
-      <h1 v-if="title">{{ title }}</h1>
-    </div>
+    <!-- Title - presunie sa k šípke pri scrolle -->
+    <h1 v-if="title" class="page-header__title">{{ title }}</h1>
   </header>
 </template>
 
@@ -115,22 +108,27 @@ onUnmounted(() => {
 
   // Scrolled stav
   &--scrolled {
-    height: 44px;
+    height: 60px;
 
     .page-header__back-btn {
-      opacity: 1;
-      transform: translateX(0) translateY(-50%);
-      pointer-events: auto;
+      width: 32px;
+      height: 32px;
+
+      svg {
+        width: 18px;
+        height: 18px;
+      }
     }
 
-    .page-header__title-compact {
-      opacity: 1;
-      transform: translateX(0) translateY(-50%);
-    }
-
-    .page-header__content {
+    .page-header__logo {
       opacity: 0;
       pointer-events: none;
+    }
+
+    .page-header__title {
+      left: 60px;
+      transform: translateY(-50%);
+      font-size: 1rem;
     }
   }
 
@@ -145,12 +143,8 @@ onUnmounted(() => {
     background: $accent-white;
     color: $text-dark;
 
-    .back-link,
     .page-header__back-btn {
       color: $text-dark;
-    }
-
-    .page-header__back-btn {
       background: rgba(0, 0, 0, 0.08);
 
       &:hover {
@@ -159,33 +153,37 @@ onUnmounted(() => {
     }
   }
 
-  // Back button
+  // Back button - vždy viditeľný, zmenší sa pri scrolle
   &__back-btn {
     position: absolute;
     left: $spacing-sm;
     top: 50%;
-    transform: translateX(-20px) translateY(-50%);
-    opacity: 0;
-    pointer-events: none;
+    transform: translateY(-50%);
     background: rgba(255, 255, 255, 0.15);
     border: none;
     border-radius: 50%;
-    width: 32px;
-    height: 32px;
+    width: 52px;
+    height: 52px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     color: inherit;
-    transition: opacity 0.15s ease, transform 0.15s ease, background 0.2s ease;
+    transition: width 0.2s ease-out, height 0.2s ease-out, background 0.2s ease;
     z-index: 2;
+
+    svg {
+      width: 26px;
+      height: 26px;
+      transition: width 0.2s ease-out, height 0.2s ease-out;
+    }
 
     &:hover {
       background: rgba(255, 255, 255, 0.25);
     }
 
     &:active {
-      transform: translateX(0) translateY(-50%) scale(0.95);
+      transform: translateY(-50%) scale(0.95);
     }
 
     &:focus-visible {
@@ -194,53 +192,37 @@ onUnmounted(() => {
     }
   }
 
-  // Compact title
-  &__title-compact {
-    position: absolute;
-    left: 64px;
-    top: 50%;
-    transform: translateX(-10px) translateY(-50%);
-    opacity: 0;
-    font-size: 1rem;
-    font-weight: 600;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: calc(100% - 80px);
-    transition: opacity 0.15s ease, transform 0.15s ease;
-    z-index: 1;
-  }
-
-  // Full content - vždy absolute pre plynulú animáciu
-  &__content {
+  // Title - animuje sa zo stredu doľava
+  &__title {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    text-align: center;
-    padding: $spacing-xs $spacing-md;
-    transition: opacity 0.2s ease-out;
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: calc(100% - 140px);
+    transition: left 0.2s ease-out, transform 0.2s ease-out, font-size 0.2s ease-out;
     z-index: 1;
 
-    h1 {
-      font-size: 1.8rem;
-      margin: 0;
-
-      @include tablet {
-        font-size: 1.4rem;
-      }
+    @include tablet {
+      font-size: 1.4rem;
     }
   }
 
+  // Logo - fade out pri scrolle
   &__logo {
-    max-height: 80px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, calc(-50% - 30px));
+    max-height: 60px;
     width: auto;
-    margin: 0 auto $spacing-xs;
+    transition: opacity 0.2s ease-out;
+    z-index: 1;
   }
-}
-
-.back-link {
-  @include back-link;
-  font-size: 0.9rem;
 }
 </style>
