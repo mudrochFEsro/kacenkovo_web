@@ -50,15 +50,22 @@ E-commerce website for "Kacenkovo" - a clothing store in Bratislava selling wome
 - Closes on route change
 
 ### Page Transitions
-- Global fade transition (0.15s opacity)
-- Homepage: No enter animation (prevents button blink), leave animation works
+- Global fade transition (0.15s opacity, `page-enter/leave`)
+- Homepage: Custom "home" transition (0.15s fade) to prevent button blink on return
 
 ### PageHeader Component
 Props:
 - `title?: string` - Page title
 - `logo?: string` - Logo image path
 - `variant: 'pink' | 'blue' | 'purple' | 'darkred' | 'black' | 'white'`
-- White variant uses dark text
+
+Features:
+- **Sticky header** with smooth height animation on scroll
+- **Back button**: Always visible, 52x52px normal → 32x32px when scrolled
+- **Title**: Animates from center to left (next to back button) on scroll, shrinks from 1.8rem to 1rem
+- **Logo**: Fades out when scrolled
+- **Scroll detection**: Debounced with hysteresis (collapse at 50px, expand at 20px after 100ms delay)
+- **White variant**: Uses dark text and dark button background
 
 ## SCSS Variables
 

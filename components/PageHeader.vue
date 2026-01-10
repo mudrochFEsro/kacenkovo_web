@@ -111,13 +111,7 @@ onUnmounted(() => {
     height: 60px;
 
     .page-header__back-btn {
-      width: 32px;
-      height: 32px;
-
-      svg {
-        width: 18px;
-        height: 18px;
-      }
+      transform: translateY(-50%) scale(0.615);
     }
 
     .page-header__logo {
@@ -126,9 +120,7 @@ onUnmounted(() => {
     }
 
     .page-header__title {
-      left: 60px;
-      transform: translateY(-50%);
-      font-size: 1rem;
+      transform: translateX(65px) translateY(-50%) scale(0.7);
     }
   }
 
@@ -153,12 +145,13 @@ onUnmounted(() => {
     }
   }
 
-  // Back button - vždy viditeľný, zmenší sa pri scrolle
+  // Back button - vždy viditeľný, zmenší sa pri scrolle cez scale (GPU)
   &__back-btn {
     position: absolute;
     left: $spacing-sm;
     top: 50%;
     transform: translateY(-50%);
+    transform-origin: left center;
     background: rgba(255, 255, 255, 0.15);
     border: none;
     border-radius: 50%;
@@ -169,13 +162,13 @@ onUnmounted(() => {
     justify-content: center;
     cursor: pointer;
     color: inherit;
-    transition: width 0.2s ease-out, height 0.2s ease-out, background 0.2s ease;
+    will-change: transform;
+    transition: transform 0.2s ease-out, background 0.2s ease;
     z-index: 2;
 
     svg {
       width: 26px;
       height: 26px;
-      transition: width 0.2s ease-out, height 0.2s ease-out;
     }
 
     &:hover {
@@ -192,21 +185,20 @@ onUnmounted(() => {
     }
   }
 
-  // Title - animuje sa zo stredu doľava
+  // Title - animuje sa zo stredu doľava cez transform (GPU-akcelerované)
   &__title {
     position: absolute;
     top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    left: 0;
+    transform: translateX(calc(50vw - 50%)) translateY(-50%);
+    transform-origin: left center;
     font-size: 1.8rem;
     font-weight: 600;
     margin: 0;
     white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: calc(100% - 140px);
-    transition: left 0.2s ease-out, transform 0.2s ease-out, font-size 0.2s ease-out;
     z-index: 1;
+    will-change: transform;
+    transition: transform 0.2s ease-out;
 
     @include tablet {
       font-size: 1.4rem;
