@@ -5,6 +5,38 @@ const route = useRoute()
 const isOpen = ref(false)
 const isMobile = ref(false)
 
+// Touch handling pre swipe up
+const touchStartY = ref(0)
+const touchStartTime = ref(0)
+
+const handleTouchStart = (e: TouchEvent) => {
+  touchStartY.value = e.touches[0].clientY
+  touchStartTime.value = Date.now()
+}
+
+const handleTouchEnd = (e: TouchEvent) => {
+  const touchEndY = e.changedTouches[0].clientY
+  const deltaY = touchStartY.value - touchEndY
+  const deltaTime = Date.now() - touchStartTime.value
+
+  // Swipe up detection: minimálne 30px hore a do 300ms
+  if (deltaY > 30 && deltaTime < 300 && !isOpen.value) {
+    isOpen.value = true
+  }
+}
+
+// Swipe down na zatvorenie drawera - z celej plochy
+const handleDrawerTouchEnd = (e: TouchEvent) => {
+  const touchEndY = e.changedTouches[0].clientY
+  const deltaY = touchEndY - touchStartY.value
+  const deltaTime = Date.now() - touchStartTime.value
+
+  // Swipe down detection: minimálne 50px dole a do 300ms
+  if (deltaY > 50 && deltaTime < 300 && isOpen.value) {
+    isOpen.value = false
+  }
+}
+
 // Detekuj mobile/tablet len na klientovi
 onMounted(() => {
   const checkMobile = () => {
@@ -24,14 +56,16 @@ watch(() => route.path, () => {
 <template>
   <ClientOnly>
     <!-- Mobile/Tablet: Vaul Drawer -->
-    <template v-if="isMobile">
+    <div v-if="isMobile" class="footer-mobile">
       <DrawerRoot v-model:open="isOpen" direction="bottom">
-        <!-- Toggle button vždy viditeľný -->
+        <!-- Toggle button vždy viditeľný a sticky - celá plocha klikateľná + swipe up -->
         <DrawerTrigger as-child>
           <button
-            class="footer-toggle"
+            class="footer-toggle footer-toggle--mobile"
             :aria-expanded="isOpen"
             aria-label="Zobraziť/skryť footer"
+            @touchstart="handleTouchStart"
+            @touchend="handleTouchEnd"
           >
             <span class="footer-toggle__arrow" :class="{ 'footer-toggle__arrow--up': isOpen }">
               &#9650;
@@ -40,7 +74,12 @@ watch(() => route.path, () => {
         </DrawerTrigger>
 
         <DrawerPortal>
-          <DrawerContent class="drawer-content" aria-describedby="footer-description">
+          <DrawerContent
+            class="drawer-content"
+            aria-describedby="footer-description"
+            @touchstart="handleTouchStart"
+            @touchend="handleDrawerTouchEnd"
+          >
             <DrawerTitle class="sr-only">Footer menu</DrawerTitle>
             <DrawerHandle class="drawer-handle" />
             <div class="drawer-inner">
@@ -77,7 +116,7 @@ watch(() => route.path, () => {
           </DrawerContent>
         </DrawerPortal>
       </DrawerRoot>
-    </template>
+    </div>
 
     <!-- Desktop: Sticky footer -->
     <div v-else class="footer-wrapper" :class="{ 'footer-wrapper--open': isOpen }">
@@ -151,6 +190,25 @@ watch(() => route.path, () => {
   border: 0;
 }
 
+// Footer wrapper - vždy sticky pre desktop
+.footer-wrapper {
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  margin-top: auto;
+}
+
+// Mobile footer toggle - vždy fixed na spodku
+.footer-mobile {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+}
+
 // Mobile Drawer styles
 .drawer-content {
   position: fixed;
@@ -161,10 +219,11 @@ watch(() => route.path, () => {
   color: $text-white;
   border-top-left-radius: 16px;
   border-top-right-radius: 16px;
-  max-height: calc(100vh - 28px);
+  max-height: 100svh;
   display: flex;
   flex-direction: column;
   z-index: 200;
+  touch-action: pan-x;
 }
 
 .drawer-handle {
@@ -174,6 +233,11 @@ watch(() => route.path, () => {
   border-radius: 2px;
   margin: 12px auto;
   flex-shrink: 0;
+  cursor: grab;
+
+  &:active {
+    cursor: grabbing;
+  }
 }
 
 .drawer-inner {
@@ -185,16 +249,6 @@ watch(() => route.path, () => {
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   min-height: calc(100vh - 100px);
-}
-
-// Desktop footer wrapper
-.footer-wrapper {
-  position: sticky;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 100;
-  margin-top: auto;
 }
 
 .footer-toggle {
@@ -209,6 +263,11 @@ watch(() => route.path, () => {
   -webkit-tap-highlight-color: transparent;
   position: relative;
   z-index: 201;
+
+  // Mobile modifier pre touch handling
+  &--mobile {
+    touch-action: pan-x; // Povoľ horizontálny scroll, zachyť vertikálny pre swipe
+  }
 
   &:focus-visible {
     outline: 2px solid $text-white;
@@ -257,10 +316,14 @@ watch(() => route.path, () => {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: $spacing-sm;
+  @include tablet{
+    margin: unset;
+  }
 
   .drawer-inner & {
     display: flex;
     flex-direction: column;
+    padding: 0;
   }
 }
 
@@ -320,5 +383,15 @@ watch(() => route.path, () => {
   text-align: center;
   opacity: 0.7;
   font-size: 0.9rem;
+
+  @include tablet{
+    margin: unset;
+  }
+  // Tablet/mobile - jednoduchší padding
+  .drawer-inner & {
+
+    max-width: none;
+    padding: $spacing-sm 0 0;
+  }
 }
 </style>

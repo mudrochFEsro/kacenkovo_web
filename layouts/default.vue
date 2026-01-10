@@ -24,6 +24,7 @@ main {
   flex: 1;
   justify-content: center;
   display: flex;
+  padding-bottom: 28px; // Priestor pre footer toggle na mobile
 
   > * {
     width: 100%;
