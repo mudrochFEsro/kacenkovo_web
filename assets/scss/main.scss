@@ -17,7 +17,7 @@ html {
 }
 
 body {
-  font-family: 'Libre Baskerville';
+  font-family: 'Libre Baskerville', serif;
   line-height: 1.6;
   color: $text-dark;
   -webkit-font-smoothing: antialiased;
@@ -56,12 +56,12 @@ img {
 }
 
 // Page transitions
+.page-enter-active,
+.page-leave-active {
+  transition: opacity 0.1s ease;
+}
+
 .page-enter-from,
 .page-leave-to {
   opacity: 0;
-}
-
-.page-enter-active *,
-.page-leave-active * {
-  transition: none !important;
 }

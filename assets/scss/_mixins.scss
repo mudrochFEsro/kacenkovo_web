@@ -33,7 +33,7 @@
 // Page header pre produktové stránky
 @mixin page-header {
   text-align: center;
-  padding: $spacing-lg $spacing-md;
+  padding: $spacing-md $spacing-md;
   color: $text-white;
 
   h1 {

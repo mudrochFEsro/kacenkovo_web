@@ -46,7 +46,7 @@ export default defineNuxtConfig({
         { name: 'apple-mobile-web-app-status-bar-style', content: 'default' },
       ]
     },
-    pageTransition: { name: 'page', mode: 'in-out' },
+    pageTransition: { name: 'page', mode: 'out-in' },
   },
 
   // Globálne SCSS

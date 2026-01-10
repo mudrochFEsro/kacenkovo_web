@@ -1,16 +1,16 @@
 <script setup lang="ts">
 defineProps<{
-  title: string
-  subtitle?: string
+  title?: string
+  logo?: string
   variant: 'pink' | 'blue' | 'purple' | 'darkred' | 'black'
 }>()
 </script>
 
 <template>
-  <section class="page-header" :class="`page-header--${variant}`" aria-labelledby="page-title">
+  <section class="page-header" :class="`page-header--${variant}`" :aria-labelledby="title ? 'page-title' : undefined">
     <NuxtLink to="/" class="back-link" aria-label="Späť na hlavnú stránku">&larr; Späť na hlavnú stránku</NuxtLink>
-    <h1 id="page-title">{{ title }}</h1>
-    <p>{{ subtitle }}</p>
+    <img v-if="logo" :src="logo" alt="" class="page-header__logo" />
+    <h1 v-if="title" id="page-title">{{ title }}</h1>
   </section>
 </template>
 
@@ -41,5 +41,11 @@ defineProps<{
 
 .back-link {
   @include back-link;
+}
+
+.page-header__logo {
+  max-height: 80px;
+  width: auto;
+  margin: 0 auto;
 }
 </style>
