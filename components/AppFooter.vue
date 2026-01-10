@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const route = useRoute()
 const isOpen = ref(false)
 const footerMaxHeight = ref('600px')
 
@@ -6,12 +7,19 @@ const toggleFooter = () => {
   isOpen.value = !isOpen.value
 }
 
+// Zavri footer pri zmene route
+watch(() => route.path, () => {
+  isOpen.value = false
+})
+
 const updateMaxHeight = () => {
-  // Na mobile/tablet nastav max height na výšku viewportu
+  // Dynamická výška podľa viewportu - prispôsobí sa pri resize
+  const vh = window.innerHeight
   if (window.innerWidth <= 768) {
-    footerMaxHeight.value = `${window.innerHeight}px`
+    footerMaxHeight.value = `${vh}px`
   } else {
-    footerMaxHeight.value = '280px' // Nižší na desktope
+    // Na desktope max 50% viewportu, minimálne 300px
+    footerMaxHeight.value = `${Math.max(300, vh * 0.5)}px`
   }
 }
 
