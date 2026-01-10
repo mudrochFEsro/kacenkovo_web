@@ -19,8 +19,10 @@ const handleTouchEnd = (e: TouchEvent) => {
   const deltaY = touchStartY.value - touchEndY
   const deltaTime = Date.now() - touchStartTime.value
 
-  // Swipe up detection: minimálne 30px hore a do 300ms
-  if (deltaY > 30 && deltaTime < 300 && !isOpen.value) {
+  // Swipe up detection: minimálne 15px hore a do 400ms
+  if (deltaY > 15 && deltaTime < 400 && !isOpen.value) {
+    e.preventDefault()
+    e.stopPropagation()
     isOpen.value = true
   }
 }
@@ -253,7 +255,7 @@ watch(() => route.path, () => {
 
 .footer-toggle {
   width: 100%;
-  height: 28px;
+  height: 30px;
   background: $bg-dark;
   border: none;
   cursor: pointer;
