@@ -16,7 +16,7 @@ const products = [
   <div>
     <PageHeader
       title="Doplnky"
-      variant="purple"
+      variant="white"
     />
 
     <section class="content" aria-label="Produkty doplnkov">

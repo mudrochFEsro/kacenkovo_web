@@ -2,7 +2,7 @@
 defineProps<{
   title?: string
   logo?: string
-  variant: 'pink' | 'blue' | 'purple' | 'darkred' | 'black'
+  variant: 'pink' | 'blue' | 'purple' | 'darkred' | 'black' | 'white'
 }>()
 </script>
 
@@ -29,6 +29,16 @@ defineProps<{
   &--black {
     background: $accent-black;
   }
+
+  &--white {
+    background: $accent-white;
+    color: $text-dark;
+
+    .back-link {
+      color: $text-dark;
+    }
+  }
+
 
   &--blue {
     background: $accent-blue;

@@ -221,7 +221,7 @@ watch(() => route.path, () => {
   color: $text-white;
   border-top-left-radius: 16px;
   border-top-right-radius: 16px;
-  max-height: 100svh;
+  max-height: 600px;
   display: flex;
   flex-direction: column;
   z-index: 200;
@@ -250,7 +250,7 @@ watch(() => route.path, () => {
   padding: $spacing-sm;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
-  min-height: calc(100vh - 100px);
+  min-height: calc(600px - 100px);
 }
 
 .footer-toggle {
