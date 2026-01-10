@@ -69,9 +69,7 @@ watch(() => route.path, () => {
             @touchstart="handleTouchStart"
             @touchend="handleTouchEnd"
           >
-            <span class="footer-toggle__arrow" :class="{ 'footer-toggle__arrow--up': isOpen }">
-              &#9650;
-            </span>
+            <span class="footer-toggle__handle"></span>
           </button>
         </DrawerTrigger>
 
@@ -254,9 +252,12 @@ watch(() => route.path, () => {
   position: relative;
   z-index: 201;
 
-  // Mobile modifier pre touch handling
+  // Mobile modifier - väčšia výška, zaoblené rohy, handle namiesto šípky
   &--mobile {
-    touch-action: pan-x; // Povoľ horizontálny scroll, zachyť vertikálny pre swipe
+    height: 36px;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    touch-action: pan-x;
   }
 
   &:focus-visible {
@@ -264,6 +265,15 @@ watch(() => route.path, () => {
     outline-offset: -2px;
   }
 
+  // Handle štýl pre mobile
+  &__handle {
+    width: 48px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 2px;
+  }
+
+  // Arrow štýl pre desktop
   &__arrow {
     color: $text-white;
     font-size: 10px;

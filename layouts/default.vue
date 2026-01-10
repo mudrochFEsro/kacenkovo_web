@@ -35,7 +35,7 @@ main {
   // Padding len pre stránky s obsahom (nie homepage)
   &.main--with-bg {
     background: $bg-light;
-    padding-bottom: 30px; // Priestor pre footer toggle na mobile
+    padding-bottom: 36px; // Priestor pre footer toggle na mobile
   }
 
   > * {
