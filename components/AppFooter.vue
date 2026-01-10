@@ -1,93 +1,193 @@
 <script setup lang="ts">
+import { DrawerRoot, DrawerTrigger, DrawerPortal, DrawerContent, DrawerHandle, DrawerTitle } from 'vaul-vue'
+
 const route = useRoute()
 const isOpen = ref(false)
-const footerMaxHeight = ref('600px')
+const isMobile = ref(false)
 
-const toggleFooter = () => {
-  isOpen.value = !isOpen.value
-}
+// Detekuj mobile/tablet len na klientovi
+onMounted(() => {
+  const checkMobile = () => {
+    isMobile.value = window.innerWidth <= 768
+  }
+  checkMobile()
+  window.addEventListener('resize', checkMobile)
+  onUnmounted(() => window.removeEventListener('resize', checkMobile))
+})
 
-// Zavri footer pri zmene route
+// Zavri drawer pri zmene route
 watch(() => route.path, () => {
   isOpen.value = false
-})
-
-const TOGGLE_HEIGHT = 28
-
-const updateMaxHeight = () => {
-  // Dynamická výška podľa viewportu - prispôsobí sa pri resize
-  const vh = window.innerHeight
-  if (window.innerWidth <= 768) {
-    // Na mobile/tablet: celá obrazovka mínus toggle button
-    footerMaxHeight.value = `${vh - TOGGLE_HEIGHT}px`
-  } else {
-    // Na desktope max 50% viewportu, minimálne 300px
-    footerMaxHeight.value = `${Math.max(300, vh * 0.5)}px`
-  }
-}
-
-onMounted(() => {
-  updateMaxHeight()
-  window.addEventListener('resize', updateMaxHeight)
-})
-
-onUnmounted(() => {
-  window.removeEventListener('resize', updateMaxHeight)
 })
 </script>
 
 <template>
-  <div class="footer-wrapper" :class="{ 'footer-wrapper--open': isOpen }">
-    <!-- Toggle bar - always visible -->
-    <button
-      class="footer-toggle"
-      @click="toggleFooter"
-      :aria-expanded="isOpen"
-      aria-label="Zobraziť/skryť footer"
-    >
-      <span class="footer-toggle__arrow" :class="{ 'footer-toggle__arrow--up': isOpen }">
-        &#9650;
-      </span>
-    </button>
+  <ClientOnly>
+    <!-- Mobile/Tablet: Vaul Drawer -->
+    <template v-if="isMobile">
+      <DrawerRoot v-model:open="isOpen" direction="bottom">
+        <!-- Toggle button vždy viditeľný -->
+        <DrawerTrigger as-child>
+          <button
+            class="footer-toggle"
+            :aria-expanded="isOpen"
+            aria-label="Zobraziť/skryť footer"
+          >
+            <span class="footer-toggle__arrow" :class="{ 'footer-toggle__arrow--up': isOpen }">
+              &#9650;
+            </span>
+          </button>
+        </DrawerTrigger>
 
-    <!-- Footer content - slides up -->
-    <footer class="main-footer">
-      <div class="footer-inner" :style="{ '--footer-max-height': footerMaxHeight }">
-        <div class="footer-content">
-          <div class="footer-section">
-            <h3>Kontakt</h3>
-            <address>
-              <a href="https://share.google/FNTrvu6s87OejToxv" target="_blank" rel="noopener">Dudvážska 5106/5</a>
-              <p>821 07 Bratislava</p>
-              <p>Tel. č.: <a href="tel:+421918519094">+421 918 519 094</a></p>
-              <p>E-mail: <a href="mailto:kacenkovo.nchron@gmail.com">kacenkovo.nchron@gmail.com</a></p>
-            </address>
+        <DrawerPortal>
+          <DrawerContent class="drawer-content" aria-describedby="footer-description">
+            <DrawerTitle class="sr-only">Footer menu</DrawerTitle>
+            <DrawerHandle class="drawer-handle" />
+            <div class="drawer-inner">
+              <div class="footer-content">
+                <div class="footer-section">
+                  <h3>Kontakt</h3>
+                  <address>
+                    <a href="https://share.google/FNTrvu6s87OejToxv" target="_blank" rel="noopener">Dudvážska 5106/5</a>
+                    <p>821 07 Bratislava</p>
+                    <p>Tel. č.: <a href="tel:+421918519094">+421 918 519 094</a></p>
+                    <p>E-mail: <a href="mailto:kacenkovo.nchron@gmail.com">kacenkovo.nchron@gmail.com</a></p>
+                  </address>
+                </div>
+                <div class="footer-section">
+                  <h3>Otváracie hodiny</h3>
+                  <p>Po-Pi: 09:00 - 19:00 hod.</p>
+                  <p>So: 09:00 - 17:00 hod.</p>
+                  <p>Ne: zatvorené</p>
+                </div>
+                <div class="footer-section">
+                  <h3 id="footer-description">Informácie</h3>
+                  <nav class="footer-nav" aria-label="Footer navigácia">
+                    <NuxtLink to="/o-nas">O nás</NuxtLink>
+                    <NuxtLink to="/sluzby">Služby</NuxtLink>
+                    <NuxtLink to="/mapa">Kde nás nájdete</NuxtLink>
+                    <a href="/ochrana-osobnych-udajov.pdf" target="_blank" rel="noopener">Ochrana osobných údajov</a>
+                  </nav>
+                </div>
+              </div>
+              <div class="footer-bottom">
+                <p>&copy; {{ new Date().getFullYear() }} Kacenkovo. Všetky práva vyhradené.</p>
+              </div>
+            </div>
+          </DrawerContent>
+        </DrawerPortal>
+      </DrawerRoot>
+    </template>
+
+    <!-- Desktop: Sticky footer -->
+    <div v-else class="footer-wrapper" :class="{ 'footer-wrapper--open': isOpen }">
+      <button
+        class="footer-toggle"
+        @click="isOpen = !isOpen"
+        :aria-expanded="isOpen"
+        aria-label="Zobraziť/skryť footer"
+      >
+        <span class="footer-toggle__arrow" :class="{ 'footer-toggle__arrow--up': isOpen }">
+          &#9650;
+        </span>
+      </button>
+
+      <footer class="main-footer">
+        <div class="footer-inner">
+          <div class="footer-content">
+            <div class="footer-section">
+              <h3>Kontakt</h3>
+              <address>
+                <a href="https://share.google/FNTrvu6s87OejToxv" target="_blank" rel="noopener">Dudvážska 5106/5</a>
+                <p>821 07 Bratislava</p>
+                <p>Tel. č.: <a href="tel:+421918519094">+421 918 519 094</a></p>
+                <p>E-mail: <a href="mailto:kacenkovo.nchron@gmail.com">kacenkovo.nchron@gmail.com</a></p>
+              </address>
+            </div>
+            <div class="footer-section">
+              <h3>Otváracie hodiny</h3>
+              <p>Po-Pi: 09:00 - 19:00 hod.</p>
+              <p>So: 09:00 - 17:00 hod.</p>
+              <p>Ne: zatvorené</p>
+            </div>
+            <div class="footer-section">
+              <h3>Informácie</h3>
+              <nav class="footer-nav" aria-label="Footer navigácia">
+                <NuxtLink to="/o-nas">O nás</NuxtLink>
+                <NuxtLink to="/sluzby">Služby</NuxtLink>
+                <NuxtLink to="/mapa">Kde nás nájdete</NuxtLink>
+                <a href="/ochrana-osobnych-udajov.pdf" target="_blank" rel="noopener">Ochrana osobných údajov</a>
+              </nav>
+            </div>
           </div>
-          <div class="footer-section">
-            <h3>Otváracie hodiny</h3>
-            <p>Po-Pi: 09:00 - 19:00 hod.</p>
-            <p>So: 09:00 - 17:00 hod.</p>
-            <p>Ne: zatvorené</p>
-          </div>
-          <div class="footer-section">
-            <h3>Informácie</h3>
-            <nav class="footer-nav" aria-label="Footer navigácia">
-              <NuxtLink to="/o-nas">O nás</NuxtLink>
-              <NuxtLink to="/sluzby">Služby</NuxtLink>
-              <NuxtLink to="/mapa">Kde nás nájdete</NuxtLink>
-              <a href="/ochrana-osobnych-udajov.pdf" target="_blank" rel="noopener">Ochrana osobných údajov</a>
-            </nav>
+          <div class="footer-bottom">
+            <p>&copy; {{ new Date().getFullYear() }} Kacenkovo. Všetky práva vyhradené.</p>
           </div>
         </div>
-        <div class="footer-bottom">
-          <p>&copy; {{ new Date().getFullYear() }} Kacenkovo. Všetky práva vyhradené.</p>
-        </div>
+      </footer>
+    </div>
+
+    <!-- Fallback pre SSR -->
+    <template #fallback>
+      <div class="footer-wrapper">
+        <button class="footer-toggle" aria-label="Zobraziť/skryť footer">
+          <span class="footer-toggle__arrow">&#9650;</span>
+        </button>
       </div>
-    </footer>
-  </div>
+    </template>
+  </ClientOnly>
 </template>
 
 <style lang="scss" scoped>
+// Accessibility - skrytý title
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+// Mobile Drawer styles
+.drawer-content {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: $bg-dark;
+  color: $text-white;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  max-height: calc(100vh - 28px);
+  display: flex;
+  flex-direction: column;
+  z-index: 200;
+}
+
+.drawer-handle {
+  width: 48px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 2px;
+  margin: 12px auto;
+  flex-shrink: 0;
+}
+
+.drawer-inner {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: $spacing-sm;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  min-height: calc(100vh - 100px);
+}
+
+// Desktop footer wrapper
 .footer-wrapper {
   position: sticky;
   bottom: 0;
@@ -95,9 +195,6 @@ onUnmounted(() => {
   right: 0;
   z-index: 100;
   margin-top: auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
 }
 
 .footer-toggle {
@@ -110,6 +207,8 @@ onUnmounted(() => {
   align-items: center;
   justify-content: center;
   -webkit-tap-highlight-color: transparent;
+  position: relative;
+  z-index: 201;
 
   &:focus-visible {
     outline: 2px solid $text-white;
@@ -145,34 +244,23 @@ onUnmounted(() => {
   transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 
   .footer-wrapper--open & {
-    max-height: var(--footer-max-height, 600px);
+    max-height: 50vh;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
-
-    @include tablet {
-      max-height: calc(100vh - 28px);
-      height: calc(100vh - 28px);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
   }
 }
 
 .footer-content {
   max-width: $wide;
   margin: 0 auto;
-  padding: 0 $spacing-sm $spacing-sm $spacing-sm;
+  padding: $spacing-sm;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: $spacing-sm;
 
-  @include tablet {
+  .drawer-inner & {
     display: flex;
     flex-direction: column;
-    width: 100%;
-    padding: $spacing-sm;
-    gap: $spacing-sm;
   }
 }
 
@@ -232,11 +320,5 @@ onUnmounted(() => {
   text-align: center;
   opacity: 0.7;
   font-size: 0.9rem;
-
-  @include tablet {
-    width: 100%;
-    padding-left: $spacing-sm;
-    padding-right: $spacing-sm;
-  }
 }
 </style>

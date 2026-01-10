@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pnpm add:*)",
+      "Bash(cat:*)",
+      "Bash(pnpm nuxt:*)",
+      "Bash(pnpm remove:*)"
+    ]
+  }
+}
