@@ -9,7 +9,6 @@ useSeoMeta({
   <div>
     <PageHeader
       title="O nás"
-      subtitle="Spoznajte náš príbeh"
       variant="darkred"
     />
 

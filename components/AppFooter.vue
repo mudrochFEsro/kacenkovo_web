@@ -180,18 +180,6 @@ watch(() => route.path, () => {
 </template>
 
 <style lang="scss" scoped>
-// Accessibility - skrytý title
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  border: 0;
-}
-
 // Footer wrapper - vždy sticky pre desktop
 .footer-wrapper {
   position: sticky;
