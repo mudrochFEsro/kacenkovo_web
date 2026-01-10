@@ -95,6 +95,9 @@ onUnmounted(() => {
   right: 0;
   z-index: 100;
   margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .footer-toggle {
@@ -145,6 +148,14 @@ onUnmounted(() => {
     max-height: var(--footer-max-height, 600px);
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
+
+    @include tablet {
+      max-height: calc(100vh - 28px);
+      height: calc(100vh - 28px);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
   }
 }
 
@@ -157,7 +168,10 @@ onUnmounted(() => {
   gap: $spacing-sm;
 
   @include tablet {
-    padding: $spacing-sm ;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: $spacing-sm;
     gap: $spacing-sm;
   }
 }
@@ -218,5 +232,11 @@ onUnmounted(() => {
   text-align: center;
   opacity: 0.7;
   font-size: 0.9rem;
+
+  @include tablet {
+    width: 100%;
+    padding-left: $spacing-sm;
+    padding-right: $spacing-sm;
+  }
 }
 </style>
