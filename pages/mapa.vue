@@ -6,10 +6,9 @@ useSeoMeta({
 </script>
 
 <template>
-  <div>
+  <div class="page-wrapper">
     <PageHeader
       title="Kde nás nájdete"
-      subtitle="Navštívte nás v našej predajni"
       variant="darkred"
     />
 
@@ -32,19 +31,29 @@ useSeoMeta({
 </template>
 
 <style lang="scss" scoped>
+.page-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
 .map-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
   max-width: $wide;
+  width: 100%;
   margin: 0 auto;
-  padding: $spacing-lg $spacing-md;
+  padding: $spacing-md;
 }
 
 .map-container {
+  flex: 1;
   width: 100%;
-  height: 450px;
+  min-height: 300px;
   border-radius: $radius-md;
   overflow: hidden;
   box-shadow: $shadow-md;
-  margin-bottom: $spacing-lg;
 
   iframe {
     display: block;

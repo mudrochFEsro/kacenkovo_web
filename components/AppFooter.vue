@@ -12,11 +12,14 @@ watch(() => route.path, () => {
   isOpen.value = false
 })
 
+const TOGGLE_HEIGHT = 28
+
 const updateMaxHeight = () => {
   // Dynamická výška podľa viewportu - prispôsobí sa pri resize
   const vh = window.innerHeight
   if (window.innerWidth <= 768) {
-    footerMaxHeight.value = `${vh}px`
+    // Na mobile/tablet: celá obrazovka mínus toggle button
+    footerMaxHeight.value = `${vh - TOGGLE_HEIGHT}px`
   } else {
     // Na desktope max 50% viewportu, minimálne 300px
     footerMaxHeight.value = `${Math.max(300, vh * 0.5)}px`
@@ -154,8 +157,8 @@ onUnmounted(() => {
   gap: $spacing-sm;
 
   @include tablet {
-    padding: $spacing-md $spacing-sm 0;
-    gap: $spacing-md;
+    padding: $spacing-sm ;
+    gap: $spacing-sm;
   }
 }
 

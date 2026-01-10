@@ -1,4 +1,16 @@
 <script setup lang="ts">
+// Homepage: len leave animácia, enter bez animácie (hero nepreblikne)
+definePageMeta({
+  pageTransition: {
+    name: 'page',
+    mode: 'out-in',
+    onEnter(el, done) {
+      // Okamžite hotovo - bez enter animácie
+      done()
+    }
+  }
+})
+
 useSeoMeta({
   title: 'Kacenkovo - Obchod s oblečením',
   description: 'Kvalitné dámske a detské oblečenie za skvelé ceny. Navštívte náš obchod!'
