@@ -22,6 +22,12 @@ const isHomepage = computed(() => route.path === '/')
 
 main {
   flex: 1;
+  justify-content: center;
+  display: flex;
+
+  > * {
+    width: 100%;
+  }
 
   &.main--with-bg {
     background: $bg-light;

@@ -40,7 +40,6 @@ onMounted(() => {
   window.addEventListener('focus', resumeVideo)
   window.addEventListener('pageshow', resumeVideo)
 
-  // iOS fallback - spustiť video pri prvej interakcii
   document.addEventListener('touchstart', tryPlayOnInteraction, { passive: true })
   document.addEventListener('click', tryPlayOnInteraction)
 })
