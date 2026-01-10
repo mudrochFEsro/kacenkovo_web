@@ -16,6 +16,7 @@ const products = [
   <div>
     <PageHeader
         title="Detská móda"
+        logo="/detska_moda_logo.svg"
         variant="white"
     />
 

@@ -16,6 +16,7 @@ const products = [
   <div>
     <PageHeader
         title="Dámska móda"
+        logo="/damska_moda_logo.svg"
         variant="black"
     />
 

@@ -16,6 +16,7 @@ const products = [
   <div>
     <PageHeader
       title="Doplnky"
+      logo="/doplnky_logo.svg"
       variant="white"
     />
 

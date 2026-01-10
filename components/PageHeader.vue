@@ -2,7 +2,7 @@
 defineProps<{
   title?: string
   logo?: string
-  variant: 'pink' | 'blue' | 'purple' | 'darkred' | 'black' | 'white'
+  variant: 'darkred' | 'black' | 'white'
 }>()
 
 const isScrolled = ref(false)
@@ -84,8 +84,8 @@ onUnmounted(() => {
     <!-- Logo - skryje sa pri scrolle -->
     <img v-if="logo" :src="logo" alt="" class="page-header__logo" />
 
-    <!-- Title - presunie sa k šípke pri scrolle -->
-    <h1 v-if="title" class="page-header__title">{{ title }}</h1>
+    <!-- Title - presunie sa k šípke pri scrolle (len ak nie je logo) -->
+    <h1 v-if="title && !logo" class="page-header__title">{{ title }}</h1>
   </header>
 </template>
 
@@ -96,40 +96,39 @@ onUnmounted(() => {
   z-index: 50;
   overflow: hidden;
   will-change: transform;
-
-  // Normálny stav - fixná výška pre plynulú animáciu
-  height: 120px;
+  height: clamp(0px, 22vw, 180px);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   color: $text-white;
-  transition: height 0.2s ease-out;
+  // transition: height 0.2s ease-out, padding 0.2s ease-out;
+
+
+
 
   // Scrolled stav
   &--scrolled {
-    height: 60px;
+    // height: 70px;
+    // padding: $spacing-xs 0;
 
-    .page-header__back-btn {
-      transform: translateY(-50%) scale(0.615);
-    }
+    // .page-header__back-btn {
+    //   transform: translateY(-50%) scale(0.615);
+    // }
 
     .page-header__logo {
-      opacity: 0;
-      pointer-events: none;
+      // transform: translate(-50%, -50%) scale(0.5);
     }
 
-    .page-header__title {
-      transform: translateX(65px) translateY(-50%) scale(0.7);
-    }
+    // .page-header__title {
+    //   transform: translateX(65px) translateY(-50%) scale(0.7);
+    // }
   }
 
   // Variant colors
-  &--pink { background: $accent-pink; }
+
   &--darkred { background: $accent-darkred; }
   &--black { background: $accent-black; }
-  &--blue { background: $accent-blue; }
-  &--purple { background: $accent-purple; }
 
   &--white {
     background: $accent-white;
@@ -155,20 +154,20 @@ onUnmounted(() => {
     background: rgba(255, 255, 255, 0.15);
     border: none;
     border-radius: 50%;
-    width: 52px;
-    height: 52px;
+    width: clamp(32px, 8vw, 52px);
+    height: clamp(32px, 8vw, 52px);
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     color: inherit;
     will-change: transform;
-    transition: transform 0.2s ease-out, background 0.2s ease;
+    // transition: transform 0.2s ease-out, background 0.2s ease;
     z-index: 2;
 
     svg {
-      width: 26px;
-      height: 26px;
+      width: clamp(16px, 4vw, 26px);
+      height: clamp(16px, 4vw, 26px);
     }
 
     &:hover {
@@ -198,23 +197,34 @@ onUnmounted(() => {
     white-space: nowrap;
     z-index: 1;
     will-change: transform;
-    transition: transform 0.2s ease-out;
+    // transition: transform 0.2s ease-out;
 
     @include tablet {
       font-size: 1.4rem;
     }
   }
 
-  // Logo - fade out pri scrolle
+
   &__logo {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, calc(-50% - 30px));
-    max-height: 60px;
-    width: auto;
-    transition: opacity 0.2s ease-out;
+    transform: translate(-50%, -50%);
+    transform-origin: center center;
+    width: 100%;
+    height: clamp(0px, 15vw, 130px);
+    // Max width = viewport - 2x (šípka 52px + spacing) pre symetriu + padding
+    will-change: transform;
+    // transition: transform 0.2s ease-out;
     z-index: 1;
+
+    //@include tablet {
+    //  width: 350px;
+    //}
+    //
+    //@include mobile {
+    //  width: 280px;
+    //}
   }
 }
 </style>
