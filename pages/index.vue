@@ -4,10 +4,9 @@ definePageMeta({
   pageTransition: {
     name: 'page',
     mode: 'out-in',
-    onEnter(el, done) {
-      // Okamžite hotovo - bez enter animácie
-      done()
-    }
+    enterFromClass: '',
+    enterActiveClass: '',
+    enterToClass: ''
   }
 })
 
