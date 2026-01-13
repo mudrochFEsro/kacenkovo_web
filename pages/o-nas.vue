@@ -3,6 +3,19 @@ useSeoMeta({
   title: 'O nás - Kacenkovo',
   description: 'Spoznajte príbeh obchodu Kacenkovo. Ponúkame kvalitné dámske a detské oblečenie v Bratislave od roku 2015.'
 })
+
+const images = [
+  '/o-nas/DK4A4104.webp',
+  '/o-nas/DK4A4107.webp',
+  '/o-nas/DK4A4112.webp',
+  '/o-nas/DK4A4114.webp',
+  '/o-nas/DK4A4119.webp',
+  '/o-nas/DK4A4137.webp',
+  '/o-nas/DK4A4141.webp',
+  '/o-nas/DK4A4153.webp',
+  '/o-nas/DK4A4235.webp',
+  '/o-nas/DK4A4238.webp'
+]
 </script>
 
 <template>
@@ -25,6 +38,7 @@ useSeoMeta({
         <strong>Módny obchod Kačenkovo</strong> dnes ponúka <strong>široký výber moderného a atraktívneho detského a dámskeho oblečenia</strong> spolu s <strong>módnymi doplnkami</strong>, ktoré dopĺňajú štýl celej rodiny.
       </p>
 
+      <ImageGallery :images="images" variant="darkred" />
     </section>
   </div>
 </template>
@@ -33,9 +47,6 @@ useSeoMeta({
 .content {
   @include content-container;
 }
-
-
-
 
   p {
     max-width: 800px;

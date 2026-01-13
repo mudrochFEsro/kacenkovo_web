@@ -5,7 +5,10 @@
       "Bash(cat:*)",
       "Bash(pnpm nuxt:*)",
       "Bash(pnpm remove:*)",
-      "Bash(curl:*)"
+      "Bash(curl:*)",
+      "Bash(for:*)",
+      "Bash(do sips -Z 1600 \"$f\")",
+      "Bash(done)"
     ]
   }
 }
