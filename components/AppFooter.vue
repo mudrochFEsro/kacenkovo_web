@@ -5,6 +5,28 @@ const route = useRoute()
 const isOpen = ref(false)
 const isMobile = ref(false)
 
+// Touch handling pre swipe-up otvorenie
+const touchStartY = ref(0)
+const isDragging = ref(false)
+
+const onTouchStart = (e: TouchEvent) => {
+  touchStartY.value = e.touches[0].clientY
+  isDragging.value = false
+}
+
+const onTouchMove = (e: TouchEvent) => {
+  const deltaY = touchStartY.value - e.touches[0].clientY
+  // Ak swipe hore viac ako 30px, otvor drawer
+  if (deltaY > 30 && !isOpen.value) {
+    isDragging.value = true
+    isOpen.value = true
+  }
+}
+
+const onTouchEnd = () => {
+  isDragging.value = false
+}
+
 // Detekuj mobile/tablet len na klientovi
 onMounted(() => {
   const checkMobile = () => {
@@ -26,12 +48,15 @@ watch(() => route.path, () => {
     <!-- Mobile/Tablet: Vaul Drawer -->
     <div v-if="isMobile" class="footer-mobile">
       <DrawerRoot v-model:open="isOpen" direction="bottom">
-        <!-- Toggle button vždy viditeľný a sticky -->
+        <!-- Toggle button vždy viditeľný a sticky - swipe up alebo klik -->
         <DrawerTrigger as-child>
           <button
             class="footer-toggle footer-toggle--mobile"
             :aria-expanded="isOpen"
             aria-label="Zobraziť/skryť footer"
+            @touchstart.passive="onTouchStart"
+            @touchmove.passive="onTouchMove"
+            @touchend.passive="onTouchEnd"
           >
             <span class="footer-toggle__handle"></span>
           </button>
