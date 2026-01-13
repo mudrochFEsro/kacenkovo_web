@@ -4,11 +4,21 @@ useSeoMeta({
   description: 'Kvalitné a pohodlné detské oblečenie pre všetky vekové kategórie. Tričká, mikiny, nohavice.'
 })
 
-const products = [
-  {name: 'Detské tričko', price: '14,99 €'},
-  {name: 'Mikina s kapucňou', price: '24,99 €'},
-  {name: 'Tepláky detské', price: '19,99 €'},
-  {name: 'Zimná bunda', price: '49,99 €'}
+const images = [
+  '/detske/DK4A4147.JPG',
+  '/detske/DK4A4148.JPG',
+  '/detske/DK4A4149.JPG',
+  '/detske/DK4A4150.JPG',
+  '/detske/DK4A4173.JPG',
+  '/detske/DK4A4175.JPG',
+  '/detske/DK4A4200.JPG',
+  '/detske/DK4A4214.JPG',
+  '/detske/DK4A4225.JPG',
+  '/detske/DK4A4226.JPG',
+  '/detske/DK4A4252.JPG',
+  '/detske/DK4A4257.JPG',
+  '/detske/DK4A4260.JPG',
+  '/detske/DK4A4279.JPG'
 ]
 </script>
 
@@ -33,15 +43,7 @@ const products = [
       vizitkou štýlu.
       <br/><br/>
       </p>
-      <ul class="product-grid" role="list" aria-label="Zoznam produktov">
-        <ProductCard
-            v-for="product in products"
-            :key="product.name"
-            :name="product.name"
-            :price="product.price"
-            variant="blue"
-        />
-      </ul>
+      <ImageGallery :images="images" variant="blue" />
     </section>
   </div>
 </template>

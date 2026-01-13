@@ -18,10 +18,10 @@ useSeoMeta({
     <div class="hero__content">
       <nav class="hero__links" aria-label="Kategórie oblečenia">
         <NuxtLink to="/damska-moda" class="hero__link" aria-label="Prejsť do sekcie dámskej módy">
-          Damska moda
+          Dámska móda
         </NuxtLink>
         <NuxtLink to="/detska-moda" class="hero__link" aria-label="Prejsť do sekcie detskej módy">
-          Detska moda
+          Detská móda
         </NuxtLink>
         <NuxtLink to="/doplnky" class="hero__link" aria-label="Prejsť do sekcie doplnky">
           Doplnky

@@ -4,11 +4,31 @@ useSeoMeta({
   description: 'Štýlové doplnky pre každú príležitosť. Kabelky, šály, šperky a viac.'
 })
 
-const products = [
-  { name: 'Elegantná kabelka', price: '39,99 €' },
-  { name: 'Hodvábny šál', price: '19,99 €' },
-  { name: 'Náušnice set', price: '14,99 €' },
-  { name: 'Kožený opasok', price: '24,99 €' }
+const images = [
+  '/doplnky/DK4A4131.JPG',
+  '/doplnky/DK4A4133.JPG',
+  '/doplnky/DK4A4134.JPG',
+  '/doplnky/DK4A4135.JPG',
+  '/doplnky/DK4A4144.JPG',
+  '/doplnky/DK4A4156.JPG',
+  '/doplnky/DK4A4156_1.JPG',
+  '/doplnky/DK4A4159.JPG',
+  '/doplnky/DK4A4166.JPG',
+  '/doplnky/DK4A4168.JPG',
+  '/doplnky/DK4A4170.JPG',
+  '/doplnky/DK4A4182.JPG',
+  '/doplnky/DK4A4186.JPG',
+  '/doplnky/DK4A4202.JPG',
+  '/doplnky/DK4A4224.JPG',
+  '/doplnky/DK4A4225.JPG',
+  '/doplnky/DK4A4251.JPG',
+  '/doplnky/DK4A4259.JPG',
+  '/doplnky/DK4A4262.JPG',
+  '/doplnky/DK4A4267.JPG',
+  '/doplnky/DK4A4345.JPG',
+  '/doplnky/DK4A4346.JPG',
+  '/doplnky/DK4A4352.JPG',
+  '/doplnky/DK4A4355.JPG'
 ]
 </script>
 
@@ -31,15 +51,7 @@ const products = [
         Doprajte si módne doplnky, ktoré hovoria za vás. Štýl začína detailmi.
         <br/><br/>
       </p>
-      <ul class="product-grid" role="list" aria-label="Zoznam produktov">
-        <ProductCard
-          v-for="product in products"
-          :key="product.name"
-          :name="product.name"
-          :price="product.price"
-          variant="purple"
-        />
-      </ul>
+      <ImageGallery :images="images" variant="purple" />
     </section>
   </div>
 </template>

@@ -154,8 +154,8 @@ onUnmounted(() => {
     background: rgba(255, 255, 255, 0.15);
     border: none;
     border-radius: 50%;
-    width: clamp(32px, 8vw, 52px);
-    height: clamp(32px, 8vw, 52px);
+    width: clamp(38px, 8vw, 52px);
+    height: clamp(38px, 8vw, 52px);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -166,8 +166,8 @@ onUnmounted(() => {
     z-index: 2;
 
     svg {
-      width: clamp(16px, 4vw, 26px);
-      height: clamp(16px, 4vw, 26px);
+      width: clamp(22px, 4vw, 26px);
+      height: clamp(22px, 4vw, 26px);
     }
 
     &:hover {

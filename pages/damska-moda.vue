@@ -4,11 +4,23 @@ useSeoMeta({
   description: 'Objavte našu kolekciu elegantného a štýlového dámskeho oblečenia. Šaty, blúzky, nohavice a viac.'
 })
 
-const products = [
-  {name: 'Elegantné šaty', price: '49,99 €'},
-  {name: 'Dámska blúzka', price: '29,99 €'},
-  {name: 'Nohavice slim fit', price: '39,99 €'},
-  {name: 'Kabát zimný', price: '89,99 €'}
+const images = [
+  '/damske/DK4A4152.JPG',
+  '/damske/DK4A4159.JPG',
+  '/damske/DK4A4183.JPG',
+  '/damske/DK4A4184.JPG',
+  '/damske/DK4A4186.JPG',
+  '/damske/DK4A4192.JPG',
+  '/damske/DK4A4195.JPG',
+  '/damske/DK4A4203.JPG',
+  '/damske/DK4A4212.JPG',
+  '/damske/DK4A4220.JPG',
+  '/damske/DK4A4222.JPG',
+  '/damske/DK4A4232.JPG',
+  '/damske/DK4A4234.JPG',
+  '/damske/DK4A4252.JPG',
+  '/damske/DK4A4262.JPG',
+  '/damske/DK4A4278.JPG'
 ]
 </script>
 
@@ -34,15 +46,7 @@ const products = [
         Dámska móda, v ktorej sa budete cítiť <strong>sebavedomo a štýlovo</strong>. Pretože skutočný štýl začína pocitom istoty.
         <br/> <br/>
       </p>
-      <ul class="product-grid" role="list" aria-label="Zoznam produktov">
-        <ProductCard
-            v-for="product in products"
-            :key="product.name"
-            :name="product.name"
-            :price="product.price"
-            variant="pink"
-        />
-      </ul>
+      <ImageGallery :images="images" variant="pink" />
     </section>
   </div>
 </template>
