@@ -5,20 +5,20 @@ useSeoMeta({
 })
 
 const images = [
-  '/detske/DK4A4147.JPG',
-  '/detske/DK4A4148.JPG',
-  '/detske/DK4A4149.JPG',
-  '/detske/DK4A4150.JPG',
-  '/detske/DK4A4173.JPG',
-  '/detske/DK4A4175.JPG',
-  '/detske/DK4A4200.JPG',
-  '/detske/DK4A4214.JPG',
-  '/detske/DK4A4225.JPG',
-  '/detske/DK4A4226.JPG',
-  '/detske/DK4A4252.JPG',
-  '/detske/DK4A4257.JPG',
-  '/detske/DK4A4260.JPG',
-  '/detske/DK4A4279.JPG'
+  '/detske/DK4A4147.webp',
+  '/detske/DK4A4148.webp',
+  '/detske/DK4A4149.webp',
+  '/detske/DK4A4150.webp',
+  '/detske/DK4A4173.webp',
+  '/detske/DK4A4175.webp',
+  '/detske/DK4A4200.webp',
+  '/detske/DK4A4214.webp',
+  '/detske/DK4A4225.webp',
+  '/detske/DK4A4226.webp',
+  '/detske/DK4A4252.webp',
+  '/detske/DK4A4257.webp',
+  '/detske/DK4A4260.webp',
+  '/detske/DK4A4279.webp'
 ]
 </script>
 

@@ -5,6 +5,19 @@ export default defineNuxtConfig({
 
   modules: ['@nuxtjs/seo', '@nuxt/fonts', '@nuxt/image', '@nuxt/scripts'],
 
+  // @nuxt/image konfigurácia - predgenerovanie obrázkov
+  image: {
+    quality: 80,
+    format: ['webp'],
+    screens: {
+      xs: 320,
+      sm: 640,
+      md: 768,
+      lg: 1024,
+      xl: 1280
+    }
+  },
+
   runtimeConfig: {
     public: {
       videoUrlMobile: 'https://pub-c3be0c5631d344eab722713e13225ca2.r2.dev/kacenkovo_web_1080p.mp4',
