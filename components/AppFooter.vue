@@ -1,43 +1,9 @@
 <script setup lang="ts">
-import { DrawerRoot, DrawerTrigger, DrawerPortal, DrawerContent, DrawerHandle, DrawerTitle } from 'vaul-vue'
+import { DrawerRoot, DrawerTrigger, DrawerPortal, DrawerContent, DrawerTitle } from 'vaul-vue'
 
 const route = useRoute()
 const isOpen = ref(false)
 const isMobile = ref(false)
-
-// Touch handling pre swipe up
-const touchStartY = ref(0)
-const touchStartTime = ref(0)
-
-const handleTouchStart = (e: TouchEvent) => {
-  touchStartY.value = e.touches[0].clientY
-  touchStartTime.value = Date.now()
-}
-
-const handleTouchEnd = (e: TouchEvent) => {
-  const touchEndY = e.changedTouches[0].clientY
-  const deltaY = touchStartY.value - touchEndY
-  const deltaTime = Date.now() - touchStartTime.value
-
-  // Swipe up detection: minimálne 15px hore a do 400ms
-  if (deltaY > 15 && deltaTime < 400 && !isOpen.value) {
-    e.preventDefault()
-    e.stopPropagation()
-    isOpen.value = true
-  }
-}
-
-// Swipe down na zatvorenie drawera - z celej plochy
-const handleDrawerTouchEnd = (e: TouchEvent) => {
-  const touchEndY = e.changedTouches[0].clientY
-  const deltaY = touchEndY - touchStartY.value
-  const deltaTime = Date.now() - touchStartTime.value
-
-  // Swipe down detection: minimálne 50px dole a do 300ms
-  if (deltaY > 50 && deltaTime < 300 && isOpen.value) {
-    isOpen.value = false
-  }
-}
 
 // Detekuj mobile/tablet len na klientovi
 onMounted(() => {
@@ -60,14 +26,12 @@ watch(() => route.path, () => {
     <!-- Mobile/Tablet: Vaul Drawer -->
     <div v-if="isMobile" class="footer-mobile">
       <DrawerRoot v-model:open="isOpen" direction="bottom">
-        <!-- Toggle button vždy viditeľný a sticky - celá plocha klikateľná + swipe up -->
+        <!-- Toggle button vždy viditeľný a sticky -->
         <DrawerTrigger as-child>
           <button
             class="footer-toggle footer-toggle--mobile"
             :aria-expanded="isOpen"
             aria-label="Zobraziť/skryť footer"
-            @touchstart="handleTouchStart"
-            @touchend="handleTouchEnd"
           >
             <span class="footer-toggle__handle"></span>
           </button>
@@ -77,41 +41,41 @@ watch(() => route.path, () => {
           <DrawerContent
             class="drawer-content"
             aria-describedby="footer-description"
-            @touchstart="handleTouchStart"
-            @touchend="handleDrawerTouchEnd"
           >
             <DrawerTitle class="sr-only">Footer menu</DrawerTitle>
-            <DrawerHandle class="drawer-handle" />
-            <div class="drawer-inner">
-              <div class="footer-content">
-                <div class="footer-section">
-                  <h3>Kontakt</h3>
-                  <address>
-                    <a href="https://share.google/FNTrvu6s87OejToxv" target="_blank" rel="noopener">Dudvážska 5106/5</a>
-                    <p>821 07 Bratislava</p>
-                    <p>Tel. č.: <a href="tel:+421918519094">+421 918 519 094</a></p>
-                    <p>E-mail: <a href="mailto:kacenkovo.nchron@gmail.com">kacenkovo.nchron@gmail.com</a></p>
-                  </address>
-                </div>
-                <div class="footer-section">
-                  <h3>Otváracie hodiny</h3>
-                  <p>Po-Pi: 09:00 - 19:00 hod.</p>
-                  <p>So: 09:00 - 17:00 hod.</p>
-                  <p>Ne: zatvorené</p>
-                </div>
-                <div class="footer-section">
-                  <h3 id="footer-description">Informácie</h3>
-                  <nav class="footer-nav" aria-label="Footer navigácia">
-                    <NuxtLink to="/o-nas">O nás</NuxtLink>
-                    <NuxtLink to="/sluzby">Služby</NuxtLink>
-                    <NuxtLink to="/mapa">Kde nás nájdete</NuxtLink>
-                    <a href="/ochrana-osobnych-udajov.pdf" target="_blank" rel="noopener">Ochrana osobných údajov</a>
-                  </nav>
-                </div>
+            <!-- Handle - viditeľný indikátor -->
+            <div class="drawer-handle-area">
+              <span class="drawer-handle"></span>
+            </div>
+            <!-- Obsah - bez scrollu, celá plocha draggable -->
+            <div class="footer-content">
+              <div class="footer-section">
+                <h3>Kontakt</h3>
+                <address>
+                  <a href="https://share.google/FNTrvu6s87OejToxv" target="_blank" rel="noopener">Dudvážska 5106/5</a>
+                  <p>821 07 Bratislava</p>
+                  <p>Tel. č.: <a href="tel:+421918519094">+421 918 519 094</a></p>
+                  <p>E-mail: <a href="mailto:kacenkovo.nchron@gmail.com">kacenkovo.nchron@gmail.com</a></p>
+                </address>
               </div>
-              <div class="footer-bottom">
-                <p>&copy; {{ new Date().getFullYear() }} Kacenkovo. Všetky práva vyhradené.</p>
+              <div class="footer-section">
+                <h3>Otváracie hodiny</h3>
+                <p>Po-Pi: 09:00 - 19:00 hod.</p>
+                <p>So: 09:00 - 17:00 hod.</p>
+                <p>Ne: zatvorené</p>
               </div>
+              <div class="footer-section">
+                <h3 id="footer-description">Informácie</h3>
+                <nav class="footer-nav" aria-label="Footer navigácia">
+                  <NuxtLink to="/o-nas">O nás</NuxtLink>
+                  <NuxtLink to="/sluzby">Služby</NuxtLink>
+                  <NuxtLink to="/mapa">Kde nás nájdete</NuxtLink>
+                  <a href="/ochrana-osobnych-udajov.pdf" target="_blank" rel="noopener">Ochrana osobných údajov</a>
+                </nav>
+              </div>
+            </div>
+            <div class="footer-bottom">
+              <p>&copy; {{ new Date().getFullYear() }} Kacenkovo. Všetky práva vyhradené.</p>
             </div>
           </DrawerContent>
         </DrawerPortal>
@@ -207,20 +171,12 @@ watch(() => route.path, () => {
   color: $text-white;
   border-top-left-radius: 16px;
   border-top-right-radius: 16px;
-  max-height: 600px;
+  max-height: 85vh;
   display: flex;
   flex-direction: column;
   z-index: 200;
-  touch-action: pan-x;
-}
-
-.drawer-handle {
-  width: 48px;
-  height: 4px;
-  background: rgba(255, 255, 255, 0.5);
-  border-radius: 2px;
-  margin: 12px auto;
-  flex-shrink: 0;
+  // Povoliť vaul-vue natívny drag z celej plochy
+  touch-action: none;
   cursor: grab;
 
   &:active {
@@ -228,16 +184,21 @@ watch(() => route.path, () => {
   }
 }
 
-.drawer-inner {
-  flex: 1;
+// Viditeľná handle area na vrchu
+.drawer-handle-area {
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: $spacing-sm;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  min-height: calc(600px - 100px);
+  justify-content: center;
+  padding: 12px 0;
+  flex-shrink: 0;
 }
+
+.drawer-handle {
+  width: 48px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 2px;
+}
+
 
 .footer-toggle {
   width: 100%;
@@ -257,7 +218,6 @@ watch(() => route.path, () => {
     height: 36px;
     border-top-left-radius: 16px;
     border-top-right-radius: 16px;
-    touch-action: pan-x;
   }
 
   &:focus-visible {
@@ -316,14 +276,17 @@ watch(() => route.path, () => {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: $spacing-sm;
-  @include tablet{
+
+  @include tablet {
     margin: unset;
   }
 
-  .drawer-inner & {
+  // V drawer kontexte - stĺpcový layout
+  .drawer-content & {
     display: flex;
     flex-direction: column;
-    padding: 0;
+    padding: $spacing-sm;
+    padding-top: 0;
   }
 }
 
@@ -387,11 +350,24 @@ watch(() => route.path, () => {
   @include tablet{
     margin: unset;
   }
-  // Tablet/mobile - jednoduchší padding
-  .drawer-inner & {
-
+  // V drawer kontexte
+  .drawer-content & {
     max-width: none;
-    padding: $spacing-sm 0 0;
+    margin: 0;
+    padding: $spacing-xs $spacing-sm calc($spacing-xs + env(safe-area-inset-bottom, 0px));
   }
+}
+
+// Screen reader only
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 </style>
