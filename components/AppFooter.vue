@@ -1,58 +1,55 @@
 <script setup lang="ts">
-import { DrawerRoot, DrawerTrigger, DrawerPortal, DrawerContent, DrawerTitle } from 'vaul-vue'
-
 const route = useRoute()
 const isOpen = ref(false)
 const isMobile = ref(false)
 
-// Desktop drag handling
+// Drag handling - funguje pre mobile aj desktop
 const footerRef = ref<HTMLElement | null>(null)
 const isDragging = ref(false)
-const hasDragged = ref(false) // Či sa skutočne ťahalo (nie len klik)
+const hasDragged = ref(false)
 const dragStartY = ref(0)
 const dragOffset = ref(0)
 const footerHeight = ref(0)
 
-const onDragStart = (e: MouseEvent | TouchEvent) => {
-  if (isMobile.value) return
+// Výška toggle baru - 36px pre mobile, 30px pre desktop
+const toggleHeight = computed(() => isMobile.value ? 36 : 30)
 
+const onDragStart = (e: MouseEvent | TouchEvent) => {
   isDragging.value = true
   hasDragged.value = false
   dragStartY.value = 'touches' in e ? e.touches[0].clientY : e.clientY
 
-  // Zisti výšku footera
   if (footerRef.value) {
     footerHeight.value = footerRef.value.offsetHeight
   }
 
-  // Nastav počiatočný offset podľa aktuálneho stavu
-  dragOffset.value = isOpen.value ? 0 : footerHeight.value - 30
+  dragOffset.value = isOpen.value ? 0 : footerHeight.value - toggleHeight.value
 
   document.addEventListener('mousemove', onDragMove)
   document.addEventListener('mouseup', onDragEnd)
-  document.addEventListener('touchmove', onDragMove)
+  document.addEventListener('touchmove', onDragMove, { passive: false })
   document.addEventListener('touchend', onDragEnd)
 }
 
 const onDragMove = (e: MouseEvent | TouchEvent) => {
   if (!isDragging.value) return
 
+  // Prevent scroll on mobile while dragging
+  if ('touches' in e) {
+    e.preventDefault()
+  }
+
   const currentY = 'touches' in e ? e.touches[0].clientY : e.clientY
   const deltaY = currentY - dragStartY.value
 
-  // Ak sa pohlo viac ako 5px, považuj to za drag
   if (Math.abs(deltaY) > 5) {
     hasDragged.value = true
   }
 
-  // Vypočítaj nový offset (kladný = zatvorené, 0 = otvorené)
-  let newOffset = (isOpen.value ? 0 : footerHeight.value - 30) + deltaY
-
-  // Obmedz rozsah
-  newOffset = Math.max(0, Math.min(footerHeight.value - 30, newOffset))
+  let newOffset = (isOpen.value ? 0 : footerHeight.value - toggleHeight.value) + deltaY
+  newOffset = Math.max(0, Math.min(footerHeight.value - toggleHeight.value, newOffset))
   dragOffset.value = newOffset
 
-  // Aplikuj transform priamo
   if (footerRef.value) {
     footerRef.value.style.transform = `translateY(${newOffset}px)`
     footerRef.value.style.transition = 'none'
@@ -67,14 +64,11 @@ const onDragEnd = () => {
   document.removeEventListener('touchmove', onDragMove)
   document.removeEventListener('touchend', onDragEnd)
 
-  // Ak sa ťahalo, snap k stavu
   if (hasDragged.value) {
-    const threshold = (footerHeight.value - 30) / 2
-    const shouldOpen = dragOffset.value < threshold
-    isOpen.value = shouldOpen
+    const threshold = (footerHeight.value - toggleHeight.value) / 2
+    isOpen.value = dragOffset.value < threshold
   }
 
-  // Resetni inline štýly - CSS transition preberie kontrolu
   if (footerRef.value) {
     footerRef.value.style.transform = ''
     footerRef.value.style.transition = ''
@@ -83,7 +77,6 @@ const onDragEnd = () => {
   isDragging.value = false
 }
 
-// Handler pre klik - len ak sa neťahalo
 const onToggleClick = () => {
   if (!hasDragged.value) {
     isOpen.value = !isOpen.value
@@ -91,7 +84,6 @@ const onToggleClick = () => {
   hasDragged.value = false
 }
 
-// Detekuj mobile/tablet len na klientovi
 onMounted(() => {
   const checkMobile = () => {
     isMobile.value = window.innerWidth <= 1024
@@ -101,106 +93,43 @@ onMounted(() => {
   onUnmounted(() => window.removeEventListener('resize', checkMobile))
 })
 
-// Zavri drawer pri zmene route
 watch(() => route.path, () => {
   isOpen.value = false
 })
 </script>
 
 <template>
-  <ClientOnly>
-    <!-- Mobile/Tablet: Vaul Drawer -->
-    <div v-if="isMobile" class="footer-mobile">
-      <DrawerRoot v-model:open="isOpen" direction="bottom">
-        <!-- Toggle button vždy viditeľný a sticky - swipe up alebo klik -->
-        <DrawerTrigger as-child>
-          <button
-            class="footer-toggle footer-toggle--mobile"
-            :aria-expanded="isOpen"
-            aria-label="Zobraziť/skryť footer"
-            @touchstart.passive="onTouchStart"
-            @touchmove.passive="onTouchMove"
-            @touchend.passive="onTouchEnd"
-          >
-            <span class="footer-toggle__handle"></span>
-          </button>
-        </DrawerTrigger>
-
-        <DrawerPortal>
-          <DrawerContent
-            class="drawer-content"
-            aria-describedby="footer-description"
-          >
-            <DrawerTitle class="sr-only">Footer menu</DrawerTitle>
-            <!-- Handle - viditeľný indikátor -->
-            <div class="drawer-handle-area">
-              <span class="drawer-handle"></span>
-            </div>
-            <!-- Obsah - bez scrollu, celá plocha draggable -->
-            <div class="footer-content">
-              <div class="footer-section">
-                <h3>Kontakt</h3>
-                <address>
-                  <a href="https://share.google/FNTrvu6s87OejToxv" target="_blank" rel="noopener">Dudvážska 5106/5</a>
-                  <p>821 07 Bratislava</p>
-                  <p>Tel. č.: <a href="tel:+421918519094">+421 918 519 094</a></p>
-                  <p>E-mail: <a href="mailto:kacenkovo.nchron@gmail.com">kacenkovo.nchron@gmail.com</a></p>
-                  <div class="social-links">
-                    <a href="https://www.facebook.com/share/1AQ923RVUF/?mibextid=wwXIfr" target="_blank" rel="noopener" aria-label="Facebook">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                      </svg>
-                    </a>
-                    <a href="https://www.instagram.com/kacenkovo_?igsh=YmV6MXI2c3R2Y2tt" target="_blank" rel="noopener" aria-label="Instagram">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
-                      </svg>
-                    </a>
-                  </div>
-                </address>
-              </div>
-              <div class="footer-section">
-                <h3>Otváracie hodiny</h3>
-                <p>Po-Pi: 09:00 - 19:00 hod.</p>
-                <p>So: 09:00 - 17:00 hod.</p>
-                <p>Ne: zatvorené</p>
-              </div>
-              <div class="footer-section">
-                <h3 id="footer-description">Informácie</h3>
-                <nav class="footer-nav" aria-label="Footer navigácia">
-                  <NuxtLink to="/o-nas">O nás</NuxtLink>
-                  <NuxtLink to="/sluzby">Služby</NuxtLink>
-                  <NuxtLink to="/mapa">Kde nás nájdete</NuxtLink>
-                  <a href="/ochrana-osobnych-udajov.pdf" target="_blank" rel="noopener">Ochrana osobných údajov</a>
-                </nav>
-              </div>
-            </div>
-            <div class="footer-bottom">
-              <p>&copy; {{ new Date().getFullYear() }} Kacenkovo. Všetky práva vyhradené. <span class="separator">|</span> <Trademark /></p>
-            </div>
-          </DrawerContent>
-        </DrawerPortal>
-      </DrawerRoot>
-    </div>
-
-    <!-- Desktop: Sticky footer -->
-    <div v-else class="footer-wrapper" :class="{ 'footer-wrapper--open': isOpen }">
-      <footer ref="footerRef" class="main-footer" :class="{ 'main-footer--dragging': isDragging }">
+  <div class="footer-wrapper" :class="{ 'footer-wrapper--open': isOpen, 'footer-wrapper--mobile': isMobile }">
+    <footer
+      ref="footerRef"
+      class="main-footer"
+      :class="{
+        'main-footer--open': isOpen,
+        'main-footer--dragging': isDragging,
+        'main-footer--mobile': isMobile
+      }"
+    >
+        <!-- Toggle bar -->
         <button
           class="footer-toggle"
+          :class="{ 'footer-toggle--mobile': isMobile }"
           @mousedown="onDragStart"
           @touchstart.passive="onDragStart"
           @click="onToggleClick"
           :aria-expanded="isOpen"
           aria-label="Zobraziť/skryť footer"
         >
-          <span class="footer-toggle__arrow" :class="{ 'footer-toggle__arrow--up': isOpen }">
+          <!-- Mobile: handle bar -->
+          <span v-if="isMobile" class="footer-toggle__handle"></span>
+          <!-- Desktop: arrow -->
+          <span v-else class="footer-toggle__arrow" :class="{ 'footer-toggle__arrow--up': isOpen }">
             &#9650;
           </span>
         </button>
 
-        <div class="footer-inner">
-          <div class="footer-content">
+        <!-- Footer content -->
+        <div class="footer-inner" :class="{ 'footer-inner--mobile': isMobile }">
+          <div class="footer-content" :class="{ 'footer-content--mobile': isMobile }">
             <div class="footer-section">
               <h3>Kontakt</h3>
               <address>
@@ -242,79 +171,44 @@ watch(() => route.path, () => {
             <p>&copy; {{ new Date().getFullYear() }} Kacenkovo. Všetky práva vyhradené. <span class="separator">|</span> <Trademark /></p>
           </div>
         </div>
-      </footer>
-    </div>
-
-    <!-- Fallback pre SSR -->
-    <template #fallback>
-      <div class="footer-wrapper">
-        <button class="footer-toggle" aria-label="Zobraziť/skryť footer">
-          <span class="footer-toggle__arrow">&#9650;</span>
-        </button>
-      </div>
-    </template>
-  </ClientOnly>
+    </footer>
+  </div>
 </template>
 
 <style lang="scss" scoped>
-// Footer wrapper - vždy fixed pre desktop
 .footer-wrapper {
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
-  z-index: 100;
-  // Len výška toggle buttonu - footer content je absolute
-  height: 30px;
+  z-index: 9999;
 }
 
-// Mobile footer toggle - vždy fixed na spodku
-.footer-mobile {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 100;
-}
-
-// Mobile Drawer styles
-.drawer-content {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
+.main-footer {
   background: $bg-dark;
   color: $text-white;
-  border-top-left-radius: 16px;
-  border-top-right-radius: 16px;
-  max-height: 85vh;
   display: flex;
   flex-direction: column;
-  z-index: 200;
-  // Povoliť vaul-vue natívny drag z celej plochy
-  touch-action: none;
-  cursor: grab;
+  transform: translateY(calc(100% - 30px));
+  transition: transform 0.5s cubic-bezier(0.33, 1, 0.68, 1);
 
-  &:active {
-    cursor: grabbing;
+  // Otvorený stav
+  &--open {
+    transform: translateY(0) !important;
+  }
+
+  // Počas dragovania
+  &--dragging {
+    transition: none !important;
+  }
+
+  // Mobile variant - zatvorený
+  &--mobile {
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    transform: translateY(calc(100% - 36px));
   }
 }
-
-// Viditeľná handle area na vrchu
-.drawer-handle-area {
-  display: flex;
-  justify-content: center;
-  padding: 12px 0;
-  flex-shrink: 0;
-}
-
-.drawer-handle {
-  width: 48px;
-  height: 4px;
-  background: rgba(255, 255, 255, 0.5);
-  border-radius: 2px;
-}
-
 
 .footer-toggle {
   width: 100%;
@@ -326,7 +220,6 @@ watch(() => route.path, () => {
   align-items: center;
   justify-content: center;
   -webkit-tap-highlight-color: transparent;
-  // Prvý element vo footer - šípka hore
   flex-shrink: 0;
   user-select: none;
 
@@ -334,7 +227,6 @@ watch(() => route.path, () => {
     cursor: grabbing;
   }
 
-  // Mobile modifier - väčšia výška, zaoblené rohy, handle namiesto šípky
   &--mobile {
     height: 36px;
     border-top-left-radius: 16px;
@@ -346,7 +238,6 @@ watch(() => route.path, () => {
     outline-offset: -2px;
   }
 
-  // Handle štýl pre mobile
   &__handle {
     width: 48px;
     height: 4px;
@@ -354,12 +245,11 @@ watch(() => route.path, () => {
     border-radius: 2px;
   }
 
-  // Arrow štýl pre desktop
   &__arrow {
     color: $text-white;
     font-size: 10px;
     opacity: 0.5;
-    transition: transform 0.55s cubic-bezier(0.33, 1, 0.68, 1), opacity 0.2s ease;
+    transition: transform 0.5s cubic-bezier(0.33, 1, 0.68, 1), opacity 0.2s ease;
     transform: rotate(0deg);
   }
 
@@ -372,34 +262,14 @@ watch(() => route.path, () => {
   }
 }
 
-.main-footer {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: $bg-dark;
-  color: $text-white;
-  // Flexbox pre toggle hore + obsah dole
-  display: flex;
-  flex-direction: column;
-  // Keď zatvorené - vysunie sa dole, viditeľný len toggle (30px)
-  transform: translateY(calc(100% - 30px));
-  transition: transform 0.5s cubic-bezier(0.33, 1, 0.68, 1);
-
-  .footer-wrapper--open & {
-    transform: translateY(0);
-  }
-
-  // Počas dragovania - bez transition
-  &--dragging {
-    transition: none !important;
-  }
-}
-
 .footer-inner {
   max-height: 50vh;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
+
+  &--mobile {
+    max-height: 70vh;
+  }
 }
 
 .footer-content {
@@ -410,16 +280,10 @@ watch(() => route.path, () => {
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: $spacing-sm;
 
-  @include tablet {
-    margin: unset;
-  }
-
-  // V drawer kontexte - stĺpcový layout
-  .drawer-content & {
+  &--mobile {
     display: flex;
     flex-direction: column;
-    padding: $spacing-sm;
-    padding-top: 0;
+    margin: unset;
   }
 }
 
@@ -510,15 +374,8 @@ watch(() => route.path, () => {
     opacity: 0.6;
   }
 
-  @include tablet {
+  .footer-content--mobile + & {
     margin: unset;
   }
-
-  .drawer-content & {
-    max-width: none;
-    margin: 0;
-    padding: $spacing-xs $spacing-sm calc($spacing-xs + env(safe-area-inset-bottom, 0px));
-  }
 }
-
 </style>

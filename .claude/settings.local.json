@@ -11,7 +11,9 @@
       "Bash(done)",
       "Bash(magick:*)",
       "Bash(convert:*)",
-      "Bash(node -e:*)"
+      "Bash(node -e:*)",
+      "Bash(npm uninstall:*)",
+      "Bash(pnpm dev)"
     ]
   }
 }
