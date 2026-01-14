@@ -43,7 +43,7 @@ const images = [
       vizitkou štýlu.
       <br/><br/>
       </p>
-      <ImageGallery :images="images" variant="blue" />
+      <ImageGallery :images="images" />
     </section>
   </div>
 </template>

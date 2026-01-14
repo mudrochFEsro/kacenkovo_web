@@ -3,7 +3,6 @@ import VueEasyLightbox from 'vue-easy-lightbox'
 
 const props = defineProps<{
   images: string[]
-  variant: 'pink' | 'blue' | 'purple' | 'darkred' | 'black' | 'white'
 }>()
 
 const visibleRef = ref(false)
@@ -22,7 +21,7 @@ const onHide = () => {
 </script>
 
 <template>
-  <div class="gallery">
+  <section class="gallery">
     <ul class="gallery-grid" role="list" aria-label="Galéria obrázkov">
       <li
         v-for="(image, index) in images"
@@ -34,7 +33,7 @@ const onHide = () => {
         role="button"
         :aria-label="`Otvoriť obrázok ${index + 1}`"
       >
-        <div class="gallery-image" :class="`gallery-image--${variant}`">
+        <div class="gallery-image">
           <NuxtImg
             :src="image"
             :alt="`Obrázok ${index + 1}`"
@@ -52,12 +51,15 @@ const onHide = () => {
         :visible="visibleRef"
         :imgs="imgsRef"
         :index="indexRef"
+        :min-zoom="1"
+        :zoom-disabled="false"
+        :rotate-disabled="true"
         @hide="onHide"
         loop
         move-disabled
       />
     </ClientOnly>
-  </div>
+  </section>
 </template>
 
 <style lang="scss" scoped>
@@ -81,6 +83,7 @@ const onHide = () => {
   height: 250px;
   position: relative;
   overflow: hidden;
+  background: linear-gradient(135deg, #232526 0%, #414345 100%);
 
   @include mobile {
     height: 200px;
@@ -90,74 +93,95 @@ const onHide = () => {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.3s ease;
+    transition: transform 0.1s ease;
   }
 
   .gallery-card:hover & img {
     transform: scale(1.05);
   }
-
-  &--pink {
-    background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
-  }
-
-  &--blue {
-    background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
-  }
-
-  &--purple {
-    background: linear-gradient(135deg, #ddd6f3 0%, #faaca8 100%);
-  }
-
-  &--darkred {
-    background: linear-gradient(135deg, #8b0000 0%, #dc143c 100%);
-  }
-
-  &--black {
-    background: linear-gradient(135deg, #232526 0%, #414345 100%);
-  }
-
-  &--white {
-    background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
-  }
 }
 </style>
 
 <style lang="scss">
-// Global lightbox styles
+// Global lightbox styles - fullscreen from edge to edge
+.vel-modal {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
 .vel-img-wrapper {
-  background: rgba(0, 0, 0, 0.95) !important;
+  background: rgba(0, 0, 0, 1) !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  .vel-img {
+    max-width: 100% !important;
+    max-height: 100% !important;
+    width: auto !important;
+    height: auto !important;
+    object-fit: contain !important;
+  }
+}
+
+// Hide the toolbar (zoom, rotate buttons)
+.vel-toolbar {
+  display: none !important;
 }
 
 .vel-btns-wrapper {
   .btn__prev,
   .btn__next {
-    background: rgba(255, 255, 255, 0.1) !important;
+    background: rgba(255, 255, 255, 0.15) !important;
     border-radius: 50% !important;
     width: 50px !important;
     height: 50px !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
+    z-index: 10 !important;
+
+    @media (max-width: 768px) {
+      width: 40px !important;
+      height: 40px !important;
+    }
 
     &:hover {
-      background: rgba(255, 255, 255, 0.2) !important;
+      background: rgba(255, 255, 255, 0.25) !important;
     }
+  }
+
+  .btn__prev {
+    left: 10px !important;
+  }
+
+  .btn__next {
+    right: 10px !important;
   }
 
   .btn__close {
     right: 16px !important;
-    top: 36px !important;
-    background: rgba(255, 255, 255, 0.1) !important;
+    top: 34px !important;
+    background: rgba(255, 255, 255, 0.15) !important;
     border-radius: 50% !important;
     width: 44px !important;
     height: 44px !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
+    z-index: 10 !important;
+
+    @media (max-width: 768px) {
+      top: calc(env(safe-area-inset-top, 16px) + 36px) !important;
+      right: 16px !important;
+    }
 
     &:hover {
-      background: rgba(255, 255, 255, 0.2) !important;
+      background: rgba(255, 255, 255, 0.25) !important;
     }
   }
 }

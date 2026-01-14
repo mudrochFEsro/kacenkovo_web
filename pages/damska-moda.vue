@@ -46,7 +46,7 @@ const images = [
         Dámska móda, v ktorej sa budete cítiť <strong>sebavedomo a štýlovo</strong>. Pretože skutočný štýl začína pocitom istoty.
         <br/> <br/>
       </p>
-      <ImageGallery :images="images" variant="pink" />
+      <ImageGallery :images="images" />
     </section>
   </div>
 </template>

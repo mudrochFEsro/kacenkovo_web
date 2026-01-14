@@ -95,34 +95,39 @@ onUnmounted(() => {
   top: 0;
   z-index: 50;
   overflow: hidden;
-  will-change: transform;
-  height: clamp(0px, 22vw, 180px);
+  will-change: height;
+  height: clamp(100px, 22vw, 180px);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   color: $text-white;
-  // transition: height 0.2s ease-out, padding 0.2s ease-out;
+  transition: height 0.25s ease-out;
 
 
 
 
-  // Scrolled stav
+  // Scrolled stav - zmenšená výška
   &--scrolled {
-    // height: 70px;
-    // padding: $spacing-xs 0;
+    height: 80px;
 
-    // .page-header__back-btn {
-    //   transform: translateY(-50%) scale(0.615);
-    // }
+    .page-header__back-btn {
+      width: 46px;
+      height: 46px;
 
-    .page-header__logo {
-      // transform: translate(-50%, -50%) scale(0.5);
+      svg {
+        width: 24px;
+        height: 24px;
+      }
     }
 
-    // .page-header__title {
-    //   transform: translateX(65px) translateY(-50%) scale(0.7);
-    // }
+    .page-header__logo {
+      height: 55px;
+    }
+
+    .page-header__title {
+      font-size: 1.4rem;
+    }
   }
 
   // Variant colors
@@ -144,7 +149,7 @@ onUnmounted(() => {
     }
   }
 
-  // Back button - vždy viditeľný, zmenší sa pri scrolle cez scale (GPU)
+  // Back button - vždy viditeľný, zmenší sa pri scrolle
   &__back-btn {
     position: absolute;
     left: $spacing-sm;
@@ -161,13 +166,13 @@ onUnmounted(() => {
     justify-content: center;
     cursor: pointer;
     color: inherit;
-    will-change: transform;
-    // transition: transform 0.2s ease-out, background 0.2s ease;
+    transition: width 0.25s ease-out, height 0.25s ease-out, background 0.2s ease;
     z-index: 2;
 
     svg {
       width: clamp(22px, 4vw, 26px);
       height: clamp(22px, 4vw, 26px);
+      transition: width 0.25s ease-out, height 0.25s ease-out;
     }
 
     &:hover {
@@ -184,7 +189,7 @@ onUnmounted(() => {
     }
   }
 
-  // Title - animuje sa zo stredu doľava cez transform (GPU-akcelerované)
+  // Title - centrovaný, zmenší sa pri scrolle
   &__title {
     position: absolute;
     top: 50%;
@@ -196,8 +201,7 @@ onUnmounted(() => {
     margin: 0;
     white-space: nowrap;
     z-index: 1;
-    will-change: transform;
-    // transition: transform 0.2s ease-out;
+    transition: font-size 0.25s ease-out;
 
     @include tablet {
       font-size: 1.4rem;
@@ -212,10 +216,8 @@ onUnmounted(() => {
     transform: translate(-50%, -50%);
     transform-origin: center center;
     width: 100%;
-    height: clamp(0px, 15vw, 130px);
-    // Max width = viewport - 2x (šípka 52px + spacing) pre symetriu + padding
-    will-change: transform;
-    // transition: transform 0.2s ease-out;
+    height: clamp(60px, 15vw, 130px);
+    transition: height 0.25s ease-out;
     z-index: 1;
 
     //@include tablet {

@@ -51,7 +51,7 @@ const images = [
         Doprajte si módne doplnky, ktoré hovoria za vás. Štýl začína detailmi.
         <br/><br/>
       </p>
-      <ImageGallery :images="images" variant="purple" />
+      <ImageGallery :images="images" />
     </section>
   </div>
 </template>

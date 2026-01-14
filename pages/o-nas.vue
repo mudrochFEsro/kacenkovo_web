@@ -38,7 +38,7 @@ const images = [
         <strong>Módny obchod Kačenkovo</strong> dnes ponúka <strong>široký výber moderného a atraktívneho detského a dámskeho oblečenia</strong> spolu s <strong>módnymi doplnkami</strong>, ktoré dopĺňajú štýl celej rodiny.
       </p>
 
-      <ImageGallery :images="images" variant="darkred" />
+      <ImageGallery :images="images" />
     </section>
   </div>
 </template>
