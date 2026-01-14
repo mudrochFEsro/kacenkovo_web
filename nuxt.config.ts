@@ -44,6 +44,7 @@ export default defineNuxtConfig({
     defaultLocale: 'sk'
   },
 
+
   app: {
     head: {
       htmlAttrs: {
@@ -57,12 +58,44 @@ export default defineNuxtConfig({
         { name: 'theme-color', media: '(prefers-color-scheme: dark)', content: '#333333' },
         { name: 'mobile-web-app-capable', content: 'yes' },
         { name: 'apple-mobile-web-app-status-bar-style', content: 'default' },
+        { property: 'og:image', content: 'https://kacenkovo.sk/poster.webp' },
+        { property: 'og:image:width', content: '1920' },
+        { property: 'og:image:height', content: '1080' },
+        { property: 'og:type', content: 'website' },
+      ],
+      script: [
+        {
+          type: 'application/ld+json',
+          innerHTML: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'ClothingStore',
+            name: 'Kacenkovo',
+            description: 'Kvalitné dámske a detské oblečenie za skvelé ceny',
+            url: 'https://kacenkovo.sk',
+            image: 'https://kacenkovo.sk/poster.webp',
+            address: {
+              '@type': 'PostalAddress',
+              streetAddress: 'Dudvážska 5',
+              addressLocality: 'Bratislava',
+              postalCode: '821 07',
+              addressCountry: 'SK'
+            },
+            geo: {
+              '@type': 'GeoCoordinates',
+              latitude: 48.1371468,
+              longitude: 17.2143142
+            },
+            priceRange: '€€'
+          })
+        }
       ],
       link: [
         { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
         { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon.png' },
         { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
         { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png' },
+        { rel: 'preconnect', href: 'https://pub-c3be0c5631d344eab722713e13225ca2.r2.dev' },
+        { rel: 'dns-prefetch', href: 'https://www.google.com' },
       ]
     },
     pageTransition: { name: 'page', mode: 'out-in' },

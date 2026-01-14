@@ -15,7 +15,7 @@ useSeoMeta({
     <section class="content">
       <div class="services-text">
         <h2>DPD Pickup Point</h2>
-        <p style="text-align: center">
+        <p>
           Sme <strong>zmluvným partnerom kuriérskej spoločnosti DPD</strong>, vďaka čomu poskytujeme zákazníkom <strong>komfortné a spoľahlivé služby</strong> pri príjme aj výdaji balíkov. U nás si môžete jednoducho <strong>vyzdvihnúť zásielky objednané prostredníctvom DPD</strong>, ako aj <strong>odoslať balík do prepravy</strong> rýchlo a bez zbytočných komplikácií.
           <br/><br/>
           Táto služba je určená pre zákazníkov, ktorí uprednostňujú <strong>osobný kontakt, flexibilitu a istotu profesionálneho spracovania zásielok</strong>. Radi vám pomôžeme s <strong>odovzdaním balíka</strong>, jeho <strong>prijatím do systému DPD</strong> a poskytneme <strong>základné informácie k preprave</strong>.

@@ -11,7 +11,6 @@ const images = [
   '/doplnky/DK4A4135.webp',
   '/doplnky/DK4A4144.webp',
   '/doplnky/DK4A4156.webp',
-  '/doplnky/DK4A4156_1.webp',
   '/doplnky/DK4A4159.webp',
   '/doplnky/DK4A4166.webp',
   '/doplnky/DK4A4168.webp',
