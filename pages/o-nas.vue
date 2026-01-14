@@ -26,7 +26,7 @@ const images = [
     />
 
     <section class="content">
-      <p style="text-align: center;">
+      <p class="intro-text">
         Naša spoločnosť pôsobí na trhu už <strong>od roku 2015</strong>. Začínali sme s predajom <strong>moderného detského oblečenia pre deti a dojčatá</strong>, pričom dôraz sme kládli na kvalitu, pohodlie a aktuálne módne trendy.
         <br/><br/>
         Postupom času sme reagovali na potreby našich zákazníkov a <strong>rozšírili sortiment o dámske módne oblečenie</strong> a <strong>štýlové doplnky pre deti, dámy aj pánov</strong>, čím sme vytvorili komplexnejšiu ponuku pre celú rodinu.
@@ -48,13 +48,12 @@ const images = [
   @include content-container;
 }
 
-  p {
-    max-width: 800px;
-    font-size: 1.1rem;
-    line-height: 1.8;
-    margin: 0 auto $spacing-md;
-    color: $text-dark;
-  }
-
-
+.intro-text {
+  max-width: 800px;
+  margin: 0 auto $spacing-md;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  text-align: center;
+  color: $text-dark;
+}
 </style>

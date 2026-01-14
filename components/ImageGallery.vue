@@ -8,8 +8,6 @@ const props = defineProps<{
 const visibleRef = ref(false)
 const indexRef = ref(0)
 
-const imgsRef = computed(() => props.images)
-
 const showImg = (index: number) => {
   indexRef.value = index
   visibleRef.value = true
@@ -49,7 +47,7 @@ const onHide = () => {
     <ClientOnly>
       <VueEasyLightbox
         :visible="visibleRef"
-        :imgs="imgsRef"
+        :imgs="images"
         :index="indexRef"
         :min-zoom="1"
         :zoom-disabled="false"
@@ -93,7 +91,7 @@ const onHide = () => {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.1s ease;
+    transition: transform 0.15s ease;
   }
 
   .gallery-card:hover & img {
@@ -103,7 +101,6 @@ const onHide = () => {
 </style>
 
 <style lang="scss">
-// Global lightbox styles - fullscreen from edge to edge
 .vel-modal {
   padding: 0 !important;
   margin: 0 !important;
@@ -128,7 +125,6 @@ const onHide = () => {
   }
 }
 
-// Hide the toolbar (zoom, rotate buttons)
 .vel-toolbar {
   display: none !important;
 }

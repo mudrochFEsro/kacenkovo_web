@@ -112,7 +112,7 @@ watch(() => route.path, () => {
               </div>
             </div>
             <div class="footer-bottom">
-              <p>&copy; {{ new Date().getFullYear() }} Kacenkovo. Všetky práva vyhradené.</p>
+              <p>&copy; {{ new Date().getFullYear() }} Kacenkovo. Všetky práva vyhradené. <span class="separator">|</span> <Trademark /></p>
             </div>
           </DrawerContent>
         </DrawerPortal>
@@ -173,7 +173,7 @@ watch(() => route.path, () => {
             </div>
           </div>
           <div class="footer-bottom">
-            <p>&copy; {{ new Date().getFullYear() }} Kacenkovo. Všetky práva vyhradené.</p>
+            <p>&copy; {{ new Date().getFullYear() }} Kacenkovo. Všetky práva vyhradené. <span class="separator">|</span> <Trademark /></p>
           </div>
         </div>
       </footer>
@@ -421,10 +421,15 @@ watch(() => route.path, () => {
   opacity: 0.7;
   font-size: 0.9rem;
 
-  @include tablet{
+  .separator {
+    margin: 0 0.3rem;
+    opacity: 0.6;
+  }
+
+  @include tablet {
     margin: unset;
   }
-  // V drawer kontexte
+
   .drawer-content & {
     max-width: none;
     margin: 0;
@@ -432,16 +437,4 @@ watch(() => route.path, () => {
   }
 }
 
-// Screen reader only
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
-}
 </style>

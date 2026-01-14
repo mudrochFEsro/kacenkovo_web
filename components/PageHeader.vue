@@ -104,9 +104,6 @@ onUnmounted(() => {
   color: $text-white;
   transition: height 0.25s ease-out;
 
-
-
-
   // Scrolled stav - zmenšená výška
   &--scrolled {
     height: 80px;
@@ -219,14 +216,6 @@ onUnmounted(() => {
     height: clamp(60px, 15vw, 130px);
     transition: height 0.25s ease-out;
     z-index: 1;
-
-    //@include tablet {
-    //  width: 350px;
-    //}
-    //
-    //@include mobile {
-    //  width: 280px;
-    //}
   }
 }
 </style>

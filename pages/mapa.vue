@@ -60,39 +60,4 @@ useSeoMeta({
   }
 }
 
-.address-info {
-  background: $bg-white;
-  padding: $spacing-md;
-  border-radius: $radius-md;
-  box-shadow: $shadow-sm;
-
-  h2 {
-    font-size: 1.5rem;
-    margin-bottom: $spacing-sm;
-    color: $text-dark;
-  }
-
-  address {
-    font-style: normal;
-    color: $text-light;
-
-    p {
-      margin: $spacing-xs 0;
-    }
-
-    strong {
-      color: $text-dark;
-    }
-
-    a {
-      color: $accent-purple;
-      text-decoration: none;
-      transition: opacity $transition-fast;
-
-      &:hover {
-        opacity: 0.7;
-      }
-    }
-  }
-}
 </style>

@@ -41,14 +41,13 @@ const images = [
     />
 
     <section class="content" aria-label="Produkty doplnkov">
-      <p style="text-align: center">Objavte svet štýlových detailov, ktoré dotvárajú každý outfit. Naša kolekcia módnych doplnkov prináša eleganciu, kvalitu a nadčasový dizajn pre každú príležitosť.
+      <p class="intro-text">Objavte svet <strong>štýlových detailov</strong>, ktoré dotvárajú každý outfit. Naša kolekcia módnych doplnkov prináša <strong>eleganciu</strong>, <strong>kvalitu</strong> a <strong>nadčasový dizajn</strong> pre každú príležitosť.
         <br/><br/>
-        <strong>Kabelky</strong> , ktoré zaujmú na prvý pohľad – praktické, moderné a navrhnuté tak, aby podčiarkli váš osobný štýl.
+        <strong>Kabelky</strong>, ktoré zaujmú na prvý pohľad – praktické, moderné a navrhnuté tak, aby podčiarkli váš osobný štýl.
         <br/><strong>Peňaženky</strong>, v ktorých sa spája funkčnosť s vkusným prevedením – ideálne na každý deň.
-        <br/>
-        <strong>Bižutéria</strong>, ktorá dodá šmrnc a originalitu, či už preferujete jemnú eleganciu alebo výrazné akcenty.
+        <br/><strong>Bižutéria</strong>, ktorá dodá šmrnc a originalitu, či už preferujete jemnú eleganciu alebo výrazné akcenty.
         <br/><br/>
-        Doprajte si módne doplnky, ktoré hovoria za vás. Štýl začína detailmi.
+        Doprajte si módne doplnky, ktoré hovoria za vás. <strong>Štýl začína detailmi.</strong>
         <br/><br/>
       </p>
       <ImageGallery :images="images" />
@@ -61,7 +60,12 @@ const images = [
   @include content-container;
 }
 
-.product-grid {
-  @include product-grid;
+.intro-text {
+  max-width: 800px;
+  margin: 0 auto $spacing-md;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  text-align: center;
+  color: $text-dark;
 }
 </style>

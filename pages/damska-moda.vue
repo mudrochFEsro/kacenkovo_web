@@ -33,17 +33,16 @@ const images = [
     />
 
     <section class="content" aria-label="Produkty dámskej módy">
-      <p style="text-align: center">
-        Objavte dámsku módu, ktorá zvýrazní vašu osobnosť a podčiarkne váš jedinečný štýl. Naša kolekcia je navrhnutá
-        pre ženy, ktoré hľadajú <strong>eleganciu</strong>, <strong>komfort</strong> a aktuálne módne trendy v dokonalej
+      <p class="intro-text">
+        Objavte dámsku módu, ktorá zvýrazní vašu osobnosť a podčiarkne váš <strong>jedinečný štýl</strong>. Naša kolekcia je navrhnutá
+        pre ženy, ktoré hľadajú <strong>eleganciu</strong>, <strong>komfort</strong> a <strong>aktuálne módne trendy</strong> v dokonalej
         rovnováhe.
         <br/> <br/>
-        Nadčasové strihy, kvalitné materiály a <strong>precízne spracovanie</strong> vytvárajú kúsky vhodné na
-        každodenné nosenie aj
-        výnimočné príležitosti. Či už preferujete jemnú eleganciu, mestský štýl alebo modernú klasiku, u nás si
+        <strong>Nadčasové strihy</strong>, <strong>kvalitné materiály</strong> a <strong>precízne spracovanie</strong> vytvárajú kúsky vhodné na
+        každodenné nosenie aj výnimočné príležitosti. Či už preferujete jemnú eleganciu, mestský štýl alebo modernú klasiku, u nás si
         vyberiete.
         <br/> <br/>
-        Dámska móda, v ktorej sa budete cítiť <strong>sebavedomo a štýlovo</strong>. Pretože skutočný štýl začína pocitom istoty.
+        Dámska móda, v ktorej sa budete cítiť <strong>sebavedomo a štýlovo</strong>. Pretože <strong>skutočný štýl začína pocitom istoty</strong>.
         <br/> <br/>
       </p>
       <ImageGallery :images="images" />
@@ -56,12 +55,12 @@ const images = [
   @include content-container;
 }
 
-.product-grid {
-  @include product-grid;
-}
-p{
+.intro-text {
   max-width: 800px;
-  margin: auto;
-  font-size: 1.1rem
+  margin: 0 auto $spacing-md;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  text-align: center;
+  color: $text-dark;
 }
 </style>
