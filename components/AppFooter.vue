@@ -25,6 +25,12 @@ const onDragStart = (e: MouseEvent | TouchEvent) => {
 
   dragOffset.value = isOpen.value ? 0 : footerHeight.value - toggleHeight.value
 
+  // Nastav počiatočnú pozíciu aby footer neskočil pri začiatku ťahania
+  if (footerRef.value) {
+    footerRef.value.style.transform = `translateY(${dragOffset.value}px)`
+    footerRef.value.style.transition = 'none'
+  }
+
   document.addEventListener('mousemove', onDragMove)
   document.addEventListener('mouseup', onDragEnd)
   document.addEventListener('touchmove', onDragMove, { passive: false })
@@ -104,7 +110,7 @@ watch(() => route.path, () => {
       ref="footerRef"
       class="main-footer"
       :class="{
-        'main-footer--open': isOpen,
+        'main-footer--open': isOpen && !isDragging,
         'main-footer--dragging': isDragging,
         'main-footer--mobile': isMobile
       }"
