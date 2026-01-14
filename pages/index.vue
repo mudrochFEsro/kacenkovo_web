@@ -61,8 +61,7 @@ useSeoMeta({
     align-items: center;
     justify-content: center;
     padding: 0.7rem;
-    background: darkred;
-    backdrop-filter: blur(20px);
+    background: $accent-darkred;
     border-radius: $radius-md;
     transition: background 0.25s ease, transform 0.25s ease, outline 0.15s ease;
     will-change: transform;

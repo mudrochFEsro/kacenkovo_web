@@ -105,7 +105,7 @@ watch(() => route.path, () => {
 </script>
 
 <template>
-  <div class="footer-wrapper" :class="{ 'footer-wrapper--open': isOpen, 'footer-wrapper--mobile': isMobile }">
+  <div class="footer-wrapper">
     <footer
       ref="footerRef"
       class="main-footer"

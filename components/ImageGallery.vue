@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import VueEasyLightbox from 'vue-easy-lightbox'
 
-const props = defineProps<{
+defineProps<{
   images: string[]
 }>()
 
