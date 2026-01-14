@@ -108,6 +108,8 @@ watch(() => route.path, () => {
         'main-footer--dragging': isDragging,
         'main-footer--mobile': isMobile
       }"
+      @mousedown="isMobile && onDragStart($event)"
+      @touchstart.passive="isMobile && onDragStart($event)"
     >
         <!-- Toggle bar -->
         <button
@@ -119,12 +121,17 @@ watch(() => route.path, () => {
           :aria-expanded="isOpen"
           aria-label="Zobraziť/skryť footer"
         >
-          <!-- Mobile: handle bar -->
-          <span v-if="isMobile" class="footer-toggle__handle"></span>
-          <!-- Desktop: arrow -->
-          <span v-else class="footer-toggle__arrow" :class="{ 'footer-toggle__arrow--up': isOpen }">
-            &#9650;
-          </span>
+          <ClientOnly>
+            <!-- Mobile: handle bar -->
+            <span v-if="isMobile" class="footer-toggle__handle"></span>
+            <!-- Desktop: arrow -->
+            <span v-else class="footer-toggle__arrow" :class="{ 'footer-toggle__arrow--up': isOpen }">
+              &#9650;
+            </span>
+            <template #fallback>
+              <span class="footer-toggle__arrow">&#9650;</span>
+            </template>
+          </ClientOnly>
         </button>
 
         <!-- Footer content -->
@@ -182,9 +189,11 @@ watch(() => route.path, () => {
   left: 0;
   right: 0;
   z-index: 9999;
+  pointer-events: none; // Prepúšťa kliknutia na obsah pod footrom
 }
 
 .main-footer {
+  pointer-events: auto; // Footer samotný reaguje na kliknutia
   background: $bg-dark;
   color: $text-white;
   display: flex;
