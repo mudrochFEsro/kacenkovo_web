@@ -283,7 +283,8 @@ watch(() => route.path, () => {
   -webkit-overflow-scrolling: touch;
 
   &--mobile {
-    max-height: 70vh;
+    max-height: none;
+    overflow-y: visible;
   }
 }
 
