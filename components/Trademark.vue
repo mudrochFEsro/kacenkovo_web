@@ -7,6 +7,7 @@
 
 <style scoped lang="scss">
 .trademark {
+  white-space: nowrap;
   a {
     color: inherit;
     text-decoration: none;
