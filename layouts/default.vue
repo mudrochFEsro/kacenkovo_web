@@ -30,11 +30,13 @@ main {
   flex: 1;
   justify-content: center;
   display: flex;
+  // Padding pre fixed footer (30px toggle)
+  padding-bottom: 30px;
 
   &.main--with-bg {
     background: $bg-light;
     @include tablet {
-      padding-bottom: 36px;
+      padding-bottom: 66px; // 30px footer + 36px extra
     }
   }
 

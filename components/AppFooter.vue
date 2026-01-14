@@ -5,32 +5,96 @@ const route = useRoute()
 const isOpen = ref(false)
 const isMobile = ref(false)
 
-// Touch handling pre swipe-up otvorenie
-const touchStartY = ref(0)
+// Desktop drag handling
+const footerRef = ref<HTMLElement | null>(null)
 const isDragging = ref(false)
+const hasDragged = ref(false) // Či sa skutočne ťahalo (nie len klik)
+const dragStartY = ref(0)
+const dragOffset = ref(0)
+const footerHeight = ref(0)
 
-const onTouchStart = (e: TouchEvent) => {
-  touchStartY.value = e.touches[0].clientY
-  isDragging.value = false
+const onDragStart = (e: MouseEvent | TouchEvent) => {
+  if (isMobile.value) return
+
+  isDragging.value = true
+  hasDragged.value = false
+  dragStartY.value = 'touches' in e ? e.touches[0].clientY : e.clientY
+
+  // Zisti výšku footera
+  if (footerRef.value) {
+    footerHeight.value = footerRef.value.offsetHeight
+  }
+
+  // Nastav počiatočný offset podľa aktuálneho stavu
+  dragOffset.value = isOpen.value ? 0 : footerHeight.value - 30
+
+  document.addEventListener('mousemove', onDragMove)
+  document.addEventListener('mouseup', onDragEnd)
+  document.addEventListener('touchmove', onDragMove)
+  document.addEventListener('touchend', onDragEnd)
 }
 
-const onTouchMove = (e: TouchEvent) => {
-  const deltaY = touchStartY.value - e.touches[0].clientY
-  // Ak swipe hore viac ako 30px, otvor drawer
-  if (deltaY > 30 && !isOpen.value) {
-    isDragging.value = true
-    isOpen.value = true
+const onDragMove = (e: MouseEvent | TouchEvent) => {
+  if (!isDragging.value) return
+
+  const currentY = 'touches' in e ? e.touches[0].clientY : e.clientY
+  const deltaY = currentY - dragStartY.value
+
+  // Ak sa pohlo viac ako 5px, považuj to za drag
+  if (Math.abs(deltaY) > 5) {
+    hasDragged.value = true
+  }
+
+  // Vypočítaj nový offset (kladný = zatvorené, 0 = otvorené)
+  let newOffset = (isOpen.value ? 0 : footerHeight.value - 30) + deltaY
+
+  // Obmedz rozsah
+  newOffset = Math.max(0, Math.min(footerHeight.value - 30, newOffset))
+  dragOffset.value = newOffset
+
+  // Aplikuj transform priamo
+  if (footerRef.value) {
+    footerRef.value.style.transform = `translateY(${newOffset}px)`
+    footerRef.value.style.transition = 'none'
   }
 }
 
-const onTouchEnd = () => {
+const onDragEnd = () => {
+  if (!isDragging.value) return
+
+  document.removeEventListener('mousemove', onDragMove)
+  document.removeEventListener('mouseup', onDragEnd)
+  document.removeEventListener('touchmove', onDragMove)
+  document.removeEventListener('touchend', onDragEnd)
+
+  // Ak sa ťahalo, snap k stavu
+  if (hasDragged.value) {
+    const threshold = (footerHeight.value - 30) / 2
+    const shouldOpen = dragOffset.value < threshold
+    isOpen.value = shouldOpen
+  }
+
+  // Resetni inline štýly - CSS transition preberie kontrolu
+  if (footerRef.value) {
+    footerRef.value.style.transform = ''
+    footerRef.value.style.transition = ''
+  }
+
   isDragging.value = false
+}
+
+// Handler pre klik - len ak sa neťahalo
+const onToggleClick = () => {
+  if (!hasDragged.value) {
+    isOpen.value = !isOpen.value
+  }
+  hasDragged.value = false
 }
 
 // Detekuj mobile/tablet len na klientovi
 onMounted(() => {
   const checkMobile = () => {
-    isMobile.value = window.innerWidth <= 768
+    isMobile.value = window.innerWidth <= 1024
   }
   checkMobile()
   window.addEventListener('resize', checkMobile)
@@ -121,18 +185,20 @@ watch(() => route.path, () => {
 
     <!-- Desktop: Sticky footer -->
     <div v-else class="footer-wrapper" :class="{ 'footer-wrapper--open': isOpen }">
-      <button
-        class="footer-toggle"
-        @click="isOpen = !isOpen"
-        :aria-expanded="isOpen"
-        aria-label="Zobraziť/skryť footer"
-      >
-        <span class="footer-toggle__arrow" :class="{ 'footer-toggle__arrow--up': isOpen }">
-          &#9650;
-        </span>
-      </button>
+      <footer ref="footerRef" class="main-footer" :class="{ 'main-footer--dragging': isDragging }">
+        <button
+          class="footer-toggle"
+          @mousedown="onDragStart"
+          @touchstart.passive="onDragStart"
+          @click="onToggleClick"
+          :aria-expanded="isOpen"
+          aria-label="Zobraziť/skryť footer"
+        >
+          <span class="footer-toggle__arrow" :class="{ 'footer-toggle__arrow--up': isOpen }">
+            &#9650;
+          </span>
+        </button>
 
-      <footer class="main-footer">
         <div class="footer-inner">
           <div class="footer-content">
             <div class="footer-section">
@@ -191,14 +257,15 @@ watch(() => route.path, () => {
 </template>
 
 <style lang="scss" scoped>
-// Footer wrapper - vždy sticky pre desktop
+// Footer wrapper - vždy fixed pre desktop
 .footer-wrapper {
-  position: sticky;
+  position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
   z-index: 100;
-  margin-top: auto;
+  // Len výška toggle buttonu - footer content je absolute
+  height: 30px;
 }
 
 // Mobile footer toggle - vždy fixed na spodku
@@ -254,13 +321,18 @@ watch(() => route.path, () => {
   height: 30px;
   background: $bg-dark;
   border: none;
-  cursor: pointer;
+  cursor: grab;
   display: flex;
   align-items: center;
   justify-content: center;
   -webkit-tap-highlight-color: transparent;
-  position: relative;
-  z-index: 201;
+  // Prvý element vo footer - šípka hore
+  flex-shrink: 0;
+  user-select: none;
+
+  &:active {
+    cursor: grabbing;
+  }
 
   // Mobile modifier - väčšia výška, zaoblené rohy, handle namiesto šípky
   &--mobile {
@@ -301,21 +373,33 @@ watch(() => route.path, () => {
 }
 
 .main-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
   background: $bg-dark;
   color: $text-white;
-  overflow: hidden;
+  // Flexbox pre toggle hore + obsah dole
+  display: flex;
+  flex-direction: column;
+  // Keď zatvorené - vysunie sa dole, viditeľný len toggle (30px)
+  transform: translateY(calc(100% - 30px));
+  transition: transform 0.5s cubic-bezier(0.33, 1, 0.68, 1);
+
+  .footer-wrapper--open & {
+    transform: translateY(0);
+  }
+
+  // Počas dragovania - bez transition
+  &--dragging {
+    transition: none !important;
+  }
 }
 
 .footer-inner {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.55s cubic-bezier(0.33, 1, 0.68, 1);
-
-  .footer-wrapper--open & {
-    max-height: 50vh;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-  }
+  max-height: 50vh;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .footer-content {
