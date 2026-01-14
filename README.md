@@ -1,75 +1,80 @@
-# Nuxt Minimal Starter
+# Kacenkovo - Web
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+E-commerce website pre obchod s oblečením "Kacenkovo" v Bratislave. Predaj dámskej a detskej módy, doplnkov.
 
-## Setup
+## Tech Stack
 
-Make sure to install dependencies:
+- **Framework**: Nuxt 3 (Vue 3, TypeScript)
+- **Styling**: SCSS s premennými a mixinmi
+- **Moduly**: @nuxtjs/seo, @nuxt/fonts, @nuxt/image, @nuxt/scripts
+- **Lightbox**: vue-easy-lightbox
+- **Build**: SSR + SSG (prerendered routes)
+
+## Štruktúra projektu
+
+```
+├── app.vue                 # Root component s video pozadím
+├── layouts/
+│   └── default.vue         # Hlavný layout s AppFooter
+├── pages/
+│   ├── index.vue           # Homepage s kategóriami
+│   ├── damska-moda.vue     # Dámska móda
+│   ├── detska-moda.vue     # Detská móda
+│   ├── doplnky.vue         # Doplnky
+│   ├── o-nas.vue           # O nás
+│   ├── sluzby.vue          # Služby (DPD pickup)
+│   └── mapa.vue            # Mapa/lokácia
+├── components/
+│   ├── AppFooter.vue       # Draggable footer
+│   ├── PageHeader.vue      # Sticky header s animáciou
+│   ├── ImageGallery.vue    # Galéria s lightboxom
+│   ├── IntroText.vue       # Intro text komponent
+│   └── Trademark.vue       # Copyright komponent
+└── assets/scss/
+    ├── main.scss           # Globálne štýly, reset
+    ├── _variables.scss     # Farby, spacing, breakpointy
+    └── _mixins.scss        # Responsive mixiny
+```
+
+## Inštalácia
 
 ```bash
-# npm
-npm install
-
-# pnpm
 pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
 ```
 
-## Development Server
-
-Start the development server on `http://localhost:3000`:
+## Development
 
 ```bash
-# npm
-npm run dev
-
-# pnpm
 pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
 ```
+
+Server beží na `http://localhost:3000`
 
 ## Production
 
-Build the application for production:
+Build:
 
 ```bash
-# npm
-npm run build
-
-# pnpm
 pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
 ```
 
-Locally preview production build:
+Preview:
 
 ```bash
-# npm
-npm run preview
-
-# pnpm
 pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
 ```
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+Generovanie statických stránok:
+
+```bash
+pnpm generate
+```
+
+## Funkcie
+
+- **Video pozadie** - Full-screen video na homepage (rôzna kvalita pre mobile/desktop)
+- **Draggable footer** - Ťahateľný footer pre mobile aj desktop
+- **Sticky header** - Animovaný header pri scrollovaní
+- **Galéria obrázkov** - Lightbox s navigáciou
+- **SEO optimalizácia** - Meta tagy, JSON-LD schema
+- **Responzívny dizajn** - Mobile-first approach

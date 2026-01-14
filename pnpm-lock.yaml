@@ -20,9 +20,6 @@ importers:
       '@nuxtjs/seo':
         specifier: ^3.3.0
         version: 3.3.0(@unhead/vue@2.0.19(vue@3.5.25(typescript@5.9.3)))(@vercel/blob@1.0.2)(db0@0.3.4)(h3@1.15.4)(ioredis@5.8.2)(magicast@0.5.1)(rollup@4.53.5)(unhead@2.0.19)(unstorage@1.17.3(@vercel/blob@1.0.2)(db0@0.3.4)(ioredis@5.8.2))(vite@7.3.0(@types/node@16.18.11)(jiti@2.6.1)(lightningcss@1.30.2)(sass-embedded@1.97.0)(sass@1.97.0)(terser@5.44.1)(tsx@4.21.0)(yaml@2.8.2))(vue@3.5.25(typescript@5.9.3))(zod@3.22.4)
-      '@vueuse/core':
-        specifier: ^14.1.0
-        version: 14.1.0(vue@3.5.25(typescript@5.9.3))
       nuxt:
         specifier: ^3.20.2
         version: 3.20.2(@parcel/watcher@2.5.1)(@types/node@16.18.11)(@vercel/blob@1.0.2)(@vue/compiler-sfc@3.5.25)(cac@6.7.14)(db0@0.3.4)(ioredis@5.8.2)(lightningcss@1.30.2)(magicast@0.5.1)(rolldown@1.0.0-beta.59)(rollup@4.53.5)(sass-embedded@1.97.0)(sass@1.97.0)(terser@5.44.1)(tsx@4.21.0)(typescript@5.9.3)(vite@7.3.0(@types/node@16.18.11)(jiti@2.6.1)(lightningcss@1.30.2)(sass-embedded@1.97.0)(sass@1.97.0)(terser@5.44.1)(tsx@4.21.0)(yaml@2.8.2))(yaml@2.8.2)
@@ -32,9 +29,6 @@ importers:
       vue-easy-lightbox:
         specifier: ^1.19.0
         version: 1.19.0(vue@3.5.25(typescript@5.9.3))
-      vue-router:
-        specifier: ^4.6.4
-        version: 4.6.4(vue@3.5.25(typescript@5.9.3))
     devDependencies:
       sass-embedded:
         specifier: ^1.97.0
