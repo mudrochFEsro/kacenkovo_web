@@ -291,7 +291,7 @@ watch(() => route.path, () => {
 .footer-content {
   max-width: $wide;
   margin: 0 auto;
-  padding: $spacing-sm;
+  padding: 0 $spacing-sm $spacing-sm $spacing-sm;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: $spacing-sm;
