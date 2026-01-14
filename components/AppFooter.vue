@@ -384,7 +384,9 @@ watch(() => route.path, () => {
   text-align: center;
   opacity: 0.7;
   font-size: 0.9rem;
-
+  @include tablet {
+    font-size: 0.65rem;
+  }
   .separator {
     margin: 0 0.3rem;
     opacity: 0.6;

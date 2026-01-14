@@ -7,6 +7,7 @@ defineProps<{
 
 const visibleRef = ref(false)
 const indexRef = ref(0)
+const galleryRef = ref<HTMLElement | null>(null)
 
 const showImg = (index: number) => {
   indexRef.value = index
@@ -16,10 +17,39 @@ const showImg = (index: number) => {
 const onHide = () => {
   visibleRef.value = false
 }
+
+// Intersection Observer pre fade efekt
+onMounted(() => {
+  if (!galleryRef.value) return
+
+  const cards = galleryRef.value.querySelectorAll('.gallery-card')
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('gallery-card--visible')
+        } else {
+          entry.target.classList.remove('gallery-card--visible')
+        }
+      })
+    },
+    {
+      threshold: 0.1,
+      rootMargin: '50px 0px'
+    }
+  )
+
+  cards.forEach((card) => observer.observe(card))
+
+  onUnmounted(() => {
+    cards.forEach((card) => observer.unobserve(card))
+  })
+})
 </script>
 
 <template>
-  <section class="gallery">
+  <section ref="galleryRef" class="gallery">
     <ul class="gallery-grid" role="list" aria-label="Galéria obrázkov">
       <li
         v-for="(image, index) in images"
@@ -36,9 +66,8 @@ const onHide = () => {
             :src="image"
             :alt="`Obrázok ${index + 1}`"
             loading="lazy"
-            width="400"
-            height="300"
-            fit="cover"
+            preset="gallery"
+            sizes="xs:320px sm:400px"
           />
         </div>
       </li>
@@ -69,7 +98,21 @@ const onHide = () => {
   @include card;
   overflow: hidden;
   cursor: pointer;
-  @include hover-lift;
+
+  // Fade efekt pri scrollovaní
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.4s ease, transform 0.4s ease, box-shadow 0.2s ease;
+
+  &--visible {
+    opacity: 1;
+    transform: translateY(0);
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: $shadow-lg;
+    }
+  }
 
   &:focus-visible {
     outline: 3px solid currentColor;

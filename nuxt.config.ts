@@ -7,6 +7,7 @@ export default defineNuxtConfig({
 
   // @nuxt/image konfigurácia - predgenerovanie obrázkov
   image: {
+    provider: 'ipx',
     quality: 80,
     format: ['webp'],
     screens: {
@@ -15,6 +16,18 @@ export default defineNuxtConfig({
       md: 768,
       lg: 1024,
       xl: 1280
+    },
+    // Predgeneruj obrázky pri SSG builde
+    presets: {
+      gallery: {
+        modifiers: {
+          format: 'webp',
+          quality: 80,
+          width: 400,
+          height: 300,
+          fit: 'cover'
+        }
+      }
     }
   },
 
