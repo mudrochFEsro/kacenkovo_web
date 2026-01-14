@@ -15,11 +15,10 @@ const isHomepage = computed(() => route.path === '/')
 
 <style lang="scss" scoped>
 .app-layout {
-  min-height: 100svh; // Pre mobile browsery
+  min-height: 100svh;
   display: flex;
   flex-direction: column;
 
-  // Homepage - bez scrollu
   &--no-scroll {
     height: 100svh;
     overflow: hidden;
@@ -30,13 +29,12 @@ main {
   flex: 1;
   justify-content: center;
   display: flex;
-  // Padding pre fixed footer (30px toggle)
   padding-bottom: 30px;
 
   &.main--with-bg {
     background: $bg-light;
     @include tablet {
-      padding-bottom: 66px; // 30px footer + 36px extra
+      padding-bottom: 36px;
     }
   }
 

@@ -145,6 +145,7 @@ onMounted(() => {
 
 <style lang="scss">
 .vel-modal {
+  z-index: 99999 !important;
   padding: 0 !important;
   margin: 0 !important;
 }

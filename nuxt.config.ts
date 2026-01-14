@@ -5,9 +5,9 @@ export default defineNuxtConfig({
 
   modules: ['@nuxtjs/seo', '@nuxt/fonts', '@nuxt/image', '@nuxt/scripts'],
 
-  // @nuxt/image konfigurácia - predgenerovanie obrázkov
+  // @nuxt/image konfigurácia
   image: {
-    provider: 'ipx',
+    // Vercel automaticky použije svoj provider
     quality: 80,
     format: ['webp'],
     screens: {
@@ -17,7 +17,6 @@ export default defineNuxtConfig({
       lg: 1024,
       xl: 1280
     },
-    // Predgeneruj obrázky pri SSG builde
     presets: {
       gallery: {
         modifiers: {
@@ -43,6 +42,7 @@ export default defineNuxtConfig({
 
   // Pre SSG - prerender specificke routy
   nitro: {
+    preset: 'vercel',
     prerender: {
       routes: ['/', '/detska-moda', '/damska-moda', '/doplnky', '/mapa', '/o-nas', '/sluzby'],
       crawlLinks: true
@@ -55,6 +55,25 @@ export default defineNuxtConfig({
     name: 'Kacenkovo - Obchod s oblečením',
     description: 'Kvalitné dámske a detské oblečenie za skvelé ceny',
     defaultLocale: 'sk'
+  },
+
+  // Sitemap konfigurácia
+  sitemap: {
+    urls: [
+      { loc: '/', changefreq: 'weekly', priority: 1.0 },
+      { loc: '/damska-moda', changefreq: 'weekly', priority: 0.9 },
+      { loc: '/detska-moda', changefreq: 'weekly', priority: 0.9 },
+      { loc: '/doplnky', changefreq: 'weekly', priority: 0.9 },
+      { loc: '/o-nas', changefreq: 'monthly', priority: 0.7 },
+      { loc: '/sluzby', changefreq: 'monthly', priority: 0.7 },
+      { loc: '/mapa', changefreq: 'monthly', priority: 0.6 }
+    ]
+  },
+
+  // Robots.txt konfigurácia
+  robots: {
+    allow: '/',
+    sitemap: 'https://kacenkovo.sk/sitemap.xml'
   },
 
 
