@@ -31,18 +31,17 @@ const images = [
     />
 
     <section class="content"  aria-label="Produkty detskej módy">
-      <p class="intro-text">
-      Objavte detskú módu, ktorá spája <strong>pohodlie</strong>, <strong>kvalitu</strong> a <strong>hravý štýl</strong>. V našej ponuke nájdete oblečenie navrhnuté s
-      dôrazom na potreby detí aj očakávania rodičov.
-      <br/><br/>
-      <strong>Moderné a pohodlné kúsky</strong> pre každodenné nosenie aj výnimočné príležitosti, vyrobené z <strong>príjemných materiálov</strong>, ktoré
-      umožňujú voľný pohyb. <strong>Veselé farby</strong>, <strong>originálne vzory</strong> a <strong>praktické strihy</strong> robia z každého outfitu radosť pre deti aj
-      rodičov.
-      <br/><br/>
-      Vyberte si detskú módu, v ktorej sa deti cítia dobre a vyzerajú skvelo. Pretože <strong>spokojné dieťa</strong> je najlepšou
-      vizitkou štýlu.
-      <br/><br/>
-      </p>
+      <IntroText>
+        Objavte detskú módu, ktorá spája <strong>pohodlie</strong>, <strong>kvalitu</strong> a <strong>hravý štýl</strong>. V našej ponuke nájdete oblečenie navrhnuté s
+        dôrazom na potreby detí aj očakávania rodičov.
+        <br/><br/>
+        <strong>Moderné a pohodlné kúsky</strong> pre každodenné nosenie aj výnimočné príležitosti, vyrobené z <strong>príjemných materiálov</strong>, ktoré
+        umožňujú voľný pohyb. <strong>Veselé farby</strong>, <strong>originálne vzory</strong> a <strong>praktické strihy</strong> robia z každého outfitu radosť pre deti aj
+        rodičov.
+        <br/><br/>
+        Vyberte si detskú módu, v ktorej sa deti cítia dobre a vyzerajú skvelo. Pretože <strong>spokojné dieťa</strong> je najlepšou
+        vizitkou štýlu.
+      </IntroText>
       <ImageGallery :images="images" />
     </section>
   </div>
@@ -51,14 +50,5 @@ const images = [
 <style lang="scss" scoped>
 .content {
   @include content-container;
-}
-
-.intro-text {
-  max-width: 800px;
-  margin: 0 auto $spacing-md;
-  font-size: 1.1rem;
-  line-height: 1.8;
-  text-align: center;
-  color: $text-dark;
 }
 </style>

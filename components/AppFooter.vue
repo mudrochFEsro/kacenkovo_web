@@ -287,7 +287,7 @@ watch(() => route.path, () => {
     color: $text-white;
     font-size: 10px;
     opacity: 0.5;
-    transition: transform 0.35s ease, opacity 0.2s ease;
+    transition: transform 0.55s cubic-bezier(0.33, 1, 0.68, 1), opacity 0.2s ease;
     transform: rotate(0deg);
   }
 
@@ -309,7 +309,7 @@ watch(() => route.path, () => {
 .footer-inner {
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: max-height 0.55s cubic-bezier(0.33, 1, 0.68, 1);
 
   .footer-wrapper--open & {
     max-height: 50vh;

@@ -33,7 +33,7 @@ const images = [
     />
 
     <section class="content" aria-label="Produkty dámskej módy">
-      <p class="intro-text">
+      <IntroText>
         Objavte dámsku módu, ktorá zvýrazní vašu osobnosť a podčiarkne váš <strong>jedinečný štýl</strong>. Naša kolekcia je navrhnutá
         pre ženy, ktoré hľadajú <strong>eleganciu</strong>, <strong>komfort</strong> a <strong>aktuálne módne trendy</strong> v dokonalej
         rovnováhe.
@@ -43,8 +43,7 @@ const images = [
         vyberiete.
         <br/> <br/>
         Dámska móda, v ktorej sa budete cítiť <strong>sebavedomo a štýlovo</strong>. Pretože <strong>skutočný štýl začína pocitom istoty</strong>.
-        <br/> <br/>
-      </p>
+      </IntroText>
       <ImageGallery :images="images" />
     </section>
   </div>
@@ -53,14 +52,5 @@ const images = [
 <style lang="scss" scoped>
 .content {
   @include content-container;
-}
-
-.intro-text {
-  max-width: 800px;
-  margin: 0 auto $spacing-md;
-  font-size: 1.1rem;
-  line-height: 1.8;
-  text-align: center;
-  color: $text-dark;
 }
 </style>
