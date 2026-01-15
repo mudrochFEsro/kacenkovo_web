@@ -90,10 +90,6 @@ onUnmounted(() => {
 </template>
 
 <style lang="scss" scoped>
-// ===========================================
-// PEVNÉ VEĽKOSTI (bez vw)
-// Desktop hodnoty, tablet = -35%
-// ===========================================
 
 // Desktop
 $header-height: 140px;
@@ -105,15 +101,15 @@ $btn-size-scrolled: 40px;
 $btn-icon: 26px;
 $btn-icon-scrolled: 20px;
 
-// Tablet (-35%)
+// Tablet
 $header-height-tablet: 90px;
-$header-height-scrolled-tablet: 58px;
+$header-height-scrolled-tablet: 72px;
 $logo-height-tablet: 65px;
-$logo-height-scrolled-tablet: 40px;
+$logo-height-scrolled-tablet: 52px;
 $btn-size-tablet: 34px;
-$btn-size-scrolled-tablet: 28px;
+$btn-size-scrolled-tablet: 34px;
 $btn-icon-tablet: 18px;
-$btn-icon-scrolled-tablet: 14px;
+$btn-icon-scrolled-tablet: 18px;
 
 .page-header {
   position: sticky;

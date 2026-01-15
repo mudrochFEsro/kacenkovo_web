@@ -11,7 +11,7 @@ const startOffset = ref(0)
 const currentOffset = ref(0)
 const hasDragged = ref(false)
 
-const TOGGLE_HEIGHT = 40
+const TOGGLE_HEIGHT = 44 // Zväčšené o 10%
 
 const onDragStart = (e: TouchEvent) => {
   if (!footerRef.value) return
@@ -31,6 +31,9 @@ const onDragStart = (e: TouchEvent) => {
 
 const onDragMove = (e: TouchEvent) => {
   if (!isDragging.value || !footerRef.value) return
+
+  // Prevent page scroll/pull-to-refresh keď je footer otvorený alebo sa ťahá
+  e.preventDefault()
 
   const currentY = e.touches[0].clientY
   const delta = currentY - dragStartY.value
@@ -81,6 +84,17 @@ const checkMobile = () => {
   isMobile.value = window.innerWidth <= 1024
 }
 
+// Blokuj scroll stránky keď je footer otvorený
+watch(isOpen, (open) => {
+  if (open) {
+    document.body.style.overflow = 'hidden'
+    document.body.style.touchAction = 'none'
+  } else {
+    document.body.style.overflow = ''
+    document.body.style.touchAction = ''
+  }
+})
+
 onMounted(() => {
   checkMobile()
   window.addEventListener('resize', checkMobile, { passive: true })
@@ -88,6 +102,9 @@ onMounted(() => {
 
 onUnmounted(() => {
   window.removeEventListener('resize', checkMobile)
+  // Cleanup - obnov scroll
+  document.body.style.overflow = ''
+  document.body.style.touchAction = ''
 })
 
 // Zatvor footer pri zmene route
@@ -106,7 +123,7 @@ watch(() => route.path, () => {
         'main-footer--mobile': isMobile
       }"
       @touchstart.passive="onDragStart"
-      @touchmove.passive="onDragMove"
+      @touchmove.prevent="onDragMove"
       @touchend.passive="onDragEnd"
     >
       <!-- Toggle bar -->
@@ -187,8 +204,8 @@ watch(() => route.path, () => {
   color: $text-white;
   display: flex;
   flex-direction: column;
-  // Zatvorený stav - ukazuje len toggle bar (40px)
-  transform: translateY(calc(100% - 40px));
+  // Zatvorený stav - ukazuje len toggle bar (44px)
+  transform: translateY(calc(100% - 44px));
   transition: transform 0.3s ease-out;
   // Skryje content ktorý preteká
   overflow: hidden;
@@ -208,14 +225,14 @@ watch(() => route.path, () => {
 
 .footer-toggle {
   width: 100%;
-  height: 40px;
+  height: 44px;
   background: $bg-dark;
   border: none;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
+  gap: 14px;
   -webkit-tap-highlight-color: transparent;
   flex-shrink: 0;
   user-select: none;
@@ -233,16 +250,16 @@ watch(() => route.path, () => {
   }
 
   &__text {
-    font-size: 1.15rem;
+    font-size: 1.32rem;
     opacity: 0.7;
     font-weight: 400;
     font-family: 'Libre Baskerville', serif;
   }
 
   &__arrow {
-    font-size: 11px;
+    font-size: 13px;
     opacity: 0.5;
-    transition: transform 0.35s cubic-bezier(0.32, 0.72, 0, 1);
+    transition: transform 0.3s ease-out;
   }
 
   &__arrow--up {
