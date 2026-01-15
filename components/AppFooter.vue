@@ -13,12 +13,13 @@ const hasDragged = ref(false)
 
 const TOGGLE_HEIGHT = 44 // Zväčšené o 10%
 
-const onDragStart = (e: TouchEvent) => {
+// Spoločná logika pre drag
+const startDrag = (clientY: number) => {
   if (!footerRef.value) return
 
   isDragging.value = true
   hasDragged.value = false
-  dragStartY.value = e.touches[0].clientY
+  dragStartY.value = clientY
 
   // Vypočítaj aktuálny offset
   const footerHeight = footerRef.value.offsetHeight
@@ -29,14 +30,10 @@ const onDragStart = (e: TouchEvent) => {
   footerRef.value.style.transition = 'none'
 }
 
-const onDragMove = (e: TouchEvent) => {
+const moveDrag = (clientY: number) => {
   if (!isDragging.value || !footerRef.value) return
 
-  // Prevent page scroll/pull-to-refresh keď je footer otvorený alebo sa ťahá
-  e.preventDefault()
-
-  const currentY = e.touches[0].clientY
-  const delta = currentY - dragStartY.value
+  const delta = clientY - dragStartY.value
 
   // Ak sa pohol viac ako 5px, považuj to za drag
   if (Math.abs(delta) > 5) {
@@ -52,7 +49,7 @@ const onDragMove = (e: TouchEvent) => {
   footerRef.value.style.transform = `translateY(${newOffset}px)`
 }
 
-const onDragEnd = () => {
+const endDrag = () => {
   if (!isDragging.value || !footerRef.value) return
 
   const footerHeight = footerRef.value.offsetHeight
@@ -71,6 +68,41 @@ const onDragEnd = () => {
   isDragging.value = false
 }
 
+// Touch handlers
+const onDragStart = (e: TouchEvent) => {
+  startDrag(e.touches[0].clientY)
+}
+
+const onDragMove = (e: TouchEvent) => {
+  // Prevent page scroll/pull-to-refresh keď je footer otvorený alebo sa ťahá
+  e.preventDefault()
+  moveDrag(e.touches[0].clientY)
+}
+
+const onDragEnd = () => {
+  endDrag()
+}
+
+// Mouse handlers (desktop)
+const onMouseDown = (e: MouseEvent) => {
+  startDrag(e.clientY)
+  // Pridaj document listeners pre mouse
+  document.addEventListener('mousemove', onMouseMove)
+  document.addEventListener('mouseup', onMouseUp)
+}
+
+const onMouseMove = (e: MouseEvent) => {
+  e.preventDefault()
+  moveDrag(e.clientY)
+}
+
+const onMouseUp = () => {
+  endDrag()
+  // Odstráň document listeners
+  document.removeEventListener('mousemove', onMouseMove)
+  document.removeEventListener('mouseup', onMouseUp)
+}
+
 // Toggle footer (pre click na button)
 const toggleFooter = () => {
   if (!hasDragged.value) {
@@ -84,9 +116,9 @@ const checkMobile = () => {
   isMobile.value = window.innerWidth <= 1024
 }
 
-// Blokuj scroll stránky keď je footer otvorený
+// Blokuj scroll stránky keď je footer otvorený (len na mobile)
 watch(isOpen, (open) => {
-  if (open) {
+  if (open && isMobile.value) {
     document.body.style.overflow = 'hidden'
     document.body.style.touchAction = 'none'
   } else {
@@ -102,6 +134,9 @@ onMounted(() => {
 
 onUnmounted(() => {
   window.removeEventListener('resize', checkMobile)
+  // Cleanup mouse listeners
+  document.removeEventListener('mousemove', onMouseMove)
+  document.removeEventListener('mouseup', onMouseUp)
   // Cleanup - obnov scroll
   document.body.style.overflow = ''
   document.body.style.touchAction = ''
@@ -125,6 +160,7 @@ watch(() => route.path, () => {
       @touchstart.passive="onDragStart"
       @touchmove.prevent="onDragMove"
       @touchend.passive="onDragEnd"
+      @mousedown="onMouseDown"
     >
       <!-- Toggle bar -->
       <button
@@ -209,6 +245,18 @@ watch(() => route.path, () => {
   transition: transform 0.3s ease-out;
   // Skryje content ktorý preteká
   overflow: hidden;
+  // Drag cursor
+  cursor: grab;
+  user-select: none;
+
+  &:active {
+    cursor: grabbing;
+  }
+
+  // Linky a buttony majú pointer
+  a, button {
+    cursor: pointer;
+  }
 
   // Otvorený stav
   &--open {
@@ -369,7 +417,7 @@ watch(() => route.path, () => {
   a {
     opacity: 0.9;
     font-size: 1rem;
-
+    width: fit-content;
     &:hover {
       opacity: 0.7;
     }

@@ -33,9 +33,10 @@ main {
 
   &.main--with-bg {
     background: $bg-light;
-    @include tablet {
-      padding-bottom: 36px;
-    }
+    padding-bottom: 46px;
+    //@include tablet {
+    //  padding-bottom: 46px;
+    //}
   }
 
   > * {
