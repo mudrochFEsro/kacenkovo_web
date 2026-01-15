@@ -3,154 +3,91 @@ const route = useRoute()
 const isOpen = ref(false)
 const isMobile = ref(false)
 
-// Refs pre drag handling
+// Drag handling
 const footerRef = ref<HTMLElement | null>(null)
-const toggleRef = ref<HTMLElement | null>(null)
 const isDragging = ref(false)
-const hasDragged = ref(false)
 const dragStartY = ref(0)
-const dragOffset = ref(0)
+const startOffset = ref(0)
+const currentOffset = ref(0)
+const hasDragged = ref(false)
 
-// Cachnuté hodnoty - neprepočítavame pri každom frame
-const cachedFooterHeight = ref(0)
-const toggleHeight = computed(() => isMobile.value ? 36 : 30)
+const TOGGLE_HEIGHT = 40
 
-// Výpočet footer height - voláme len keď treba
-const updateFooterHeight = () => {
-  if (footerRef.value) {
-    cachedFooterHeight.value = footerRef.value.scrollHeight
-  }
-}
-
-const onDragStart = (e: MouseEvent | TouchEvent) => {
-  // Prevent default len pre touch (mouse potrebuje click)
-  if ('touches' in e) {
-    // Nič - passive listener
-  }
+const onDragStart = (e: TouchEvent) => {
+  if (!footerRef.value) return
 
   isDragging.value = true
   hasDragged.value = false
-  dragStartY.value = 'touches' in e ? e.touches[0].clientY : e.clientY
+  dragStartY.value = e.touches[0].clientY
 
-  // Aktualizuj výšku len pri štarte dragu
-  updateFooterHeight()
+  // Vypočítaj aktuálny offset
+  const footerHeight = footerRef.value.offsetHeight
+  startOffset.value = isOpen.value ? 0 : footerHeight - TOGGLE_HEIGHT
+  currentOffset.value = startOffset.value
 
-  // Počiatočný offset podľa stavu
-  dragOffset.value = isOpen.value ? 0 : cachedFooterHeight.value - toggleHeight.value
-
-  // Okamžite nastav pozíciu bez animácie
-  if (footerRef.value) {
-    footerRef.value.style.transition = 'none'
-    footerRef.value.style.transform = `translateY(${dragOffset.value}px)`
-  }
-
-  // Event listeners - touchmove musí byť non-passive pre preventDefault
-  document.addEventListener('mousemove', onDragMove, { passive: true })
-  document.addEventListener('mouseup', onDragEnd, { passive: true })
-  document.addEventListener('touchmove', onDragMove, { passive: false })
-  document.addEventListener('touchend', onDragEnd, { passive: true })
+  // Vypni transition počas dragu
+  footerRef.value.style.transition = 'none'
 }
 
-const onDragMove = (e: MouseEvent | TouchEvent) => {
-  if (!isDragging.value) return
+const onDragMove = (e: TouchEvent) => {
+  if (!isDragging.value || !footerRef.value) return
 
-  // Prevent scroll len pre touch
-  if ('touches' in e) {
-    e.preventDefault()
-  }
+  const currentY = e.touches[0].clientY
+  const delta = currentY - dragStartY.value
 
-  const currentY = 'touches' in e ? e.touches[0].clientY : e.clientY
-  const deltaY = currentY - dragStartY.value
-
-  // Threshold pre detekciu skutočného dragu
-  if (Math.abs(deltaY) > 5) {
+  // Ak sa pohol viac ako 5px, považuj to za drag
+  if (Math.abs(delta) > 5) {
     hasDragged.value = true
   }
 
-  // Vypočítaj nový offset s clampom
-  const maxOffset = cachedFooterHeight.value - toggleHeight.value
-  const baseOffset = isOpen.value ? 0 : maxOffset
-  const newOffset = Math.max(0, Math.min(maxOffset, baseOffset + deltaY))
+  // Vypočítaj nový offset (clamp medzi 0 a max)
+  const footerHeight = footerRef.value.offsetHeight
+  const maxOffset = footerHeight - TOGGLE_HEIGHT
+  const newOffset = Math.max(0, Math.min(maxOffset, startOffset.value + delta))
 
-  dragOffset.value = newOffset
-
-  // RAF pre smooth update
-  if (footerRef.value) {
-    footerRef.value.style.transform = `translateY(${newOffset}px)`
-  }
+  currentOffset.value = newOffset
+  footerRef.value.style.transform = `translateY(${newOffset}px)`
 }
 
 const onDragEnd = () => {
-  if (!isDragging.value) return
+  if (!isDragging.value || !footerRef.value) return
 
-  // Odstráň listeners
-  document.removeEventListener('mousemove', onDragMove)
-  document.removeEventListener('mouseup', onDragEnd)
-  document.removeEventListener('touchmove', onDragMove)
-  document.removeEventListener('touchend', onDragEnd)
+  const footerHeight = footerRef.value.offsetHeight
+  const maxOffset = footerHeight - TOGGLE_HEIGHT
+  const threshold = maxOffset / 2
 
-  // Ak bol skutočný drag, urči nový stav
+  // Rozhodnutie: ak offset < polovica = otvor, inak zatvor
   if (hasDragged.value) {
-    const threshold = (cachedFooterHeight.value - toggleHeight.value) / 2
-    isOpen.value = dragOffset.value < threshold
+    isOpen.value = currentOffset.value < threshold
   }
 
-  // Vráť CSS control
-  if (footerRef.value) {
-    footerRef.value.style.transition = ''
-    footerRef.value.style.transform = ''
-  }
+  // Zapni transition a resetuj transform (CSS prevezme kontrolu)
+  footerRef.value.style.transition = ''
+  footerRef.value.style.transform = ''
 
   isDragging.value = false
 }
 
-const onToggleClick = () => {
-  // Toggle len ak nebol drag
+// Toggle footer (pre click na button)
+const toggleFooter = () => {
   if (!hasDragged.value) {
     isOpen.value = !isOpen.value
   }
   hasDragged.value = false
 }
 
-// Debounced resize check
-let resizeTimeout: ReturnType<typeof setTimeout> | null = null
+// Resize check
 const checkMobile = () => {
-  if (resizeTimeout) clearTimeout(resizeTimeout)
-  resizeTimeout = setTimeout(() => {
-    isMobile.value = window.innerWidth <= 1024
-    updateFooterHeight()
-  }, 100)
+  isMobile.value = window.innerWidth <= 1024
 }
 
 onMounted(() => {
-  // Počiatočná detekcia
-  isMobile.value = window.innerWidth <= 1024
-
-  // Počkaj na DOM a vypočítaj výšku
-  nextTick(() => {
-    updateFooterHeight()
-  })
-
-  // Resize observer pre presnejšiu detekciu
-  if (typeof ResizeObserver !== 'undefined' && footerRef.value) {
-    const resizeObserver = new ResizeObserver(() => {
-      if (!isDragging.value) {
-        updateFooterHeight()
-      }
-    })
-    resizeObserver.observe(footerRef.value)
-
-    onUnmounted(() => {
-      resizeObserver.disconnect()
-    })
-  }
-
+  checkMobile()
   window.addEventListener('resize', checkMobile, { passive: true })
+})
 
-  onUnmounted(() => {
-    window.removeEventListener('resize', checkMobile)
-    if (resizeTimeout) clearTimeout(resizeTimeout)
-  })
+onUnmounted(() => {
+  window.removeEventListener('resize', checkMobile)
 })
 
 // Zatvor footer pri zmene route
@@ -165,35 +102,23 @@ watch(() => route.path, () => {
       ref="footerRef"
       class="main-footer"
       :class="{
-        'main-footer--open': isOpen && !isDragging,
-        'main-footer--dragging': isDragging,
+        'main-footer--open': isOpen,
         'main-footer--mobile': isMobile
       }"
-      @mousedown="isMobile && onDragStart($event)"
-      @touchstart.passive="isMobile && onDragStart($event)"
+      @touchstart.passive="onDragStart"
+      @touchmove.passive="onDragMove"
+      @touchend.passive="onDragEnd"
     >
-      <!-- Toggle bar - jediný element s drag handlers -->
+      <!-- Toggle bar -->
       <button
-        ref="toggleRef"
         class="footer-toggle"
-        :class="{ 'footer-toggle--mobile': isMobile }"
-        @mousedown="onDragStart"
-        @touchstart.passive="onDragStart"
-        @click="onToggleClick"
+        @click="toggleFooter"
         :aria-expanded="isOpen"
         aria-label="Zobraziť/skryť footer"
       >
-        <ClientOnly>
-          <!-- Mobile: handle bar -->
-          <span v-if="isMobile" class="footer-toggle__handle"></span>
-          <!-- Desktop: arrow -->
-          <span v-else class="footer-toggle__arrow" :class="{ 'footer-toggle__arrow--up': isOpen }">
-            &#9650;
-          </span>
-          <template #fallback>
-            <span class="footer-toggle__arrow">&#9650;</span>
-          </template>
-        </ClientOnly>
+        <span class="footer-toggle__arrow" :class="{ 'footer-toggle__arrow--up': isOpen }">&#9650;</span>
+        <span class="footer-toggle__text">{{ isOpen ? 'Menej info' : 'Viac info' }}</span>
+        <span class="footer-toggle__arrow" :class="{ 'footer-toggle__arrow--up': isOpen }">&#9650;</span>
       </button>
 
       <!-- Footer content -->
@@ -252,8 +177,8 @@ watch(() => route.path, () => {
   right: 0;
   z-index: 9999;
   pointer-events: none;
-  // Stabilná pozícia - neovplyvnená address barom
-  contain: layout style;
+  // Pre iOS Safari - použijeme safe area
+  padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 
 .main-footer {
@@ -262,53 +187,42 @@ watch(() => route.path, () => {
   color: $text-white;
   display: flex;
   flex-direction: column;
-  transform: translateY(calc(100% - 30px));
-  transition: transform 0.4s cubic-bezier(0.32, 0.72, 0, 1);
-  will-change: transform;
-  contain: layout style;
-  // Prevent iOS bounce/overscroll
-  overscroll-behavior: contain;
-  -webkit-overflow-scrolling: touch;
+  // Zatvorený stav - ukazuje len toggle bar (40px)
+  transform: translateY(calc(100% - 40px));
+  transition: transform 0.3s ease-out;
+  // Skryje content ktorý preteká
+  overflow: hidden;
 
   // Otvorený stav
   &--open {
-    transform: translateY(0) !important;
+    transform: translateY(0);
+    overflow: visible;
   }
 
-  // Počas dragovania - žiadna animácia
-  &--dragging {
-    transition: none !important;
-    will-change: transform;
-  }
-
-  // Mobile variant
+  // Mobile variant - zaoblené rohy
   &--mobile {
     border-top-left-radius: 16px;
     border-top-right-radius: 16px;
-    transform: translateY(calc(100% - 36px));
   }
 }
 
 .footer-toggle {
   width: 100%;
-  height: 30px;
+  height: 40px;
   background: $bg-dark;
   border: none;
-  cursor: grab;
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 12px;
   -webkit-tap-highlight-color: transparent;
   flex-shrink: 0;
   user-select: none;
-  touch-action: pan-x; // Povoľ horizontálny scroll, blokuj vertikálny
+  color: $text-white;
 
-  &:active {
-    cursor: grabbing;
-  }
-
-  &--mobile {
-    height: 36px;
+  // Mobile - zaoblené rohy
+  .main-footer--mobile & {
     border-top-left-radius: 16px;
     border-top-right-radius: 16px;
   }
@@ -318,30 +232,28 @@ watch(() => route.path, () => {
     outline-offset: -2px;
   }
 
-  &__handle {
-    width: 48px;
-    height: 4px;
-    background: rgba(255, 255, 255, 0.5);
-    border-radius: 2px;
-    // Prevent layout shift
-    flex-shrink: 0;
+  &__text {
+    font-size: 1.15rem;
+    opacity: 0.7;
+    font-weight: 400;
+    font-family: 'Libre Baskerville', serif;
   }
 
   &__arrow {
-    color: $text-white;
-    font-size: 10px;
+    font-size: 11px;
     opacity: 0.5;
-    transition: transform 0.4s cubic-bezier(0.32, 0.72, 0, 1), opacity 0.2s ease;
-    transform: rotate(0deg);
-    will-change: transform;
+    transition: transform 0.35s cubic-bezier(0.32, 0.72, 0, 1);
   }
 
   &__arrow--up {
     transform: rotate(180deg);
   }
 
-  &:hover &__arrow {
-    opacity: 0.8;
+  &:hover {
+    .footer-toggle__arrow,
+    .footer-toggle__text {
+      opacity: 0.9;
+    }
   }
 }
 

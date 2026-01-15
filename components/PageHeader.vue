@@ -90,63 +90,93 @@ onUnmounted(() => {
 </template>
 
 <style lang="scss" scoped>
+// ===========================================
+// PEVNÉ VEĽKOSTI (bez vw)
+// Desktop hodnoty, tablet = -35%
+// ===========================================
+
+// Desktop
+$header-height: 140px;
+$header-height-scrolled: 90px;
+$logo-height: 100px;
+$logo-height-scrolled: 60px;
+$btn-size: 50px;
+$btn-size-scrolled: 40px;
+$btn-icon: 26px;
+$btn-icon-scrolled: 20px;
+
+// Tablet (-35%)
+$header-height-tablet: 90px;
+$header-height-scrolled-tablet: 58px;
+$logo-height-tablet: 65px;
+$logo-height-scrolled-tablet: 40px;
+$btn-size-tablet: 34px;
+$btn-size-scrolled-tablet: 28px;
+$btn-icon-tablet: 18px;
+$btn-icon-scrolled-tablet: 14px;
+
 .page-header {
   position: sticky;
   top: 0;
   z-index: 50;
   overflow: hidden;
-  will-change: height;
-  height: clamp(100px, 22vw, 180px);
+  height: $header-height;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
   color: $text-white;
-  transition: height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: height 0.25s ease-out;
 
-  // Scrolled stav - zmenšená výška
+  @include tablet {
+    height: $header-height-tablet;
+  }
+
+  // Scrolled stav
   &--scrolled {
-    // Desktop - zmenšenie o ~35% (z max 180px na ~117px)
-    height: clamp(70px, 14vw, 117px);
+    height: $header-height-scrolled;
 
-    // Mobile - menšie zmenšenie
     @include tablet {
-      height: 80px;
+      height: $header-height-scrolled-tablet;
     }
 
     .page-header__back-btn {
-      transform: translateY(-50%) scale(0.9);
+      width: $btn-size-scrolled;
+      height: $btn-size-scrolled;
 
       @include tablet {
-        transform: translateY(-50%) scale(0.88);
+        width: $btn-size-scrolled-tablet;
+        height: $btn-size-scrolled-tablet;
+      }
+
+      svg {
+        width: $btn-icon-scrolled;
+        height: $btn-icon-scrolled;
+
+        @include tablet {
+          width: $btn-icon-scrolled-tablet;
+          height: $btn-icon-scrolled-tablet;
+        }
       }
     }
 
     .page-header__logo {
-      // Logo má height: 72% - automaticky sa zmenší s headerom
-      transform: translate(-50%, -50%) scale(0.95);
+      height: $logo-height-scrolled;
 
       @include tablet {
-        transform: translate(-50%, -50%) scale(0.95);
-      }
-
-      // Malé mobily - už je zmenšené na 0.85, scrolled pridá ďalšie zmenšenie
-      @media (max-width: 400px) {
-        transform: translate(-50%, -50%) scale(0.8);
+        height: $logo-height-scrolled-tablet;
       }
     }
 
     .page-header__title {
-      font-size: 1.5rem;
+      font-size: 1.4rem;
 
       @include tablet {
-        font-size: 1.3rem;
+        font-size: 1.1rem;
       }
     }
   }
 
   // Variant colors
-
   &--darkred { background: $accent-darkred; }
   &--black { background: $accent-black; }
 
@@ -164,40 +194,38 @@ onUnmounted(() => {
     }
   }
 
-  // Back button - vždy viditeľný, zmenší sa pri scrolle
+  // Back button
   &__back-btn {
     position: absolute;
     left: $spacing-sm;
     top: 50%;
     transform: translateY(-50%);
-    transform-origin: left center;
     background: rgba(255, 255, 255, 0.15);
     border: none;
     border-radius: 50%;
-    width: 52px;
-    height: 52px;
+    width: $btn-size;
+    height: $btn-size;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     color: inherit;
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), background 0.2s ease;
-    will-change: transform;
+    transition: width 0.25s ease-out, height 0.25s ease-out, background 0.15s ease;
     z-index: 2;
 
-    // Mobile - zmenšený o 20%
     @include tablet {
-      width: 42px;
-      height: 42px;
+      width: $btn-size-tablet;
+      height: $btn-size-tablet;
     }
 
     svg {
-      width: 26px;
-      height: 26px;
+      width: $btn-icon;
+      height: $btn-icon;
+      transition: width 0.25s ease-out, height 0.25s ease-out;
 
       @include tablet {
-        width: 20px;
-        height: 20px;
+        width: $btn-icon-tablet;
+        height: $btn-icon-tablet;
       }
     }
 
@@ -206,7 +234,7 @@ onUnmounted(() => {
     }
 
     &:active {
-      transform: translateY(-50%) scale(0.92);
+      transform: translateY(-50%) scale(0.95);
     }
 
     &:focus-visible {
@@ -215,43 +243,31 @@ onUnmounted(() => {
     }
   }
 
-  // Title - centrovaný, zmenší sa pri scrolle
+  // Title
   &__title {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    transform: translateX(calc(50vw - 50%)) translateY(-50%);
-    transform-origin: left center;
     font-size: 1.8rem;
     font-weight: 600;
     margin: 0;
     white-space: nowrap;
     z-index: 1;
-    transition: font-size 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: font-size 0.25s ease-out;
 
     @include tablet {
-      font-size: 1.4rem;
+      font-size: 1.3rem;
     }
   }
 
+  // Logo - pevná výška, vždy sa zmestí do headera
   &__logo {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    transform-origin: center center;
-    // Relatívna výška k headeru - automaticky sa prispôsobí
-    height: 72%;
+    height: $logo-height;
     width: auto;
     max-width: 90%;
     object-fit: contain;
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    will-change: transform;
+    transition: height 0.25s ease-out;
     z-index: 1;
 
-    // Malé mobily - zmenšené o 15%
-    @media (max-width: 400px) {
-      transform: translate(-50%, -50%) scale(0.85);
+    @include tablet {
+      height: $logo-height-tablet;
     }
   }
 }
