@@ -58,7 +58,11 @@ img {
 // Page transitions - default
 .page-enter-active,
 .page-leave-active {
-  transition: opacity 0.15s ease;
+  transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+
+  @include tablet {
+    transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
 }
 
 .page-enter-from,
@@ -68,14 +72,14 @@ img {
 
 // Homepage transition - pomalší, plynulejší fade
 .home-enter-active {
-  transition: opacity 0.1s ease-out;
+  transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   @include tablet{
-    transition: opacity 0.4s ease-out;
+    transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
 }
 
 .home-leave-active {
-  transition: opacity 0s ease;
+  transition: opacity 0.1s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .home-enter-from {
