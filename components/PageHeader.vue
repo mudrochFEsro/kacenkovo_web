@@ -106,25 +106,41 @@ onUnmounted(() => {
 
   // Scrolled stav - zmenšená výška
   &--scrolled {
-    height: 80px;
+    // Desktop - zmenšenie o ~35% (z max 180px na ~117px)
+    height: clamp(70px, 14vw, 117px);
 
+    // Mobile - menšie zmenšenie
     @include tablet {
-      height: 64px;
+      height: 80px;
     }
 
     .page-header__back-btn {
-      transform: translateY(-50%) scale(0.82);
+      transform: translateY(-50%) scale(0.9);
+
+      @include tablet {
+        transform: translateY(-50%) scale(0.88);
+      }
     }
 
     .page-header__logo {
-      transform: translate(-50%, -50%) scale(0.65);
+      // Logo má height: 72% - automaticky sa zmenší s headerom
+      transform: translate(-50%, -50%) scale(0.95);
+
+      @include tablet {
+        transform: translate(-50%, -50%) scale(0.95);
+      }
+
+      // Malé mobily - už je zmenšené na 0.85, scrolled pridá ďalšie zmenšenie
+      @media (max-width: 400px) {
+        transform: translate(-50%, -50%) scale(0.8);
+      }
     }
 
     .page-header__title {
-      font-size: 1.4rem;
+      font-size: 1.5rem;
 
       @include tablet {
-        font-size: 1.2rem;
+        font-size: 1.3rem;
       }
     }
   }
@@ -169,10 +185,10 @@ onUnmounted(() => {
     will-change: transform;
     z-index: 2;
 
-    // Mobile - zmenšený o ~15%
+    // Mobile - zmenšený o 20%
     @include tablet {
-      width: 44px;
-      height: 44px;
+      width: 42px;
+      height: 42px;
     }
 
     svg {
@@ -180,8 +196,8 @@ onUnmounted(() => {
       height: 26px;
 
       @include tablet {
-        width: 22px;
-        height: 22px;
+        width: 20px;
+        height: 20px;
       }
     }
 
@@ -224,11 +240,19 @@ onUnmounted(() => {
     left: 50%;
     transform: translate(-50%, -50%);
     transform-origin: center center;
-    width: 100%;
-    height: clamp(60px, 15vw, 130px);
+    // Relatívna výška k headeru - automaticky sa prispôsobí
+    height: 72%;
+    width: auto;
+    max-width: 90%;
+    object-fit: contain;
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     will-change: transform;
     z-index: 1;
+
+    // Malé mobily - zmenšené o 15%
+    @media (max-width: 400px) {
+      transform: translate(-50%, -50%) scale(0.85);
+    }
   }
 }
 </style>
