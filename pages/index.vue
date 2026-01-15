@@ -1,5 +1,4 @@
 <script setup lang="ts">
-// Homepage: pomalší fade-in pre buttony
 definePageMeta({
   pageTransition: {
     name: 'home',
@@ -8,7 +7,7 @@ definePageMeta({
 })
 
 useSeoMeta({
-  title: 'Kacenkovo - Obchod s oblečením',
+  title: 'Kačenkovo - Obchod s oblečením',
   description: 'Kvalitné dámske a detské oblečenie za skvelé ceny. Navštívte náš obchod!'
 })
 </script>

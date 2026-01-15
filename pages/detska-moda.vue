@@ -1,6 +1,6 @@
 <script setup lang="ts">
 useSeoMeta({
-  title: 'Detská móda - Kacenkovo',
+  title: 'Detská móda - Kačenkovo',
   description: 'Kvalitné a pohodlné detské oblečenie pre všetky vekové kategórie. Tričká, mikiny, nohavice.'
 })
 
@@ -32,14 +32,14 @@ const images = [
 
     <section class="content"  aria-label="Produkty detskej módy">
       <IntroText>
-        Objavte detskú módu, ktorá spája <strong>pohodlie</strong>, <strong>kvalitu</strong> a <strong>hravý štýl</strong>. V našej ponuke nájdete oblečenie navrhnuté s
-        dôrazom na potreby detí aj očakávania rodičov.
+        Objavte detskú módu, ktorá spája <strong>pohodlie</strong>, <strong>kvalitu</strong> a&nbsp;<strong>hravý štýl</strong>. V&nbsp;našej ponuke nájdete oblečenie navrhnuté
+        s&nbsp;dôrazom na potreby detí aj očakávania rodičov.
         <br/><br/>
-        <strong>Moderné a pohodlné kúsky</strong> pre každodenné nosenie aj výnimočné príležitosti, vyrobené z <strong>príjemných materiálov</strong>, ktoré
-        umožňujú voľný pohyb. <strong>Veselé farby</strong>, <strong>originálne vzory</strong> a <strong>praktické strihy</strong> robia z každého outfitu radosť pre deti aj
+        <strong>Moderné a&nbsp;pohodlné kúsky</strong> pre každodenné nosenie aj výnimočné príležitosti, vyrobené z&nbsp;<strong>príjemných materiálov</strong>, ktoré
+        umožňujú voľný pohyb. <strong>Veselé farby</strong>, <strong>originálne vzory</strong> a&nbsp;<strong>praktické strihy</strong> robia z&nbsp;každého outfitu radosť pre deti aj
         rodičov.
         <br/><br/>
-        Vyberte si detskú módu, v ktorej sa deti cítia dobre a vyzerajú skvelo. Pretože <strong>spokojné dieťa</strong> je najlepšou
+        Vyberte si detskú módu, v&nbsp;ktorej sa deti cítia dobre a&nbsp;vyzerajú skvelo. Pretože <strong>spokojné dieťa</strong> je najlepšou
         vizitkou štýlu.
       </IntroText>
       <ImageGallery :images="images" />

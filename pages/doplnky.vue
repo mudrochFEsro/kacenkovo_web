@@ -1,6 +1,6 @@
 <script setup lang="ts">
 useSeoMeta({
-  title: 'Doplnky - Kacenkovo',
+  title: 'Doplnky - Kačenkovo',
   description: 'Štýlové doplnky pre každú príležitosť. Kabelky, šály, šperky a viac.'
 })
 
@@ -41,11 +41,11 @@ const images = [
 
     <section class="content" aria-label="Produkty doplnkov">
       <IntroText>
-        Objavte svet <strong>štýlových detailov</strong>, ktoré dotvárajú každý outfit. Naša kolekcia módnych doplnkov prináša <strong>eleganciu</strong>, <strong>kvalitu</strong> a <strong>nadčasový dizajn</strong> pre každú príležitosť.
+        Objavte svet <strong>štýlových detailov</strong>, ktoré dotvárajú každý outfit. Naša kolekcia módnych doplnkov prináša <strong>eleganciu</strong>, <strong>kvalitu</strong> a&nbsp;<strong>nadčasový dizajn</strong> pre každú príležitosť.
         <br/><br/>
-        <strong>Kabelky</strong>, ktoré zaujmú na prvý pohľad – praktické, moderné a navrhnuté tak, aby podčiarkli váš osobný štýl.
-        <br/><strong>Peňaženky</strong>, v ktorých sa spája funkčnosť s vkusným prevedením – ideálne na každý deň.
-        <br/><strong>Bižutéria</strong>, ktorá dodá šmrnc a originalitu, či už preferujete jemnú eleganciu alebo výrazné akcenty.
+        <strong>Kabelky</strong>, ktoré zaujmú na prvý <nobr>pohľad – praktické</nobr>, moderné a&nbsp;navrhnuté tak, aby podčiarkli váš osobný štýl.
+        <br/><strong>Peňaženky</strong>, v&nbsp;ktorých sa spája funkčnosť s vkusným prevedením – ideálne na každý deň.
+        <br/><strong>Bižutéria</strong>, ktorá dodá šmrnc a&nbsp;originalitu, či už preferujete jemnú eleganciu alebo výrazné akcenty.
         <br/><br/>
         Doprajte si módne doplnky, ktoré hovoria za vás. <strong>Štýl začína detailmi.</strong>
       </IntroText>

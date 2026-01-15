@@ -1,6 +1,6 @@
 <script setup lang="ts">
 useSeoMeta({
-  title: 'Dámska móda - Kacenkovo',
+  title: 'Dámska móda - Kačenkovo',
   description: 'Objavte našu kolekciu elegantného a štýlového dámskeho oblečenia. Šaty, blúzky, nohavice a viac.'
 })
 
@@ -34,15 +34,15 @@ const images = [
 
     <section class="content" aria-label="Produkty dámskej módy">
       <IntroText>
-        Objavte dámsku módu, ktorá zvýrazní vašu osobnosť a podčiarkne váš <strong>jedinečný štýl</strong>. Naša kolekcia je navrhnutá
-        pre ženy, ktoré hľadajú <strong>eleganciu</strong>, <strong>komfort</strong> a <strong>aktuálne módne trendy</strong> v dokonalej
+        Objavte dámsku módu, ktorá zvýrazní vašu osobnosť a&nbsp;podčiarkne váš <strong>jedinečný štýl</strong>. Naša kolekcia je navrhnutá
+        pre ženy, ktoré hľadajú <strong>eleganciu</strong>, <strong>komfort</strong> a&nbsp;<strong>aktuálne módne trendy</strong> v&nbsp;dokonalej
         rovnováhe.
         <br/> <br/>
-        <strong>Nadčasové strihy</strong>, <strong>kvalitné materiály</strong> a <strong>precízne spracovanie</strong> vytvárajú kúsky vhodné na
-        každodenné nosenie aj výnimočné príležitosti. Či už preferujete jemnú eleganciu, mestský štýl alebo modernú klasiku, u nás si
+        <strong>Nadčasové strihy</strong>, <strong>kvalitné materiály</strong> a&nbsp;<strong>precízne spracovanie</strong> vytvárajú kúsky vhodné na
+        každodenné nosenie aj výnimočné príležitosti. Či už preferujete jemnú eleganciu, mestský štýl alebo modernú klasiku, u&nbsp;nás si
         vyberiete.
         <br/> <br/>
-        Dámska móda, v ktorej sa budete cítiť <strong>sebavedomo a štýlovo</strong>. Pretože <strong>skutočný štýl začína pocitom istoty</strong>.
+        Dámska móda, v&nbsp;ktorej sa budete cítiť <strong>sebavedomo a&nbsp;štýlovo</strong>. Pretože <strong>skutočný štýl začína pocitom istoty</strong>.
       </IntroText>
       <ImageGallery :images="images" />
     </section>

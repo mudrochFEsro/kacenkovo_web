@@ -1,6 +1,6 @@
 <script setup lang="ts">
 useSeoMeta({
-  title: 'Služby - Kacenkovo',
+  title: 'Služby - Kačenkovo',
   description: 'Ponúkame služby DPD Pickup - príjem a výdaj balíkov. Navštívte nás v Bratislave.'
 })
 </script>
@@ -15,11 +15,11 @@ useSeoMeta({
     <section class="content">
       <h2 class="section-title">DPD Pickup Point</h2>
       <IntroText>
-        Sme <strong>zmluvným partnerom kuriérskej spoločnosti DPD</strong>, vďaka čomu poskytujeme zákazníkom <strong>komfortné a spoľahlivé služby</strong> pri príjme aj výdaji balíkov. U nás si môžete jednoducho <strong>vyzdvihnúť zásielky objednané prostredníctvom DPD</strong>, ako aj <strong>odoslať balík do prepravy</strong> rýchlo a bez zbytočných komplikácií.
+        Sme <strong>zmluvným partnerom kuriérskej spoločnosti DPD</strong>, vďaka čomu poskytujeme zákazníkom <strong>komfortné a&nbsp;spoľahlivé služby</strong> pri príjme aj výdaji balíkov. U&nbsp;nás si môžete jednoducho <strong>vyzdvihnúť zásielky objednané prostredníctvom DPD</strong>, ako aj <strong>odoslať balík do prepravy</strong> rýchlo a&nbsp;bez zbytočných komplikácií.
         <br/><br/>
-        Táto služba je určená pre zákazníkov, ktorí uprednostňujú <strong>osobný kontakt, flexibilitu a istotu profesionálneho spracovania zásielok</strong>. Radi vám pomôžeme s <strong>odovzdaním balíka</strong>, jeho <strong>prijatím do systému DPD</strong> a poskytneme <strong>základné informácie k preprave</strong>.
+        Táto služba je určená pre zákazníkov, ktorí uprednostňujú <strong>osobný kontakt, flexibilitu a&nbsp;istotu profesionálneho spracovania zásielok</strong>. Radi vám pomôžeme s&nbsp;<strong>odovzdaním balíka</strong>, jeho <strong>prijatím do systému DPD</strong> a&nbsp;poskytneme <strong>základné informácie k&nbsp;preprave</strong>.
         <br/><br/>
-        Využite <strong>pohodlné riešenie pre zasielanie a vyzdvihovanie balíkov na jednom mieste</strong> – <strong>spoľahlivo, rýchlo a s podporou overenej kuriérskej spoločnosti DPD</strong>.
+        Využite <strong>pohodlné riešenie pre zasielanie a&nbsp;vyzdvihovanie balíkov na jednom mieste</strong> – <strong>spoľahlivo, rýchlo a&nbsp;s&nbsp;podporou overenej kuriérskej spoločnosti DPD</strong>.
       </IntroText>
     </section>
   </div>

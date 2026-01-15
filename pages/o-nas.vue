@@ -1,7 +1,7 @@
 <script setup lang="ts">
 useSeoMeta({
-  title: 'O nás - Kacenkovo',
-  description: 'Spoznajte príbeh obchodu Kacenkovo. Ponúkame kvalitné dámske a detské oblečenie v Bratislave od roku 2015.'
+  title: 'O nás - Kačenkovo',
+  description: 'Spoznajte príbeh obchodu Kačenkovo. Ponúkame kvalitné dámske a detské oblečenie v Bratislave od roku 2015.'
 })
 
 const images = [
@@ -27,15 +27,15 @@ const images = [
 
     <section class="content">
       <IntroText>
-        Naša spoločnosť pôsobí na trhu už <strong>od roku 2015</strong>. Začínali sme s predajom <strong>moderného detského oblečenia pre deti a dojčatá</strong>, pričom dôraz sme kládli na kvalitu, pohodlie a aktuálne módne trendy.
+        Naša spoločnosť pôsobí na trhu už <strong>od roku 2015</strong>. Začínali sme s&nbsp;predajom <strong>moderného detského oblečenia pre deti a&nbsp;dojčatá</strong>, pričom dôraz sme kládli na kvalitu, pohodlie a&nbsp;aktuálne módne trendy.
         <br/><br/>
-        Postupom času sme reagovali na potreby našich zákazníkov a <strong>rozšírili sortiment o dámske módne oblečenie</strong> a <strong>štýlové doplnky pre deti, dámy aj pánov</strong>, čím sme vytvorili komplexnejšiu ponuku pre celú rodinu.
+        Postupom času sme reagovali na potreby našich zákazníkov a&nbsp;<strong>rozšírili sortiment o&nbsp;dámske módne oblečenie</strong> a&nbsp;<strong>štýlové doplnky pre deti, dámy aj pánov</strong>, čím sme vytvorili komplexnejšiu ponuku pre celú rodinu.
         <br/><br/>
-        Naše začiatky boli spojené s <strong>menšími priestormi v nákupnom centre NC Hron</strong>, na 1. poschodí nákupnej pasáže. <strong>Od roku 2023</strong> sme sa presťahovali do <strong>väčších a modernejších priestorov v tom istom nákupnom centre</strong>, aby sme boli bližšie k ľuďom a mohli ponúknuť širší sortiment aj viac služieb.
+        Naše začiatky boli spojené s&nbsp;<strong>menšími priestormi v&nbsp;nákupnom centre NC Hron</strong>, na 1.&nbsp;poschodí nákupnej pasáže. <strong>Od roku 2023</strong> sme sa presťahovali do <strong>väčších a&nbsp;modernejších priestorov v&nbsp;tom istom nákupnom centre</strong>, aby sme boli bližšie k&nbsp;ľuďom a&nbsp;mohli ponúknuť širší sortiment aj viac služieb.
         <br/><br/>
-        Väčšie priestory nám umožnili výrazne rozšíriť ponuku o <strong>bižutériu, kabelky, ľadvinky</strong> a <strong>kožené peňaženky pre dámy aj pánov</strong>.
+        Väčšie priestory nám umožnili výrazne rozšíriť ponuku o&nbsp;<strong>bižutériu, kabelky, ľadvinky</strong> a&nbsp;<strong>kožené peňaženky pre dámy aj pánov</strong>.
         <br/><br/>
-        <strong>Módny obchod Kačenkovo</strong> dnes ponúka <strong>široký výber moderného a atraktívneho detského a dámskeho oblečenia</strong> spolu s <strong>módnymi doplnkami</strong>, ktoré dopĺňajú štýl celej rodiny.
+        <strong>Módny obchod Kačenkovo</strong> dnes ponúka <strong>široký výber moderného a&nbsp;atraktívneho detského a&nbsp;dámskeho oblečenia</strong> spolu s&nbsp;<strong>módnymi doplnkami</strong>, ktoré dopĺňajú štýl celej rodiny.
       </IntroText>
 
       <ImageGallery :images="images" />

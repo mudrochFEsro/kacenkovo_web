@@ -102,28 +102,30 @@ onUnmounted(() => {
   align-items: center;
   justify-content: center;
   color: $text-white;
-  transition: height 0.25s ease-out;
+  transition: height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
   // Scrolled stav - zmenšená výška
   &--scrolled {
     height: 80px;
 
-    .page-header__back-btn {
-      width: 46px;
-      height: 46px;
+    @include tablet {
+      height: 64px;
+    }
 
-      svg {
-        width: 24px;
-        height: 24px;
-      }
+    .page-header__back-btn {
+      transform: translateY(-50%) scale(0.82);
     }
 
     .page-header__logo {
-      height: 55px;
+      transform: translate(-50%, -50%) scale(0.65);
     }
 
     .page-header__title {
       font-size: 1.4rem;
+
+      @include tablet {
+        font-size: 1.2rem;
+      }
     }
   }
 
@@ -156,20 +158,31 @@ onUnmounted(() => {
     background: rgba(255, 255, 255, 0.15);
     border: none;
     border-radius: 50%;
-    width: clamp(38px, 8vw, 52px);
-    height: clamp(38px, 8vw, 52px);
+    width: 52px;
+    height: 52px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     color: inherit;
-    transition: width 0.25s ease-out, height 0.25s ease-out, background 0.2s ease;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), background 0.2s ease;
+    will-change: transform;
     z-index: 2;
 
+    // Mobile - zmenšený o ~15%
+    @include tablet {
+      width: 44px;
+      height: 44px;
+    }
+
     svg {
-      width: clamp(22px, 4vw, 26px);
-      height: clamp(22px, 4vw, 26px);
-      transition: width 0.25s ease-out, height 0.25s ease-out;
+      width: 26px;
+      height: 26px;
+
+      @include tablet {
+        width: 22px;
+        height: 22px;
+      }
     }
 
     &:hover {
@@ -177,7 +190,7 @@ onUnmounted(() => {
     }
 
     &:active {
-      transform: translateY(-50%) scale(0.95);
+      transform: translateY(-50%) scale(0.92);
     }
 
     &:focus-visible {
@@ -198,13 +211,12 @@ onUnmounted(() => {
     margin: 0;
     white-space: nowrap;
     z-index: 1;
-    transition: font-size 0.25s ease-out;
+    transition: font-size 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
     @include tablet {
       font-size: 1.4rem;
     }
   }
-
 
   &__logo {
     position: absolute;
@@ -214,7 +226,8 @@ onUnmounted(() => {
     transform-origin: center center;
     width: 100%;
     height: clamp(60px, 15vw, 130px);
-    transition: height 0.25s ease-out;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
     z-index: 1;
   }
 }

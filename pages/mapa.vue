@@ -1,6 +1,6 @@
 <script setup lang="ts">
 useSeoMeta({
-  title: 'Kde nás nájdete - Kacenkovo',
+  title: 'Kde nás nájdete - Kačenkovo',
   description: 'Navštívte nás na adrese Dudvážska 5, 821 07 Bratislava. Pozrite si mapu a nájdite cestu k nám.'
 })
 </script>

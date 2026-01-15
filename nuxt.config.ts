@@ -52,7 +52,7 @@ export default defineNuxtConfig({
   // SEO konfigurácia
   site: {
     url: 'https://kacenkovo.sk',
-    name: 'Kacenkovo - Obchod s oblečením',
+    name: 'Kačenkovo - Obchod s oblečením',
     description: 'Kvalitné dámske a detské oblečenie za skvelé ceny',
     defaultLocale: 'sk'
   },
@@ -101,7 +101,7 @@ export default defineNuxtConfig({
           innerHTML: JSON.stringify({
             '@context': 'https://schema.org',
             '@type': 'ClothingStore',
-            name: 'Kacenkovo',
+            name: 'Kačenkovo',
             description: 'Kvalitné dámske a detské oblečenie za skvelé ceny',
             url: 'https://kacenkovo.sk',
             image: 'https://kacenkovo.sk/poster.webp',
