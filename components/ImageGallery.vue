@@ -1,21 +1,75 @@
 <script setup lang="ts">
-import VueEasyLightbox from 'vue-easy-lightbox'
+import PhotoSwipe from 'photoswipe'
+import 'photoswipe/style.css'
 
-defineProps<{
+const props = defineProps<{
   images: string[]
 }>()
 
-const visibleRef = ref(false)
-const indexRef = ref(0)
 const galleryRef = ref<HTMLElement | null>(null)
 
-const showImg = (index: number) => {
-  indexRef.value = index
-  visibleRef.value = true
+// Cache pre rozmery obrázkov
+const imageDimensions = ref<Map<string, { width: number; height: number }>>(new Map())
+const dimensionsLoaded = ref(false)
+
+// Pred-načítať rozmery jedného obrázka
+const loadImageDimensions = (src: string): Promise<{ width: number; height: number }> => {
+  return new Promise((resolve) => {
+    if (imageDimensions.value.has(src)) {
+      resolve(imageDimensions.value.get(src)!)
+      return
+    }
+
+    const img = new Image()
+    img.onload = () => {
+      const dims = { width: img.naturalWidth, height: img.naturalHeight }
+      imageDimensions.value.set(src, dims)
+      resolve(dims)
+    }
+    img.onerror = () => {
+      resolve({ width: 1200, height: 800 })
+    }
+    img.src = src
+  })
 }
 
-const onHide = () => {
-  visibleRef.value = false
+// Pred-načítať rozmery VŠETKÝCH obrázkov
+const preloadAllDimensions = async () => {
+  if (dimensionsLoaded.value) return
+
+  await Promise.all(props.images.map(src => loadImageDimensions(src)))
+  dimensionsLoaded.value = true
+}
+
+const openLightbox = async (index: number) => {
+  // Načítať všetky rozmery pred otvorením
+  await preloadAllDimensions()
+
+  const dataSource = props.images.map((src) => {
+    const dims = imageDimensions.value.get(src) || { width: 1200, height: 800 }
+    return {
+      src,
+      width: dims.width,
+      height: dims.height,
+    }
+  })
+
+  const pswp = new PhotoSwipe({
+    dataSource,
+    index,
+    bgOpacity: 1,
+    showHideAnimationType: 'fade',
+    pswpModule: PhotoSwipe,
+    wheelToZoom: true,
+    pinchToClose: false,
+    closeOnVerticalDrag: true,
+    padding: { top: 0, bottom: 0, left: 0, right: 0 },
+    spacing: 0.1,
+    arrowPrevSVG: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>',
+    arrowNextSVG: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>',
+  })
+
+  pswp.init()
 }
 
 // Intersection Observer pre fade efekt
@@ -55,8 +109,8 @@ onMounted(() => {
         v-for="(image, index) in images"
         :key="image"
         class="gallery-card"
-        @click="showImg(index)"
-        @keydown.enter="showImg(index)"
+        @click="openLightbox(index)"
+        @keydown.enter="openLightbox(index)"
         tabindex="0"
         role="button"
         :aria-label="`Otvoriť obrázok ${index + 1}`"
@@ -72,20 +126,6 @@ onMounted(() => {
         </div>
       </li>
     </ul>
-
-    <ClientOnly>
-      <VueEasyLightbox
-        :visible="visibleRef"
-        :imgs="images"
-        :index="indexRef"
-        :min-zoom="1"
-        :zoom-disabled="false"
-        :rotate-disabled="true"
-        @hide="onHide"
-        loop
-        move-disabled
-      />
-    </ClientOnly>
   </section>
 </template>
 
@@ -144,85 +184,73 @@ onMounted(() => {
 </style>
 
 <style lang="scss">
-.vel-modal {
-  z-index: 99999 !important;
-  padding: 0 !important;
-  margin: 0 !important;
+.pswp {
+  --pswp-bg: #000;
+  --pswp-icon-color: #fff;
+  --pswp-icon-color-secondary: rgba(255, 255, 255, 0.6);
+  z-index: 99999;
 }
 
-.vel-img-wrapper {
-  background: rgba(0, 0, 0, 1) !important;
-  padding: 0 !important;
-  margin: 0 !important;
-  width: 100vw !important;
-  height: 100vh !important;
+.pswp__button--close {
+  margin-top: env(safe-area-inset-top, 0);
+}
+
+// Šípky - vždy viditeľné aj na mobile
+.pswp__button--arrow {
   display: flex !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  background: rgba(255, 255, 255, 0.15) !important;
+  border-radius: 50% !important;
+  width: 50px !important;
+  height: 50px !important;
   align-items: center !important;
   justify-content: center !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  margin-top: 0 !important;
 
-  .vel-img {
-    max-width: 100% !important;
-    max-height: 100% !important;
-    width: auto !important;
-    height: auto !important;
-    object-fit: contain !important;
+  @media (max-width: 768px) {
+    width: 40px !important;
+    height: 40px !important;
+  }
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.25) !important;
+  }
+
+  // SVG ikona
+  svg {
+    width: 20px !important;
+    height: 20px !important;
+    stroke: #fff !important;
+    position: static !important;
+    margin: 0 !important;
+
+    @media (max-width: 768px) {
+      width: 16px !important;
+      height: 16px !important;
+    }
+  }
+
+  // Skryť default ikonu
+  .pswp__icn {
+    display: none !important;
   }
 }
 
-.vel-toolbar {
-  display: none !important;
+.pswp__button--arrow--prev {
+  left: 10px !important;
+  right: auto !important;
 }
 
-.vel-btns-wrapper {
-  .btn__prev,
-  .btn__next {
-    background: rgba(255, 255, 255, 0.15) !important;
-    border-radius: 50% !important;
-    width: 50px !important;
-    height: 50px !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    z-index: 10 !important;
+.pswp__button--arrow--next {
+  right: 10px !important;
+  left: auto !important;
+}
 
-    @media (max-width: 768px) {
-      width: 40px !important;
-      height: 40px !important;
-    }
-
-    &:hover {
-      background: rgba(255, 255, 255, 0.25) !important;
-    }
-  }
-
-  .btn__prev {
-    left: 10px !important;
-  }
-
-  .btn__next {
-    right: 10px !important;
-  }
-
-  .btn__close {
-    right: 16px !important;
-    top: 34px !important;
-    background: rgba(255, 255, 255, 0.15) !important;
-    border-radius: 50% !important;
-    width: 44px !important;
-    height: 44px !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    z-index: 10 !important;
-
-    @media (max-width: 768px) {
-      top: calc(env(safe-area-inset-top, 16px) + 36px) !important;
-      right: 16px !important;
-    }
-
-    &:hover {
-      background: rgba(255, 255, 255, 0.25) !important;
-    }
-  }
+// Zaistiť že top bar neskryje šípky
+.pswp__top-bar {
+  z-index: 10;
 }
 </style>

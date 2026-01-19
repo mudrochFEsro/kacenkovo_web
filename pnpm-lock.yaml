@@ -23,12 +23,12 @@ importers:
       nuxt:
         specifier: ^3.20.2
         version: 3.20.2(@parcel/watcher@2.5.1)(@types/node@16.18.11)(@vercel/blob@1.0.2)(@vue/compiler-sfc@3.5.25)(cac@6.7.14)(db0@0.3.4)(ioredis@5.8.2)(lightningcss@1.30.2)(magicast@0.5.1)(rolldown@1.0.0-beta.59)(rollup@4.53.5)(sass-embedded@1.97.0)(sass@1.97.0)(terser@5.44.1)(tsx@4.21.0)(typescript@5.9.3)(vite@7.3.0(@types/node@16.18.11)(jiti@2.6.1)(lightningcss@1.30.2)(sass-embedded@1.97.0)(sass@1.97.0)(terser@5.44.1)(tsx@4.21.0)(yaml@2.8.2))(yaml@2.8.2)
+      photoswipe:
+        specifier: ^5.4.4
+        version: 5.4.4
       vue:
         specifier: ^3.5.25
         version: 3.5.25(typescript@5.9.3)
-      vue-easy-lightbox:
-        specifier: ^1.19.0
-        version: 1.19.0(vue@3.5.25(typescript@5.9.3))
     devDependencies:
       sass-embedded:
         specifier: ^1.97.0
@@ -3806,6 +3806,10 @@ packages:
   perfect-debounce@2.0.0:
     resolution: {integrity: sha512-fkEH/OBiKrqqI/yIgjR92lMfs2K8105zt/VT6+7eTjNwisrsh47CeIED9z58zI7DfKdH3uHAn25ziRZn3kgAow==}
 
+  photoswipe@5.4.4:
+    resolution: {integrity: sha512-WNFHoKrkZNnvFFhbHL93WDkW3ifwVOXSW3w1UuZZelSmgXpIGiZSNlZJq37rR8YejqME2rHs9EhH9ZvlvFH2NA==}
+    engines: {node: '>= 0.12.0'}
+
   picocolors@1.0.0:
     resolution: {integrity: sha512-1fygroTLlHu66zi26VoTDv8yRgm0Fccecssto+MhsZ0D/DGW2sm8E8AjW7NU5VVTRt5GxbeZ5qBuJr+HyLYkjQ==}
 
@@ -4951,12 +4955,6 @@ packages:
 
   vue-devtools-stub@0.1.0:
     resolution: {integrity: sha512-RutnB7X8c5hjq39NceArgXg28WZtZpGc3+J16ljMiYnFhKvd8hITxSWQSQ5bvldxMDU6gG5mkxl1MTQLXckVSQ==}
-
-  vue-easy-lightbox@1.19.0:
-    resolution: {integrity: sha512-YxLXgjEn91UF3DuK1y8u3Pyx2sJ7a/MnBpkyrBSQkvU1glzEJASyAZ7N+5yDpmxBQDVMwCsL2VmxWGIiFrWCgA==}
-    engines: {node: '>=14.18.3'}
-    peerDependencies:
-      vue: ^3.0.0
 
   vue-router@4.6.4:
     resolution: {integrity: sha512-Hz9q5sa33Yhduglwz6g9skT8OBPii+4bFn88w6J+J4MfEo4KRRpmiNG/hHHkdbRFlLBOqxN8y8gf2Fb0MTUgVg==}
@@ -9425,6 +9423,8 @@ snapshots:
 
   perfect-debounce@2.0.0: {}
 
+  photoswipe@5.4.4: {}
+
   picocolors@1.0.0: {}
 
   picocolors@1.1.1: {}
@@ -10600,10 +10600,6 @@ snapshots:
       ufo: 1.6.1
 
   vue-devtools-stub@0.1.0: {}
-
-  vue-easy-lightbox@1.19.0(vue@3.5.25(typescript@5.9.3)):
-    dependencies:
-      vue: 3.5.25(typescript@5.9.3)
 
   vue-router@4.6.4(vue@3.5.25(typescript@5.9.3)):
     dependencies:
