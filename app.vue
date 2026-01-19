@@ -3,11 +3,16 @@ const config = useRuntimeConfig()
 
 useHead({
   link: [
-    { rel: 'preload', href: '/poster.webp', as: 'image', type: 'image/webp', fetchpriority: 'high' }
+    { rel: 'preload', href: '/poster.webp', as: 'image', type: 'image/webp', fetchpriority: 'high' },
+    { rel: 'preload', href: '/akcie/akcia_baner.webp', as: 'image', type: 'image/webp', fetchpriority: 'high' },
+    { rel: 'preload', href: '/damska_moda_logo.svg', as: 'image', type: 'image/svg+xml' },
+    { rel: 'preload', href: '/detska_moda_logo.svg', as: 'image', type: 'image/svg+xml' },
+    { rel: 'preload', href: '/doplnky_logo.svg', as: 'image', type: 'image/svg+xml' }
   ]
 })
 
 const route = useRoute()
+const showPopup = computed(() => route.path === '/')
 const videoRef = ref<HTMLVideoElement | null>(null)
 const isVideoLoaded = ref(false)
 const shouldLoadVideo = ref(false)
@@ -110,6 +115,10 @@ const tryPlayOnInteraction = () => {
   <NuxtLayout>
     <NuxtPage />
   </NuxtLayout>
+
+  <ClientOnly>
+    <AkciaPopup v-if="showPopup" />
+  </ClientOnly>
 </template>
 
 <style lang="scss">
