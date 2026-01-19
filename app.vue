@@ -117,7 +117,7 @@ const tryPlayOnInteraction = () => {
   </NuxtLayout>
 
   <ClientOnly>
-    <AkciaPopup v-if="showPopup" />
+    <AkciaPopup v-if="showPopup" :auto-show="true" />
   </ClientOnly>
 </template>
 

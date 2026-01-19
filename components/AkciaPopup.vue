@@ -1,27 +1,40 @@
 <script setup lang="ts">
+const props = defineProps<{
+  autoShow?: boolean
+}>()
+
+// Zdieľaný stav pre manuálne otvorenie z iných komponentov
+const showAkciaPopup = useState('showAkciaPopup', () => false)
+
 const isVisible = ref(false)
 let autoCloseTimer: ReturnType<typeof setTimeout> | null = null
 
 const closePopup = () => {
   isVisible.value = false
+  showAkciaPopup.value = false
   if (autoCloseTimer) {
     clearTimeout(autoCloseTimer)
     autoCloseTimer = null
   }
 }
 
-onMounted(() => {
-  const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+// Watch pre manuálne otvorenie cez useState
+watch(showAkciaPopup, (newVal) => {
+  if (newVal) {
+    isVisible.value = true
+  }
+})
 
-  // Na localhost vždy zobraz popup (pre testovanie)
-  // Na produkcii len raz za session
-  const wasShown = isLocalhost ? false : sessionStorage.getItem('akciaPopupShown')
+onMounted(() => {
+  // Ak autoShow nie je true, nerob nič
+  if (!props.autoShow) return
+
+  // Len raz za session
+  const wasShown = sessionStorage.getItem('akciaPopupShown')
 
   if (!wasShown) {
     isVisible.value = true
-    if (!isLocalhost) {
-      sessionStorage.setItem('akciaPopupShown', 'true')
-    }
+    sessionStorage.setItem('akciaPopupShown', 'true')
 
     // Automaticky zavrieť po 10 sekundách
     autoCloseTimer = setTimeout(() => {

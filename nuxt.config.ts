@@ -46,6 +46,13 @@ export default defineNuxtConfig({
     prerender: {
       routes: ['/', '/detska-moda', '/damska-moda', '/doplnky', '/mapa', '/o-nas', '/sluzby'],
       crawlLinks: true
+    },
+    routeRules: {
+      '/**': {
+        headers: {
+          'X-Powered-By': ''
+        }
+      }
     }
   },
 
