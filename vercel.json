@@ -1,0 +1,10 @@
+{
+  "redirects": [
+    { "source": "/O-nás", "destination": "/o-nas", "permanent": true },
+    { "source": "/O-nás/", "destination": "/o-nas", "permanent": true },
+    { "source": "/Kabelky-a-ľadvinky", "destination": "/", "permanent": true },
+    { "source": "/Kabelky-a-ľadvinky/", "destination": "/", "permanent": true },
+    { "source": "/Produkty", "destination": "/", "permanent": true },
+    { "source": "/Produkty/", "destination": "/", "permanent": true }
+  ]
+}
