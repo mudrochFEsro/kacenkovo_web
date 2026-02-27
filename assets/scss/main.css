@@ -1,0 +1,18 @@
+/* Error: Undefined mixin.
+ *    ,
+ * 63 | /   @include tablet {
+ * 64 | |     transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+ * 65 | \   }
+ *    '
+ *   main.scss 63:3  root stylesheet */
+
+body::before {
+  font-family: "Source Code Pro", "SF Mono", Monaco, Inconsolata, "Fira Mono",
+      "Droid Sans Mono", monospace, monospace;
+  white-space: pre;
+  display: block;
+  padding: 1em;
+  margin-bottom: 1em;
+  border-bottom: 2px solid black;
+  content: "Error: Undefined mixin.\a    \2577 \a 63 \2502  \250c    @include tablet {\a 64 \2502  \2502      transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1);\a 65 \2502  \2514    }\a    \2575 \a   main.scss 63:3  root stylesheet";
+}
