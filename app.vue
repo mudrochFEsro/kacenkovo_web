@@ -4,7 +4,7 @@ const config = useRuntimeConfig()
 useHead({
   link: [
     { rel: 'preload', href: '/poster.webp', as: 'image', type: 'image/webp', fetchpriority: 'high' },
-    { rel: 'preload', href: '/akcie/akcia_2722026.webp', as: 'image', type: 'image/webp', fetchpriority: 'high' },
+    { rel: 'preload', href: '/akcie/akcia_582026.webp', as: 'image', type: 'image/webp', fetchpriority: 'high' },
     { rel: 'preload', href: '/damska_moda_logo.svg', as: 'image', type: 'image/svg+xml' },
     { rel: 'preload', href: '/detska_moda_logo.svg', as: 'image', type: 'image/svg+xml' },
     { rel: 'preload', href: '/doplnky_logo.svg', as: 'image', type: 'image/svg+xml' }
