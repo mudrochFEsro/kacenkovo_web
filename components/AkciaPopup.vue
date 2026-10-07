@@ -66,7 +66,7 @@ onUnmounted(() => {
             </svg>
           </button>
           <img
-            src="/akcie/akcia_582026.webp"
+            src="/akcie/akcia_07102026.webp"
             alt="Aktuálna akcia"
             class="akcia-popup__image"
             fetchpriority="high"
